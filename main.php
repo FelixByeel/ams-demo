@@ -14,13 +14,6 @@
 
 <script>
 
-
-//show complete title
-
-function showCompleteTitle(){
-    
-}
-
 //show profile box
 
 function showProfileBox() {
@@ -129,11 +122,8 @@ $(document).ready(function(){
         <!--头部信息-->
         <div id = "headbox">
             <span id="title">资产管理系统-AMS</span>
-            <span id="welcome" >
-                <span id = "profile" onmouseover = "showProfileBox()" >
+            <span id="welcome" onmouseover = "showProfileBox()">
                     <?php  echo $_SESSION['username'];?>，欢迎。
-                </span>
-
             </span>
             <div id = "profile_box" >
                 <ul id = "profile_box_ul">
