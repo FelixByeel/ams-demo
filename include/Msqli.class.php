@@ -91,4 +91,10 @@ class Msqli{
             $sql = "delete from $tablename where $condition";
             $this->query($sql);
     }
+
+    //check input
+    public function checkInput($str){
+        $str = mysqli_real_escape_string($str);
+        return $str;
+    }
 }
