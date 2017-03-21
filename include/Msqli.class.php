@@ -9,29 +9,28 @@
 *@Param $port
 *@Param $db_name
 *@Param $username
-*@Param $password
-*@Param $con
+*@Param $userpwd
 *
 */
 
 class Msqli{
     private $host       = 'localhost';
-    private $db_name    = 'my_db';
+    private $db_name    = 'ams_db';
     private $port       = '3306';
     private $username   = 'root';
-    private $password   = '123456';
+    private $userpwd    = '123456';
     private $con        = null;
     private $error      = null;
     private $errno      = null;
     private $result     = null;
-    private $charset    = 'utf8';
 
-    public function __construct($host,$username,$password,$db_name,$port) {
+    public function __construct($host,$username,$userpwd,$db_name,$port) {
         $this->host     = $host;
         $this->username = $username;
-        $this->password = $password;
+        $this->userpwd  = $userpwd;
         $this->db_name  = $db_name;
-        $this->con = mysqli_connect($this->host,$this->username,$this->password,$db_name,$port) or die('连接失败');
+        $this->port     = $port;
+        $this->con = mysqli_connect($this->host,$this->username,$this->userpwd,$this->db_name,$this->port) or die('连接失败');
     }
 
     //get error information
