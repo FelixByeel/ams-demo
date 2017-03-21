@@ -48,16 +48,6 @@ li{
     margin-right: 50px;
     font-size: 1em;
 }
-#welcome::after{
-    content: "";
-    border-top: 5px solid #FFF;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    position:relative;
-    left: -5px;
-    top:10px;
-}
 
 #welcome:hover{
     cursor:pointer;
