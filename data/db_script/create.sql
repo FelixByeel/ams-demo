@@ -1,5 +1,7 @@
 create database ams_db default character set utf8 collate utf8_general_ci;
 
+use ams_db;
+
 create table user_t(
     id int(10) unsigned not null auto_increment comment '自增主键',
     uid varchar(40) not null default '' comment '用户标识',
