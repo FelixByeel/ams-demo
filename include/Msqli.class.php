@@ -63,7 +63,7 @@ class Msqli{
             $sql = "select $column from $tablename where $condition";
         }
         //echo $sql;
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     //insert
