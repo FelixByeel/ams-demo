@@ -33,29 +33,30 @@
 </body>
 
 <script>
-    var itemSelectId = 0;                                       //每创建一个select，并为其添加ID
+                                           //每创建一个select，并为其添加ID
     var existSelectList = [];                                   //记录已经存在的select列表
-
+    var choosedSelectListId = [];
+    var k = 0;
     window.onload = function(){
         let itemJsonStr = '<?php echo $data; ?>'; 
         let itemJsonObj = JSON.parse(itemJsonStr);              //从后台获取分类信息，转换称JSON对象。
 
-        
+        var itemSelectId = 0;
         let itemBoxObj = document.getElementById('itemBox');    //获取需要添加select的对象
         let is_selectedId = 0;                                  //每个option的ID
 
         //调用添加分类 功能
-        createItemSelect(itemBoxObj,  itemJsonObj, is_selectedId);
+        createItemSelect(itemBoxObj, itemSelectId, itemJsonObj, is_selectedId);
     }
 
-    //---------------定义加分类方法功能--------------
-    function createItemSelect(itemBoxObj,  itemJsonObj, is_selectedId){
+    //---------------定义添加分类方法功能--------------
+    function createItemSelect(itemBoxObj, itemSelectId, itemJsonObj, is_selectedId){
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
-
+        
         //创建一个select时的添加“请选择分类”项为默认值
-        itemSelectObj.id = "itemSelect_" + itemSelectId++;
+        itemSelectObj.id = "itemSelect_" + itemSelectId;
         itemOptionObj.value= 'itemOption_0';
         itemOptionObj.text = "请选择分类";
 
@@ -83,52 +84,33 @@
     //--------------select的change事件-------------------
     function itemChoose(choose, itemBoxObj,  itemJsonObj){
         is_selectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
-
+        
+        /*
         //已存在该选项时不再重复显示
         var i = 0;
         while(existSelectList[i]){
             if(existSelectList[i] == choose.options[choose.selectedIndex].value) {
                 return false;
             }
+
             i++;
         }
-        existSelectList[itemSelectId-1] = choose.options[choose.selectedIndex].value;
-        
+        existSelectList[k++ - 1] = choose.options[choose.selectedIndex].value;
+
+        var j = 0;
+        while(choosedSelectListId[j]){
+            if(choosedSelectListId[j] == choose.id){
+
+            }
+        }
+        */
+        //choosedSelectListId[itemSelectId - 1] = choose.id;
         //当前项没有子分类时停止创建select
+
         if(0 == itemJsonObj[is_selectedId - 1].is_ended) {
-            createItemSelect(itemBoxObj,  itemJsonObj, is_selectedId);
+            createItemSelect(itemBoxObj, itemJsonObj[is_selectedId - 1].id, itemJsonObj, is_selectedId);
         }
     }
-
-
-    /*
-    //响应添加分类操作
-    function addItem(){
-        let itemJsonStr = '<?php echo $data; ?>'; 
-        let itemJsonObj = JSON.parse(itemJsonStr); //从后台获取分类信息，转换称JSON对象。
-
-        //获取需要添加select的对象
-        let itemBoxObj = document.getElementById('itemBox');
-        let itemSelectId = 0;   //每次创建一个select，并为其添加ID
-        let is_selectedId = 0; //每个option的ID
-
-        //调用添加分类 功能
-        createItemSelect(itemBoxObj, itemSelectId, itemJsonObj, is_selectedId);
-    }
-    */
-
-    //测试数据
-    function showTest(){
-        let itemJsonStr = '<?php echo $data; ?>'; 
-        let itemJsonObj = JSON.parse(itemJsonStr); //从后台获取分类信息，转换称JSON对象。
-
-        for(let i = 0; i < itemJsonObj.length; i++){
-           if(0 == itemJsonObj[i].is_ended){
-               alert(itemJsonObj[i].is_ended);
-           }
-        }
-    }
-
 </script>
 </html>
 
