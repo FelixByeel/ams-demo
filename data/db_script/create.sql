@@ -19,7 +19,7 @@ CREATE TABLE item_t(
     item_id varchar(20) not null default '' comment '类目编号，由祖先ID和自身ID构成（0-0-0）',
     item_name varchar(20) not null default '' comment '类目显示名称',
     parent_id int(10) unsigned not null default 0 comment '记录父ID',
-    is_ended tinyint(3) unsigned not null default 0 comment '是否最终项，1是，0否',
+    is_ended tinyint(3) unsigned not null default 1 comment '是否最终项，1是，0否',
     warehouse_name varchar(20) not null default '' comment '标识仓库名称',
     item_count int(10) unsigned not null default 0 comment '库存数量',
     primary key(id)
