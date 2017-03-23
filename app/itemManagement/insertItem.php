@@ -11,13 +11,15 @@
         echo $row['id'].'-'.$row['uid'].'-'.$row['username'].'-'.$row['userpwd'].'-'.$row['nick_name'].'-'.$row['role_group'].'-'.$row['is_enabled'].'-'.$row['last_time'];
     }
 */
-    $data = [];
+    $itemData = [];//保存分类信息
+    $warehouseData = [];
+
     $result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
     while($row = mysqli_fetch_assoc($result)){
-        $data[] = $row;
+        $itemData[] = $row;
     }
-    $data = json_encode($data,JSON_UNESCAPED_UNICODE);
-    //echo $data;
+    $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
+    echo $itemData;
 ?>
 <!--添加分类-->
 <html>
@@ -59,11 +61,11 @@
 
 <!---------script---------->
 <script>
-    let existSelectListCount = 0;
-    let existSelectList = [];                                   //记录已经存在的select列表
+    //let existSelectListCount = 0;
+    //let existSelectList = [];                                   //记录已经存在的select列表
 
     window.onload = function(){
-        let itemJsonStr = '<?php echo $data; ?>'; 
+        let itemJsonStr = '<?php echo $itemData; ?>'; 
         let itemJsonObj = JSON.parse(itemJsonStr);              //从后台获取分类信息，转换称JSON对象。
 
         let itemSelectId = itemJsonObj[0].parent_id;
