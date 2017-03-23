@@ -125,13 +125,12 @@
         //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类
         will_selectedName  = choose.id.split("_")[1];
 
+        //选择分类时，下一级分类显示同步
+        countSelect(will_selectedName);
         //判断是否选择了空项，默认第一项提示为空
         if(0 == will_selectedId){
             return false;
         }
-
-        //选择分类时，下一级分类显示同步
-        countSelect(will_selectedName);
 
         //获取到当前选择项在itemJsonObj中的位置
         for(let i = 0; i < itemJsonObj.length; i++) {
@@ -152,7 +151,7 @@
     function  countSelect(sname){
         let selectArr = document.getElementsByTagName("select");    //获取当前已存在的select列表
         let selectName = "itemSelectName_" + sname;                 //获取要创建的select的Name
-
+        
         //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
         //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
         for(let i = 0; i < selectArr.length; i++){
