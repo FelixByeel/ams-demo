@@ -125,25 +125,24 @@
         //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类
         will_selectedName  = choose.id.split("_")[1];
 
-        //选择分类时，下一级分类显示同步
+        //选择分类项改变时，下一级分类显示同步
         countSelect(will_selectedName);
+
         //判断是否选择了空项，默认第一项提示为空
-        if(0 == will_selectedId){
-            return false;
-        }
-
-        //获取到当前选择项在itemJsonObj中的位置
-        for(let i = 0; i < itemJsonObj.length; i++) {
-            if(will_selectedId == itemJsonObj[i].id){
-                will_selectedId = i;
-                break;
+        if(!(0 == will_selectedId)){
+            //获取到当前选择项在itemJsonObj中的位置
+            for(let i = 0; i < itemJsonObj.length; i++) {
+                if(will_selectedId == itemJsonObj[i].id){
+                    will_selectedId = i;
+                    break;
+                }
             }
-        }
 
-        //当前选择项有子分类时，显示子分类
-        if( 0 == itemJsonObj[will_selectedId].is_ended) {
-            //existSelectList[existSelectListCount++] = createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
-            createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+            //当前选择项有子分类时，显示子分类
+            if( 0 == itemJsonObj[will_selectedId].is_ended) {
+                //existSelectList[existSelectListCount++] = createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+                createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+            }
         }
     }
 
@@ -159,11 +158,8 @@
 
                 let selectId = selectArr[i].id;
 
-                //$(document).ready(function(){
-
-                    $("#" + selectId).nextAll().remove();
-                    $("#" + selectId).remove();
-                //});
+                $("#" + selectId).nextAll().remove();
+                $("#" + selectId).remove();
             }
         }
     }
