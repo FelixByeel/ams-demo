@@ -11,14 +11,24 @@
         echo $row['id'].'-'.$row['uid'].'-'.$row['username'].'-'.$row['userpwd'].'-'.$row['nick_name'].'-'.$row['role_group'].'-'.$row['is_enabled'].'-'.$row['last_time'];
     }
 */
-    $itemData = [];//保存分类信息
-    $warehouseData = [];
+    $itemData = [];         //保存分类信息
+    $warehouseData = [];    //保存仓库信息
 
+    //查询分类信息，并保存在$itemData[]中
     $result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
     while($row = mysqli_fetch_assoc($result)){
         $itemData[] = $row;
     }
     $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
+
+    //查询仓库信息，并保存在$warehouseData[]中
+    $result = $mysql->select('warehouse_t', 'id, warehouse_name');
+    while($row = mysqli_fetch_assoc($result)){
+        $warehouseData[] = $row;
+    }
+    $warehouseData = json_encode($warehouseData,JSON_UNESCAPED_UNICODE);
+
+    echo $warehouseData;
     echo $itemData;
 ?>
 <!--添加分类-->
@@ -68,7 +78,7 @@
         let itemJsonStr = '<?php echo $itemData; ?>'; 
         let itemJsonObj = JSON.parse(itemJsonStr);              //从后台获取分类信息，转换称JSON对象。
 
-        let itemSelectId = itemJsonObj[0].parent_id;
+        let itemSelectId = 0;                                   //初始分类为0
         let itemBoxObj = document.getElementById('itemBox');    //获取需要添加select的对象
         let itemSelectName = -1;                                //第一个分类select列表Id
 
@@ -97,7 +107,7 @@
 
             let itemOptionObj = document.createElement('option');
             
-            if(itemSelectId == itemJsonObj[i].parent_id){
+            if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
                 //if(itemJsonObj[i].is_ended == 1) return false; 添加分类和添加物品切换
                itemOptionObj.value = 'itemOption_' + itemJsonObj[i].id;
                itemOptionObj.text = itemJsonObj[i].item_name;
@@ -168,11 +178,11 @@
 
     //---------------点击“添加”按钮-------------
     function addItem(){
-        let selectArr = document.getElementsByTagName("select");
+        let selectArr = document.getElementsByTagName("select");    //获取当前所有显示的分类列表
         let str = "";
 
         for(let i = 0; i < selectArr.length; i++){
-            str += ' + ' + selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+            str += ' + ' + selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];    //获取当前所有已选择的分类
             
         }
         alert(str);
