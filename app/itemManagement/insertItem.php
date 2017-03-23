@@ -27,36 +27,37 @@
 </head>
 <body>
     <div id = "itemBox"></div>
-    <button id = "addItem0" onclick = "showTest()">测试</button>
-    <button id = "addItem1" onclick = "">添加分类</button>
     <button id = "addItem2" onclick = "">添加</button>
 </body>
 
 <script>
-                                           //每创建一个select，并为其添加ID
-    var existSelectList = [];                                   //记录已经存在的select列表
-    var choosedSelectListId = [];
-    var k = 0;
+    let existSelectListCount = 0;
+    let existSelectList = [];                                   //记录已经存在的select列表
+
     window.onload = function(){
         let itemJsonStr = '<?php echo $data; ?>'; 
         let itemJsonObj = JSON.parse(itemJsonStr);              //从后台获取分类信息，转换称JSON对象。
 
-        var itemSelectId = 0;
+        let itemSelectId = itemJsonObj[0].parent_id;
         let itemBoxObj = document.getElementById('itemBox');    //获取需要添加select的对象
-        let is_selectedId = 0;                                  //每个option的ID
+        let itemSelectName = -1;
 
         //调用添加分类 功能
-        createItemSelect(itemBoxObj, itemSelectId, itemJsonObj, is_selectedId);
+
+        createItemSelect(itemBoxObj, itemSelectId, itemSelectName, itemJsonObj);
     }
 
     //---------------定义添加分类方法功能--------------
-    function createItemSelect(itemBoxObj, itemSelectId, itemJsonObj, is_selectedId){
+    //return 当前创建成功的select的序号即分类号
+    function createItemSelect(itemBoxObj, itemSelectId, itemSelectName, itemJsonObj){
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
         
         //创建一个select时的添加“请选择分类”项为默认值
-        itemSelectObj.id = "itemSelect_" + itemSelectId;
+        itemSelectObj.id = "itemSelectId_" + itemSelectId;
+        itemSelectObj.name = "itemSelectName_" + itemSelectName;
+        
         itemOptionObj.value= 'itemOption_0';
         itemOptionObj.text = "请选择分类";
 
@@ -67,7 +68,7 @@
 
             let itemOptionObj = document.createElement('option');
 
-            if(is_selectedId == itemJsonObj[i].parent_id){
+            if(itemSelectId == itemJsonObj[i].parent_id){
                itemOptionObj.value = 'itemOption_' + itemJsonObj[i].id;
                itemOptionObj.text = itemJsonObj[i].item_name;
                itemSelectObj.appendChild(itemOptionObj);
@@ -75,40 +76,77 @@
         }
         //为每个select绑定change事件
         itemSelectObj.addEventListener('change',function(){
-            itemChoose(this, itemBoxObj,  itemJsonObj);
+
+            itemChange(this, itemBoxObj,  itemJsonObj);
         });
 
         itemBoxObj.appendChild(itemSelectObj);
+        return itemSelectId;
     }
     
-    //--------------select的change事件-------------------
-    function itemChoose(choose, itemBoxObj,  itemJsonObj){
-        is_selectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
-        
+    //-----------------select的change事件-------------------
+    function itemChange(choose, itemBoxObj, itemJsonObj){
+
+        let will_selectedId = 0;        //保存要创建子分类的select的ID号码
+        let is_selectedId = 0;          //保存当前选择项的select的ID号
+        let will_selectedName = 0;      //保存要创建子分类的select的name号
+
+        //子分类select的ID号码为当前选择项option的id号码
+        will_selectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
+
+        //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类
+        will_selectedName  = choose.id.split("_")[1];
+
+        //判断是否选择了空项，默认第一项提示为空
+        if(0 == will_selectedId){
+            return false;
+        }
+
+        countSelect(will_selectedName);
         /*
-        //已存在该选项时不再重复显示
-        var i = 0;
+        //通过select的id序号，判断要创建的select是否已经存在，已存在时不再重复创建
+        let i = 0;
         while(existSelectList[i]){
-            if(existSelectList[i] == choose.options[choose.selectedIndex].value) {
+            
+            if(existSelectList[i] == will_selectedId) {
                 return false;
             }
-
             i++;
         }
-        existSelectList[k++ - 1] = choose.options[choose.selectedIndex].value;
-
-        var j = 0;
-        while(choosedSelectListId[j]){
-            if(choosedSelectListId[j] == choose.id){
-
+        */
+        //获取到当前选择项在itemJsonObj中的位置
+        for(let i = 0; i < itemJsonObj.length; i++) {
+            if(will_selectedId == itemJsonObj[i].id){
+                will_selectedId = i;
+                break;
             }
         }
-        */
-        //choosedSelectListId[itemSelectId - 1] = choose.id;
-        //当前项没有子分类时停止创建select
 
-        if(0 == itemJsonObj[is_selectedId - 1].is_ended) {
-            createItemSelect(itemBoxObj, itemJsonObj[is_selectedId - 1].id, itemJsonObj, is_selectedId);
+        //当前选择项有子分类时，显示子分类
+        if( 0 == itemJsonObj[will_selectedId].is_ended) {
+            //existSelectList[existSelectListCount++] = createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+            createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+        }
+    }
+
+    //同级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示，
+    function  countSelect(sname){
+        let selectArr = document.getElementsByTagName("select");    //获取当前已存在的select列表
+        let selectName = "itemSelectName_" + sname;                 //获取要创建的select的Name
+
+        //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
+        //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
+        for(let i = 0; i < selectArr.length; i++){
+            if(selectArr[i].name == selectName){
+
+                let selectId = selectArr[i].id;
+
+                $(document).ready(function(){
+
+                    $("#" + selectId).nextAll().remove();
+                    $("#" + selectId).remove();
+                });
+            }
         }
     }
 </script>
