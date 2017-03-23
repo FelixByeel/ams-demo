@@ -25,6 +25,14 @@ CREATE TABLE item_t(
     primary key(id)
 )engine=innodb default charset=utf8 comment='库存信息表';
 
+create table warehouse_t(
+	id int(10) unsigned not null auto_increment comment '自增主键',
+    item_id varchar(20) not null default '' comment '对应库存信息表item_id字段',
+    warehouse_name varchar(50) not null default '' comment '仓库名称',
+    item_count int(10) unsigned not null  default 0 comment '库存数量',
+    primary key (id)
+)engine = InnoDB default charset  = utf8 comment='仓库信息表';
+
 create table record_t(
 	id int(10) unsigned not null auto_increment comment '自增主键',
     item_id varchar(20) not null default '' comment '对应库存信息表item_id字段',

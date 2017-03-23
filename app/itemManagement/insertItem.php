@@ -12,7 +12,7 @@
     }
 */
     $data = [];
-    $result = $mysql->select('item_t', '*');
+    $result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
     while($row = mysqli_fetch_assoc($result)){
         $data[] = $row;
     }
