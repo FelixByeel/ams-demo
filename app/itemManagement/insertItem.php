@@ -183,7 +183,6 @@
 
         for(let i = 0; i < selectArr.length; i++){
             str += ' + ' + selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];    //获取当前所有已选择的分类
-            
         }
         alert(str);
     }
