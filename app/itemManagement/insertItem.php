@@ -53,13 +53,15 @@
 </head>
 <body>
     
-    <div>
+    <div id = "warehouseBox">
         <p>请选择备货仓库：</p>
-        <label><input name = "warehouse" type = "radio" value = ""/>南山</label>
-         <label><input name = "warehouse" type = "radio" value = ""/>惠联科技</label>
+        <div id = "warehouseList"></div>
     </div>
-    <p>请选择上级分类：</p>
-    <div id = "itemBox"></div>
+    <div id = "itemBox">
+        <p>请选择上级分类：</p>
+        <div id = "itemList"></div>
+    </div>
+
     <div id = "inputBox">
         <p>请输入分类（物品）名称：</p>
         <input id = "itemNameInput" type = "text"/>
@@ -71,24 +73,46 @@
 
 <!---------script---------->
 <script>
-    //let existSelectListCount = 0;
-    //let existSelectList = [];                                   //记录已经存在的select列表
 
     window.onload = function(){
         let itemJsonStr = '<?php echo $itemData; ?>'; 
-        let itemJsonObj = JSON.parse(itemJsonStr);              //从后台获取分类信息，转换称JSON对象。
+        let itemJsonObj = JSON.parse(itemJsonStr);              //记录分类信息，转换为JSON对象。
 
+        let warehouseJsonStr = '<?php echo $warehouseData; ?>';
+        let warehouseJsonObj = JSON.parse(warehouseJsonStr);    //记录仓库信息，转换为JSON对象
+
+        //定义分类列表显示相关变量
         let itemSelectId = 0;                                   //初始分类为0
-        let itemBoxObj = document.getElementById('itemBox');    //获取需要添加select的对象
+        let itemListObj = document.getElementById('itemList');    //获取需要添加select的对象
         let itemSelectName = -1;                                //第一个分类select列表Id
 
-        //调用添加下一级分类 功能
-        createItemSelect(itemBoxObj, itemSelectId, itemSelectName, itemJsonObj);
+        //定义仓库列表显示相关变量
+        let warehouseListObj = document.getElementById('warehouseList');
+
+
+        //显示仓库信息
+        showWarehouseInfo(warehouseJsonObj, warehouseListObj);
+        
+        //调用显示下一级分类
+        addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
 
-    //---------------定义添加下一级分类方法--------------
+    //显示仓库信息--------------------------------------
+    function showWarehouseInfo(warehouseJsonObj, warehouseListObj){
+        let str ="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
+        str += warehouseJsonObj[0].id;
+        str +="'/>" + warehouseJsonObj[0].warehouse_name + "</label>";
+        for(let i = 1; i < warehouseJsonObj.length; i++){
+            str +="<label><input type = 'radio' name = 'warehouse' value = '";
+            str += warehouseJsonObj[i].id;
+            str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+        }
+        warehouseListObj.innerHTML = str;
+    }
+
+    //---------------定义显示下一级分类方法--------------
     //return 当前创建成功的select的id即分类号(分类号表示第一级分类，第二季分类...)
-    function createItemSelect(itemBoxObj, itemSelectId, itemSelectName, itemJsonObj){
+    function addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj){
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
@@ -118,15 +142,15 @@
         //为每个select绑定change事件
         itemSelectObj.addEventListener('change',function(){
 
-            itemChange(this, itemBoxObj,  itemJsonObj);
+            itemChange(this, itemListObj,  itemJsonObj);
         });
 
-        itemBoxObj.appendChild(itemSelectObj);
+        itemListObj.appendChild(itemSelectObj);
         return itemSelectId;
     }
     
     //-----------------select的change事件-------------------
-    function itemChange(choose, itemBoxObj, itemJsonObj){
+    function itemChange(choose, itemListObj, itemJsonObj){
 
         let will_selectedId = 0;        //保存要创建子分类的select的ID号码
         let is_selectedId = 0;          //保存当前选择项的select的ID号
@@ -153,8 +177,8 @@
 
             //当前选择项有子分类时，显示子分类
             if( 0 == itemJsonObj[will_selectedId].is_ended) {
-                //existSelectList[existSelectListCount++] = createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
-                createItemSelect(itemBoxObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+                //existSelectList[existSelectListCount++] = addItemSelect(itemListObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+                addItemSelect(itemListObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
             }
         }
     }
@@ -179,14 +203,43 @@
 
     //---------------点击“添加”按钮-------------
     function addItem(){
-        let selectArr = document.getElementsByTagName("select");    //获取当前所有显示的分类列表
-        let str = "";
+        let warehouseValue = getWarehouseRadioValue();
+        let itemSelectList = getItemSelectOptionValueList();
+
+        let itemName = document.getElementById('itemNameInput').value;
+        let itemCount = document.getElementById('itemCountInput').value;
+
+        //alert(itemName);
+        //alert(itemCount);
+        //alert(warehouseValue);
+        for(let i = 0; i < itemSelectList.length; i++){
+            alert(itemSelectList[i]);
+        }
+    }
+    
+    //获取当前选择的仓库
+    function getWarehouseRadioValue(){
+        let radioObj = document.getElementsByName('warehouse');
+        for(let i = 0; i < radioObj.length; i++){
+            if(true == radioObj[i].checked){
+                return radioObj[i].value;
+            }
+        }
+    }
+
+    //获取当前选择的分类
+    function getItemSelectOptionValueList(){
+        let selectArr = document.getElementsByTagName("select");
+        let val = [];
 
         for(let i = 0; i < selectArr.length; i++){
-            str += ' + ' + selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];    //获取当前所有已选择的分类
+            if((selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1])){
+                val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+            }
         }
-        alert(str);
+        return val;
     }
+
 </script>
 </html>
 
