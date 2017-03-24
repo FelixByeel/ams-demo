@@ -107,8 +107,9 @@
 
             let itemOptionObj = document.createElement('option');
             
-            if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
-                //if(itemJsonObj[i].is_ended == 1) return false; 添加分类和添加物品切换
+            //if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
+            if(itemSelectId == itemJsonObj[i].parent_id){
+
                itemOptionObj.value = 'itemOption_' + itemJsonObj[i].id;
                itemOptionObj.text = itemJsonObj[i].item_name;
                itemSelectObj.appendChild(itemOptionObj);
