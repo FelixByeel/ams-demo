@@ -97,26 +97,32 @@
         addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
 
-    //显示仓库信息--------------------------------------
+    //----------------------显示仓库信息--------------------------------------
     function showWarehouseInfo(warehouseJsonObj, warehouseListObj){
 
-        let str = "";
-
-        for(let i = 0; i < warehouseJsonObj.length; i++){
-
-            if(0 == i) {
-                str +="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
-                str += warehouseJsonObj[i].warehouse_id;
-                str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
-            }
-            else {
-                str +="<label><input type = 'radio' name = 'warehouse' value = '";
-                str += warehouseJsonObj[i].warehouse_id;
-                str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
-            }
-
+        if(!warehouseJsonObj.length){
+            warehouseListObj.innerHTML = "未查询到仓库信息，请先添加仓库信息！";
         }
-        warehouseListObj.innerHTML = str;
+        else {
+
+            let str = "";
+
+            for(let i = 0; i < warehouseJsonObj.length; i++){
+
+                if(0 == i) {
+                    str +="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
+                    str += warehouseJsonObj[i].warehouse_id;
+                    str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+                }
+                else {
+                    str +="<label><input type = 'radio' name = 'warehouse' value = '";
+                    str += warehouseJsonObj[i].warehouse_id;
+                    str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+                }
+
+            }
+            warehouseListObj.innerHTML = str;
+        }
     }
 
     //---------------定义显示下一级分类方法--------------
@@ -218,25 +224,79 @@
         let itemName = document.getElementById('itemNameInput').value;      //获取输入的分类名称
         let itemCount = document.getElementById('itemCountInput').value;    //获取输入的物品数量
 
-        let warehouseValue = getWarehouseRadioValue();                      //存储当前选择的仓库信息
-        let itemSelectList = getItemSelectOptionValueList();                //存储当前选择的分类信息,用数组存储
-        
-        
-        
-        /*
-        //alert(itemName);
-        //alert(itemCount);
-        //alert(warehouseValue);
-        for(let i = 0; i < itemSelectList.length; i++){
-            alert(itemSelectList[i]);
+        let warehouseId = getWarehouseRadioValue();                      //存储当前选择的仓库信息
+        let itemSelectId = getItemSelectOptionValueList();                //存储当前将要添加的分类的上一级分类ID
+
+        let item = "";
+
+        itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
+        itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");                //去除输入内容中首尾的空格
+
+        if(!warehouseId) {
+            alert("未查询到仓库信息，请先添加仓库信息！");
+            return false;
         }
-        */
+
+        if((0 == itemSelectId) && (0 == itemName.length)){
+
+            alert("请先选择一个分类或者添加一个新的分类!");
+            return false;
+        }
+
+        if(0 != itemSelectId) {
+            if(0 == itemCount && 0 == itemName){
+                alert("请输入一个分类或者数量！");
+                return false;
+            }
+            if(0 != itemCount.length){
+                if(!checkInput(itemCount)){
+                    return false;
+                }
+            }
+        }
         
+        if(0 == itemSelectId){
+            if(0 != itemCount.length){
+                if(!checkInput(itemCount)){
+                    return false;
+                }
+            }
+        }
+
+        item = "仓库：" + warehouseId + " 上一级分类：" + itemSelectId + " 当前分类：" + itemName + " 数量：" + itemCount;
+
+        itemJSON = {
+            "warehouse_id" : warehouseId,
+            "parent_id" : itemSelectId,
+            "item_name" : itemName,
+            "item_count" : itemCount
+        };
+        alert(itemJSON.item_name);
     }
-    
+
+    function checkInput(content){
+
+        var isNumber = /^[1-9]+[0-9]*]*$/; //判断字符串是否为正整数
+
+        if(!isNumber.test(content)){
+            alert("物品数量只能包含数字，请重新输入！");
+            document.getElementById('itemCountInput').value = "";
+            document.getElementById('itemCountInput').focus();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
         let radioObj = document.getElementsByName('warehouse');
+
+        if(0 == radioObj.length){
+
+            return false;
+        }
+
         for(let i = 0; i < radioObj.length; i++){
             if(true == radioObj[i].checked){
                 return radioObj[i].value;
@@ -244,20 +304,25 @@
         }
     }
 
-    //获取当前选择的各级分类
+    //返回一个有效的上一级分类ID。0表示要添加的分类为第一级分类。
     function getItemSelectOptionValueList(){
         let selectArr = document.getElementsByTagName("select");
         let val = [];
 
         for(let i = 0; i < selectArr.length; i++){
             //有时候会莫名其妙出现几个<select></select>为空项的bug，导致获取选择的option时出现undefined，所以加了if判断，返回分类数组时，去除undefined项。
-            if((selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1])){
+            let optionNumber = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+            if((typeof(optionNumber) != "undefined") && (optionNumber != 0)){
 
                 val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
             }
         }
-        return val;
+        
+        return val.length ? val[val.length - 1] : 0;
     }
+
+
+
 
 </script>
 </html>
