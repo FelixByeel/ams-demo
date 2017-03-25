@@ -205,18 +205,24 @@
 
     //---------------点击“添加”按钮-------------
     function addItem(){
-        let warehouseValue = getWarehouseRadioValue();
-        let itemSelectList = getItemSelectOptionValueList();
 
-        let itemName = document.getElementById('itemNameInput').value;
-        let itemCount = document.getElementById('itemCountInput').value;
+        let itemName = document.getElementById('itemNameInput').value;      //获取输入的分类名称
+        let itemCount = document.getElementById('itemCountInput').value;    //获取输入的物品数量
 
+        let warehouseValue = getWarehouseRadioValue();                      //存储当前选择的仓库信息
+        let itemSelectList = getItemSelectOptionValueList();                //存储当前选择的分类信息,用数组存储
+        
+        
+        
+        /*
         //alert(itemName);
         //alert(itemCount);
         //alert(warehouseValue);
         for(let i = 0; i < itemSelectList.length; i++){
             alert(itemSelectList[i]);
         }
+        */
+        
     }
     
     //获取当前选择的仓库
