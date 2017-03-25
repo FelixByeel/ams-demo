@@ -69,6 +69,7 @@
         <input id = "itemCountInput" type = "text"/>
     </div>
     <button id = "addItem2" onclick = "addItem()">添加</button>
+    <div id = "testJSON" ></div>
 </body>
 
 <!---------script---------->
@@ -272,11 +273,13 @@
             "item_count" : itemCount
         };
         alert(itemJSON.item_name);
+        $("#testJSON").load("insertService.php", itemJSON);
     }
 
+    //判断字符串是否为正整数------------
     function checkInput(content){
 
-        var isNumber = /^[1-9]+[0-9]*]*$/; //判断字符串是否为正整数
+        var isNumber = /^[1-9]+[0-9]*]*$/; 
 
         if(!isNumber.test(content)){
             alert("物品数量只能包含数字，请重新输入！");
@@ -288,6 +291,7 @@
             return true;
         }
     }
+
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
         let radioObj = document.getElementsByName('warehouse');
@@ -320,8 +324,6 @@
         
         return val.length ? val[val.length - 1] : 0;
     }
-
-
 
 
 </script>
