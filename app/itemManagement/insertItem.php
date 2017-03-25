@@ -83,8 +83,8 @@
 
         //定义分类列表显示相关变量
         let itemSelectId = 0;                                   //初始分类为0
-        let itemListObj = document.getElementById('itemList');    //获取需要添加select的对象
-        let itemSelectName = -1;                                //第一个分类select列表Id
+        let itemListObj = document.getElementById('itemList');  //获取需要添加select的对象
+        let itemSelectName = -1;                                //第一个分类select列表name属性的值
 
         //定义仓库列表显示相关变量
         let warehouseListObj = document.getElementById('warehouseList');
@@ -131,6 +131,7 @@
 
             let itemOptionObj = document.createElement('option');
             
+            //通过if判断是否需要显示分类项下面的最终项
             //if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
             if(itemSelectId == itemJsonObj[i].parent_id){
 
@@ -146,7 +147,7 @@
         });
 
         itemListObj.appendChild(itemSelectObj);
-        return itemSelectId;
+        //return itemSelectId;
     }
     
     //-----------------select的change事件-------------------
@@ -165,8 +166,9 @@
         //选择分类项改变时，下一级分类显示同步
         countSelect(will_selectedName);
 
-        //判断是否选择了空项，默认第一项提示为空
-        if(!(0 == will_selectedId)){
+        //判断是否选择了空项，默认第一项提示为空，选择空项时，不显示下一级分类，否则继续显示子分类
+        //if(!(0 == will_selectedId)){
+        if(0 != will_selectedId){
             //获取到当前选择项在itemJsonObj中的位置
             for(let i = 0; i < itemJsonObj.length; i++) {
                 if(will_selectedId == itemJsonObj[i].id){
@@ -183,10 +185,10 @@
         }
     }
 
-    //同级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
-    function  countSelect(sname){
+    //同一级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
+    function  countSelect(will_selectedName){
         let selectArr = document.getElementsByTagName("select");    //获取当前已存在的select列表
-        let selectName = "itemSelectName_" + sname;                 //获取要创建的select的Name
+        let selectName = "itemSelectName_" + will_selectedName;     //获取将要创建的select的Name属性
         
         //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
         //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
@@ -227,13 +229,15 @@
         }
     }
 
-    //获取当前选择的分类
+    //获取当前选择的各级分类
     function getItemSelectOptionValueList(){
         let selectArr = document.getElementsByTagName("select");
         let val = [];
 
         for(let i = 0; i < selectArr.length; i++){
+            //有时候会莫名其妙出现几个<select></select>为空项的bug，导致获取选择的option时出现undefined，所以加了if判断，返回分类数组时，去除undefined项。
             if((selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1])){
+
                 val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
             }
         }
