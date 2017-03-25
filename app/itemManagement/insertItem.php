@@ -22,7 +22,7 @@
     $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
 
     //查询仓库信息，并保存在$warehouseData[]中
-    $result = $mysql->select('warehouse_t', 'id, warehouse_name');
+    $result = $mysql->select('warehouse_t', 'warehouse_id, warehouse_name');
     while($row = mysqli_fetch_assoc($result)){
         $warehouseData[] = $row;
     }
@@ -99,13 +99,22 @@
 
     //显示仓库信息--------------------------------------
     function showWarehouseInfo(warehouseJsonObj, warehouseListObj){
-        let str ="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
-        str += warehouseJsonObj[0].id;
-        str +="'/>" + warehouseJsonObj[0].warehouse_name + "</label>";
-        for(let i = 1; i < warehouseJsonObj.length; i++){
-            str +="<label><input type = 'radio' name = 'warehouse' value = '";
-            str += warehouseJsonObj[i].id;
-            str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+
+        let str = "";
+
+        for(let i = 0; i < warehouseJsonObj.length; i++){
+
+            if(0 == i) {
+                str +="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
+                str += warehouseJsonObj[i].warehouse_id;
+                str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+            }
+            else {
+                str +="<label><input type = 'radio' name = 'warehouse' value = '";
+                str += warehouseJsonObj[i].warehouse_id;
+                str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
+            }
+
         }
         warehouseListObj.innerHTML = str;
     }
