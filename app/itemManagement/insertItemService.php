@@ -1,10 +1,8 @@
 <?php
 /*
-*添加分类
 *处理接收的JSON数据，添加到数据库
 */
-echo isset($_POST['itemData']);
-echo "<br />";
+
 if(isset($_POST['itemData'])) {
     $itemData = $_POST['itemData'];
 }
@@ -12,7 +10,7 @@ else{
     die("请求异常！");
 }
 
-
+echo "长度".count($itemData);
 
 
 foreach ($itemData as $key => $value) {
