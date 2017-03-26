@@ -278,7 +278,6 @@
                 "item_count"    : itemCount
             };
         }
-        alert(itemJSON.item_name);
         //提交数据
         $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
             alert("添加成功");
@@ -288,9 +287,9 @@
     //判断字符串是否为正整数------------
     function checkInput(content){
 
-        var isNumber = /^[1-9]+[0-9]*]*$/; 
+        var isNumberReg = /^[1-9]+[0-9]*]*$/; 
 
-        if(!isNumber.test(content)){
+        if(!isNumberReg.test(content)){
             alert("输入的物品数量无效，请重新输入！");
             document.getElementById('itemCountInput').value = "";
             document.getElementById('itemCountInput').focus();
