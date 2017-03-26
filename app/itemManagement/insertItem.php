@@ -72,7 +72,7 @@
     <div id = "tips" ></div>
 </body>
 
-<!---------script---------->
+<!--script-->
 <script>
 
     window.onload = function(){
