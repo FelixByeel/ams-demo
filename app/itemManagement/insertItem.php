@@ -219,13 +219,16 @@
         let itemName = document.getElementById('itemNameInput').value;      //获取输入的分类名称
         let itemCount = document.getElementById('itemCountInput').value;    //获取输入的物品数量
 
-        let warehouseId = getWarehouseRadioValue();                      //存储当前选择的仓库信息
-        let itemSelectId = getItemSelectOptionValueList();                //存储当前将要添加的分类的上一级分类ID
+        let warehouseId = getWarehouseRadioValue();                         //存储当前选择的仓库信息
+        let itemSelectId = getItemSelectOptionValueList();                  //存储当前将要添加的分类的上一级分类ID
 
         let item = "";
 
-        itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
-        itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");                //去除输入内容中首尾的空格
+        //itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
+        //itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
+
+        itemName = itemName.replace(/\s+/g,"");
+        itemCount = itemCount.replace(/\s+/g,"");                           //去除输入内容中的所有空格
 
         if(!warehouseId) {
             alert("未查询到仓库信息，请先添加仓库信息！");
@@ -275,7 +278,7 @@
                 "item_count"    : itemCount
             };
         }
-
+        alert(itemJSON.item_name);
         //提交数据
         $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
             alert("添加成功");
