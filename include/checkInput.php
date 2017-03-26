@@ -1,6 +1,9 @@
 <?php
 
 function inputFilter($str){
-    $str = htmlspecialchars($str);
+    $specialCharacter  = array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?');
 
+    foreach ($specialCharacter as $key => $value) {
+        $str = str_replace($value, '', $str);
+    }
 }
