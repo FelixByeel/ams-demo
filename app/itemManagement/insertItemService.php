@@ -2,8 +2,12 @@
 /*
 *处理接收的JSON数据，添加到数据库
 */
+$itemData =  Array();
 
 if(isset($_POST['itemData'])) {
+    foreach ($_POST['itemData'] as $key => $value) {
+        $itemData
+    }
     $itemData = $_POST['itemData'];
 }
 else{
