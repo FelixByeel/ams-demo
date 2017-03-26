@@ -5,12 +5,7 @@
 
     //连接数据库
     $mysql = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-/*
-    $result = $mysql->select('user_t', '*','id = 1');
-    while($row = mysqli_fetch_array($result)){
-        echo $row['id'].'-'.$row['uid'].'-'.$row['username'].'-'.$row['userpwd'].'-'.$row['nick_name'].'-'.$row['role_group'].'-'.$row['is_enabled'].'-'.$row['last_time'];
-    }
-*/
+
     $itemData = [];         //保存分类信息
     $warehouseData = [];    //保存仓库信息
 
@@ -19,6 +14,8 @@
     while($row = mysqli_fetch_assoc($result)){
         $itemData[] = $row;
     }
+
+    //将查询的信息进行JSON转换，添加参数JSON_UNESCAPED_UNICODE解决中文乱码
     $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
 
     //查询仓库信息，并保存在$warehouseData[]中
@@ -27,9 +24,6 @@
         $warehouseData[] = $row;
     }
     $warehouseData = json_encode($warehouseData,JSON_UNESCAPED_UNICODE);
-
-    //echo $warehouseData;
-    //echo $itemData;
 ?>
 <!--添加分类-->
 <html>
