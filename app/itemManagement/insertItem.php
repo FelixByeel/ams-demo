@@ -243,8 +243,7 @@
             alert("请先选择一个分类或者添加一个新的分类!");
             return false;
         }
-
-        if(0 != itemSelectId) {
+        else if(0 != itemSelectId) {
             if(0 == itemCount && 0 == itemName){
                 alert("请输入一个分类或者有效的物品数量！");
                 return false;
@@ -255,13 +254,16 @@
                 }
             }
         }
-        
-        if(0 == itemSelectId){
+        else if(0 == itemSelectId){
             if(0 != itemCount.length){
                 if(!checkInput(itemCount)){
                     return false;
                 }
             }
+        }
+        else {
+            alert("输入的数据有误，请修改后再提交!");
+            return false;
         }
 
         if(0 == itemName.length) {
