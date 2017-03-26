@@ -28,14 +28,14 @@
     }
     $warehouseData = json_encode($warehouseData,JSON_UNESCAPED_UNICODE);
 
-    echo $warehouseData;
-    echo $itemData;
+    //echo $warehouseData;
+    //echo $itemData;
 ?>
 <!--添加分类-->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script type = "text/javascript" src = "../../public/js/jquery-1.8.3/jquery.js"></script>
 <script></script>
 <style>
     select{
@@ -69,7 +69,7 @@
         <input id = "itemCountInput" type = "text"/>
     </div>
     <button id = "addItem2" onclick = "addItem()">添加</button>
-    <div id = "testJSON" ></div>
+    <div id = "tips" ></div>
 </body>
 
 <!---------script---------->
@@ -246,7 +246,7 @@
 
         if(0 != itemSelectId) {
             if(0 == itemCount && 0 == itemName){
-                alert("请输入一个分类或者数量！");
+                alert("请输入一个分类或者有效的物品数量！");
                 return false;
             }
             if(0 != itemCount.length){
@@ -264,16 +264,26 @@
             }
         }
 
-        item = "仓库：" + warehouseId + " 上一级分类：" + itemSelectId + " 当前分类：" + itemName + " 数量：" + itemCount;
+        if(0 == itemName.length) {
+            itemJSON = {
+                "warehouse_id"  : warehouseId,
+                "id"            : itemSelectId,
+                "item_count"    : itemCount
+            };
+        }
+        else{
+            itemJSON = {
+                "warehouse_id"  : warehouseId,
+                "parent_id"     : itemSelectId,
+                "item_name"     : itemName,
+                "item_count"    : itemCount
+            };
+        }
 
-        itemJSON = {
-            "warehouse_id" : warehouseId,
-            "parent_id" : itemSelectId,
-            "item_name" : itemName,
-            "item_count" : itemCount
-        };
-        alert(itemJSON.item_name);
-        $("#testJSON").load("insertService.php", itemJSON);
+        //提交数据
+        $("#tips").load("insertService.php", itemJSON, function(msg){
+            alert("添加成功");
+        });
     }
 
     //判断字符串是否为正整数------------
@@ -282,7 +292,7 @@
         var isNumber = /^[1-9]+[0-9]*]*$/; 
 
         if(!isNumber.test(content)){
-            alert("物品数量只能包含数字，请重新输入！");
+            alert("输入的物品数量无效，请重新输入！");
             document.getElementById('itemCountInput').value = "";
             document.getElementById('itemCountInput').focus();
             return false;
@@ -324,8 +334,6 @@
         
         return val.length ? val[val.length - 1] : 0;
     }
-
-
 </script>
 </html>
 
