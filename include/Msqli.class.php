@@ -56,6 +56,12 @@ class Msqli{
 
     //select
     public function select($tablename, $column, $condition = '') {
+
+        $tablename = mysqli_real_escape_string($this->con,$tablename);
+        $column = mysqli_real_escape_string($this->con,$column);
+        $condition = mysqli_real_escape_string($this->con,$condition);
+
+
         if(empty($condition)) {
             $sql = "select $column from $tablename";
         }
@@ -69,6 +75,10 @@ class Msqli{
     //insert
     public function insert($tablename, $column, $value) {
 
+        $tablename = mysqli_real_escape_string($this->con,$tablename);
+        $column = mysqli_real_escape_string($this->con,$column);
+        $value = mysqli_real_escape_string($this->con,$value);
+
         $sql = "insert into $tablename($column)values($value)";
 
         $this->query($sql);
@@ -76,6 +86,11 @@ class Msqli{
 
     //update
     public function update($tablename, $col_val, $condition = '') {
+
+        $tablename = mysqli_real_escape_string($this->con,$tablename);
+        $col_val = mysqli_real_escape_string($this->con,$col_val);
+        $condition = mysqli_real_escape_string($this->con,$condition);
+
         if(empty($condition)) {
             $sql = "update $tablename set $col_val";
         }
@@ -88,8 +103,11 @@ class Msqli{
     //delete
     public function delete($tablename,$condition) {
 
-            $sql = "delete from $tablename where $condition";
-            $this->query($sql);
+        $tablename = mysqli_real_escape_string($this->con,$tablename);
+        $condition = mysqli_real_escape_string($this->con,$condition);
+
+        $sql = "delete from $tablename where $condition";
+        $this->query($sql);
     }
 
     //check input
