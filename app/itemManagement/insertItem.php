@@ -281,7 +281,7 @@
         }
 
         //提交数据
-        $("#tips").load("insertService.php", itemJSON, function(msg){
+        $("#tips").load("insertService.php", "itemData" : itemJSON, function(msg){
             alert("添加成功");
         });
     }
