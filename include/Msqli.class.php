@@ -81,7 +81,7 @@ class Msqli{
 
         $sql = "insert into $tablename($column)values($value)";
 
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     //update
@@ -97,7 +97,7 @@ class Msqli{
         else {
             $sql = "update $tablename set $col_val where $condition";
         }
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     //delete
@@ -107,7 +107,7 @@ class Msqli{
         $condition = mysqli_real_escape_string($this->con,$condition);
 
         $sql = "delete from $tablename where $condition";
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     //check input
