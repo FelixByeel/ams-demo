@@ -1,12 +1,19 @@
 <?php
 //过滤一些特殊符号
-function inputFilter($str){
+function checkInput($str){
     $specialCharacter  = array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
                 '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
                 '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
                 '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
+
     foreach ($specialCharacter as $key => $value) {
-        $str = str_replace($value, '', $str);
+        $result = strpos($str, $value);
     }
-    return $str;
+
+    if($result){
+        return $specialCharacter[$result];
+    }
+    else {
+        return $result;
+    }
 }
