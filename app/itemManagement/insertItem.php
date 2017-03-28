@@ -246,14 +246,14 @@
                 return false;
             }
             if(0 != itemCount.length){
-                if(!checkInput(itemCount)){
+                if(!checkInput(itemCount, 1)){
                     return false;
                 }
             }
         }
         else if(0 == itemSelectId){
             if(0 != itemCount.length){
-                if(!checkInput(itemCount)){
+                if(!checkInput(itemCount, 1)){
                     return false;
                 }
             }
@@ -271,7 +271,7 @@
                 "item_count"    : itemCount
             };
         }
-        else{
+        else if(checkInput(itemName, 0)){
             itemJSON = {
                 "warehouse_id"  : warehouseId,
                 "parent_id"     : itemSelectId,
@@ -279,22 +279,44 @@
                 "item_count"    : itemCount
             };
         }
+        else {
+            return false;
+        }
         //提交数据
         $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
             alert("添加成功");
         });
     }
 
-    //判断字符串是否为正整数------------
-    function checkInput(content){
+    //判断字符串是否合法字符串------------
+    function checkInput(content, flag){
 
         let isNumberReg = /^[1-9]+[0-9]*]*$/; 
 
-        if(!isNumberReg.test(content)){
+        if(1 == flag && (!isNumberReg.test(content))){
             alert("输入的物品数量无效，请重新输入！");
             document.getElementById('itemCountInput').value = "";
             document.getElementById('itemCountInput').focus();
             return false;
+        }
+        else if(0 == flag){
+            let is_existC = 0;
+            let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
+                    '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
+                    '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
+                    '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
+            for(let i = 0; i < content.length; i++) {
+                for(let j = 0; j < specialCharacter.length; j++){
+                    if(content[i] == specialCharacter[j]){
+                        is_existC = 1;
+                        alert("分类名称中不能含有字符：" + specialCharacter[j]);
+                        return false;
+                    }
+                }
+                if(is_existC) return false;
+            }
+            if(is_existC) return false;
+            else return true;
         }
         else {
             return true;
@@ -303,11 +325,16 @@
 
     //去除输入内容中的特殊字符
     function inputFilter(str){
-        let specialCharacter  = array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
+        let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
                  '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
                  '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
                   '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
-        
+        for (let i = 0; i < specialCharacter.length; i++) {
+            for (let j = 0; j < str.length; j++) {
+                str = str.replace(specialCharacter[i], '');
+            }
+        }
+        return str;
     }
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
