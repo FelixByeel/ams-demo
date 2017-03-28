@@ -21,6 +21,16 @@ if (isset($_POST['itemData'])) {
             die("输入数据有误!");
         }
     }
+    if (array_key_exists('parent_id', $itemData)) {
+        if (!empty($itemData['parent_id'])) {
+            if(!preg_match($isNumberReg, $itemData['parent_id'])){
+                die("输入数据有误!");
+            }
+        }
+        else {
+            $itemData['parent_id'] = 0;
+        }
+    }
     if (array_key_exists('id', $itemData)) {
         if (!preg_match($isNumberReg, $itemData['id'])) {
             die("输入数据有误!");
