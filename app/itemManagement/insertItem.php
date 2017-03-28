@@ -323,19 +323,6 @@
         }
     }
 
-    //去除输入内容中的特殊字符
-    function inputFilter(str){
-        let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
-                 '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
-                 '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
-                  '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
-        for (let i = 0; i < specialCharacter.length; i++) {
-            for (let j = 0; j < str.length; j++) {
-                str = str.replace(specialCharacter[i], '');
-            }
-        }
-        return str;
-    }
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
         let radioObj = document.getElementsByName('warehouse');
