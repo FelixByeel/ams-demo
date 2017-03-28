@@ -310,6 +310,8 @@
                     if(content[i] == specialCharacter[j]){
                         is_existC = 1;
                         alert("分类名称中不能含有字符：" + specialCharacter[j]);
+                        document.getElementById('itemNameInput').value = "";
+                        document.getElementById('itemNameInput').focus();
                         return false;
                     }
                 }
