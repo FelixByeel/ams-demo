@@ -10,7 +10,7 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <link href="public/css/main.css" rel="stylesheet" type="text/css" />
-<script src="public/js/jquery-1.8.3-min.js"></script>
+<script type="text/javascript" src="public/js/jquery-1.8.3/jquery.js"></script>
 
 <script>
 
