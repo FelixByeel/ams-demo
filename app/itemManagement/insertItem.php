@@ -241,7 +241,7 @@
             return false;
         }
         else if(0 != itemSelectId) {
-            if(0 == itemCount && 0 == itemName){
+            if(0 == itemCount.length && 0 == itemName.length){
                 alert("请输入一个分类或者有效的物品数量！");
                 return false;
             }
@@ -263,6 +263,7 @@
             return false;
         }
 
+        //原有分类添加数量，而不是添加了新分类
         if(0 == itemName.length) {
             itemJSON = {
                 "warehouse_id"  : warehouseId,
@@ -287,7 +288,7 @@
     //判断字符串是否为正整数------------
     function checkInput(content){
 
-        var isNumberReg = /^[1-9]+[0-9]*]*$/; 
+        let isNumberReg = /^[1-9]+[0-9]*]*$/; 
 
         if(!isNumberReg.test(content)){
             alert("输入的物品数量无效，请重新输入！");
@@ -300,6 +301,14 @@
         }
     }
 
+    //去除输入内容中的特殊字符
+    function inputFilter(str){
+        let specialCharacter  = array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
+                 '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
+                 '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
+                  '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
+        
+    }
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
         let radioObj = document.getElementsByName('warehouse');
