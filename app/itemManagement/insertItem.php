@@ -36,7 +36,7 @@
         width:199px;
         height:25px;
         margin-top:5px;
-        
+
     }
 
     div{
@@ -87,7 +87,7 @@
 
         //显示仓库信息
         showWarehouseInfo(warehouseJsonObj, warehouseListObj);
-        
+
         //调用显示下一级分类
         addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
@@ -126,11 +126,11 @@
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
-        
+
         //创建一个select时的添加“请选择分类”项为默认值
         itemSelectObj.id = "itemSelectId_" + itemSelectId;
         itemSelectObj.name = "itemSelectName_" + itemSelectName;
-        
+
         itemOptionObj.value= 'itemOption_0';
         itemOptionObj.text = "--无--";
 
@@ -140,7 +140,7 @@
         for(let i = 0; i < itemJsonObj.length; i++){
 
             let itemOptionObj = document.createElement('option');
-            
+
             //通过if判断是否需要显示分类项下面的最终项
             //if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
             if(itemSelectId == itemJsonObj[i].parent_id){
@@ -159,7 +159,7 @@
         itemListObj.appendChild(itemSelectObj);
         //return itemSelectId;
     }
-    
+
     //-----------------select的change事件-------------------
     function itemChange(choose, itemListObj, itemJsonObj){
 
@@ -199,7 +199,7 @@
     function  countSelect(will_selectedName){
         let selectArr = document.getElementsByTagName("select");    //获取当前已存在的select列表
         let selectName = "itemSelectName_" + will_selectedName;     //获取将要创建的select的Name属性
-        
+
         //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
         //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
         for(let i = 0; i < selectArr.length; i++){
@@ -329,7 +329,7 @@
                 val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
             }
         }
-        
+
         return val.length ? val[val.length - 1] : 0;
     }
 </script>
