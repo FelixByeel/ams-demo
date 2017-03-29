@@ -35,10 +35,10 @@ class Msqli{
 
     //get error information
     public function getError() {
-        return mysqli_error();
+        return mysqli_error($this->con);
     }
     public function getErrno() {
-        return mysqli_errno();
+        return mysqli_errno($this->con);
     }
 
     //execute query and return result
@@ -52,39 +52,44 @@ class Msqli{
     //select
     public function select($tablename, $column, $condition = '') {
 
-        $tablename = mysqli_real_escape_string($this->con,$tablename);
-        $column = mysqli_real_escape_string($this->con,$column);
-        $condition = mysqli_real_escape_string($this->con,$condition);
-
-
         if(empty($condition)) {
             $sql = "select $column from $tablename";
         }
         else {
+
             $sql = "select $column from $tablename where $condition";
+
         }
-        //echo $sql;
+
+        echo '<br />当前SQL语句：'.$sql;
         return $this->query($sql);
     }
 
     //insert
-    public function insert($tablename, $column, $value) {
+    public function insert($tablename, $itemData) {
 
-        $tablename = mysqli_real_escape_string($this->con,$tablename);
-        $column = mysqli_real_escape_string($this->con,$column);
-        $value = mysqli_real_escape_string($this->con,$value);
+        $sql = "insert into $tablename(";
 
-        $sql = "insert into $tablename($column)values($value)";
+        foreach ($itemData as $key => $value) {
+            $sql .= $key.',';
+        }
 
+        $sql = rtrim($sql, ',');
+        $sql .= ") values(";
+
+        foreach ($itemData as $key => $value) {
+            $sql .= "'".$value."'".',';
+        }
+
+        $sql = rtrim($sql, ',');
+        $sql .= ")";
+
+        echo '<br />当前SQL语句：'.$sql;
         return $this->query($sql);
     }
 
     //update
     public function update($tablename, $col_val, $condition = '') {
-
-        $tablename = mysqli_real_escape_string($this->con,$tablename);
-        $col_val = mysqli_real_escape_string($this->con,$col_val);
-        $condition = mysqli_real_escape_string($this->con,$condition);
 
         if(empty($condition)) {
             $sql = "update $tablename set $col_val";
@@ -98,16 +103,7 @@ class Msqli{
     //delete
     public function delete($tablename,$condition) {
 
-        $tablename = mysqli_real_escape_string($this->con,$tablename);
-        $condition = mysqli_real_escape_string($this->con,$condition);
-
         $sql = "delete from $tablename where $condition";
         return $this->query($sql);
-    }
-
-    //check input
-    public function checkInput($str){
-        $str = mysqli_real_escape_string($str);
-        return $str;
     }
 }

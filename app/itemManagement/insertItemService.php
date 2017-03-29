@@ -82,6 +82,7 @@ else {
 //写入数据到数据库
 $mysql = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'item_t';
+
 if (3 == count($itemData) && array_key_exists('id', $itemData) && (0 != $itemData['item_count'])) {
     $count = $itemData['item_count'];
     $id    = $itemData['id'];
@@ -95,15 +96,10 @@ if (3 == count($itemData) && array_key_exists('id', $itemData) && (0 != $itemDat
     }
 }
 else if (4 == count($itemData) && array_key_exists('item_name', $itemData) && (!empty($itemData['item_name']))) {
-    
-    $warehouseId = $itemData['warehouse_id'];
-    $parentId    = $itemData['parent_id'];
-    $itemName    = $itemData['item_name'];
-    
+
     if(0 == $itemData['item_count']) {
-
-        $result = $mysql->insert($tableName, 'item_name, parent_id, warehouse_id', "$itemName, $parentId, $warehouseId");
-
+        
+        $result = $mysql->insert($tableName, $itemData);
         if ($result) {
             echo '操作成功!';
         } else {
@@ -119,7 +115,7 @@ else if (4 == count($itemData) && array_key_exists('item_name', $itemData) && (!
 else {
     die('输入的数据有误，请重新输入！');
 }
-//$result = $mysql->update();
+
 //测试输出
 echo '<br />';
 echo '<br /> 处理后：<br />';
@@ -131,5 +127,9 @@ foreach ($itemData as $key => $value) {
 echo '<br />';
 echo count($itemData);
 echo '<br />';
-echo $mysql->getError();
-echo $mysql->select($tableName, '*');
+echo "错误：".$mysql->getError();
+$result = $mysql->select($tableName, '*');
+while($row = mysqli_fetch_assoc($result)){
+    echo '<br />';
+    echo $row['id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
+}
