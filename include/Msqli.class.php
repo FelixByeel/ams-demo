@@ -46,12 +46,7 @@ class Msqli{
 
         $this->result =  mysqli_query($this->con,$sql);
 
-        if($this->result){
-            return $this->result;
-        }
-        else {
-            return false;
-        }
+        return $this->result;
     }
 
     //select
