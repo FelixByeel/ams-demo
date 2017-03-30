@@ -139,10 +139,8 @@
 
             let itemOptionObj = document.createElement('option');
 
-            //通过if判断是否需要显示分类项下面的最终项
-            //if((itemSelectId == itemJsonObj[i].parent_id) && (0 == itemJsonObj[i].is_ended)){
+            //显示当前分类下的所有子项
             if(itemSelectId == itemJsonObj[i].parent_id){
-
                itemOptionObj.value = 'itemOption_' + itemJsonObj[i].id;
                itemOptionObj.text = itemJsonObj[i].item_name;
                itemSelectObj.appendChild(itemOptionObj);
@@ -155,7 +153,6 @@
         });
 
         itemListObj.appendChild(itemSelectObj);
-        //return itemSelectId;
     }
 
     //-----------------select的change事件-------------------
