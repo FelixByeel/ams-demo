@@ -52,13 +52,17 @@ class Msqli{
     //select
     public function select($tablename, $column, $condition = '') {
 
-        if(empty($condition)) {
-            $sql = "select $column from $tablename";
+        $sql = "select ";
+        
+        foreach ($column as $key => $value) {
+            $sql .= $value.',';
         }
-        else {
 
-            $sql = "select $column from $tablename where $condition";
+        $sql = rtrim($sql, ',');
+        $sql .= " from $tablename";
 
+        if (!empty($condition)) {
+           $sql .= " where $condition";
         }
 
         echo '<br />当前SQL语句：'.$sql;
