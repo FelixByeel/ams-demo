@@ -88,7 +88,7 @@
         showWarehouseInfo(warehouseJsonObj, warehouseListObj);
 
         //调用显示下一级分类
-        addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
+        showSubItem(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
 
     //----------------------显示仓库信息--------------------------------------
@@ -120,7 +120,7 @@
 
     //---------------定义显示下一级分类方法--------------
     //return 当前创建成功的select的id即分类号(分类号表示第一级分类，第二级分类...)
-    function addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj){
+    function showSubItem(itemListObj, itemSelectId, itemSelectName, itemJsonObj){
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
@@ -149,50 +149,57 @@
         //为每个select绑定change事件
         itemSelectObj.addEventListener('change',function(){
 
-            itemChange(this, itemListObj,  itemJsonObj);
+            itemChanged(this, itemListObj,  itemJsonObj);
         });
 
         itemListObj.appendChild(itemSelectObj);
     }
 
     //-----------------select的change事件-------------------
-    function itemChange(choose, itemListObj, itemJsonObj){
+    function itemChanged(choose, itemListObj, itemJsonObj){
 
-        let will_selectedId     = 0;    //保存要创建子分类的select的ID号码
-        let is_selectedId       = 0;    //保存当前选择项的select的ID号
-        let will_selectedName   = 0;    //保存要创建子分类的select的name号
+        let currentSelectedId     = 0;    //保存要创建子分类的select的ID号码
+        let currentSelectedName   = 0;    //保存要创建子分类的select的name号
 
         //子分类select的ID号码为当前选择项option的id号码
-        will_selectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
+        currentSelectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
 
         //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类
-        will_selectedName  = choose.id.split("_")[1];
+        currentSelectedName  = choose.id.split("_")[1];
 
-        //选择分类项改变时，下一级分类显示同步
-        countSelect(will_selectedName);
+        //当前选择分类项改变时，所属仓库显示同步
+        changeWarehouse(currentSelectedId);
+
+        //当前选择分类项改变时，下一级分类显示同步：
+        //先移除当前分类下所有显示的子分类，然后通过showSubItem()显示为更换分类选择后的子分类
+        removeSubItem(currentSelectedName);
 
         //判断是否选择了空项，默认第一项提示为空，选择空项时，不显示下一级分类，否则继续显示子分类
-        if(0 != will_selectedId){
+        if(0 != currentSelectedId){
             //获取到当前选择项在itemJsonObj中的位置
             for(let i = 0; i < itemJsonObj.length; i++) {
-                if(will_selectedId == itemJsonObj[i].id){
-                    will_selectedId = i;
+                if(currentSelectedId == itemJsonObj[i].id){
+                    currentSelectedId = i;
                     break;
                 }
             }
 
             //当前选择项的is_ended的值为0表示有子分类，显示子分类
-            if( 0 == itemJsonObj[will_selectedId].is_ended) {
-                addItemSelect(itemListObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
+            if( 0 == itemJsonObj[currentSelectedId].is_ended) {
+                showSubItem(itemListObj, itemJsonObj[currentSelectedId].id, currentSelectedName, itemJsonObj);
             }
         }
     }
 
+    //同步仓库显示
+    function changeWarehouse(currentSelectedId){
+    }
+
     //同一级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
-    function  countSelect(will_selectedName){
+    function  removeSubItem(currentSelectedName){
 
         let selectArr   = document.getElementsByTagName("select");      //获取当前已存在的select列表
-        let selectName  = "itemSelectName_" + will_selectedName;        //获取将要创建的select的Name属性
+        let selectName  = "itemSelectName_" + currentSelectedName;        //获取将要创建的select的Name属性
 
         //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
         //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
