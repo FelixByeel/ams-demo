@@ -23,7 +23,7 @@
 
     //查询仓库信息，并保存在$warehouseData[]中
     //$result = $mysql->select('warehouse_t', 'warehouse_id, warehouse_name');
-    $rsult = $mysql->select('warehouse_t', array('warehouse_id', 'warehouse_name'));
+    $result = $mysql->select('warehouse_t', array('warehouse_id', 'warehouse_name'));
 
     while($row = mysqli_fetch_assoc($result)){
         $warehouseData[] = $row;
