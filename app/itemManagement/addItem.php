@@ -254,7 +254,7 @@
             return false;
         }
         else{
-            $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
+            $("#tips").load("addItemService.php", {"itemData" : itemJSON}, function(msg){
                 alert(msg);
             });
         }
