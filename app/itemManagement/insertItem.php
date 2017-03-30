@@ -41,7 +41,6 @@
         width:199px;
         height:25px;
         margin-top:5px;
-
     }
 
     div{
@@ -227,19 +226,36 @@
         let warehouseId = getWarehouseRadioValue();                         //存储当前选择的仓库信息
         let itemSelectId = getItemSelectOptionValueList();                  //存储当前将要添加的分类的上一级分类ID
 
-        let item = "";
+        let itemJSON = "";
 
-        //itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
-        //itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
+        itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
+        itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
 
-        itemName = itemName.replace(/\s+/g,"");
-        itemCount = itemCount.replace(/\s+/g,"");                           //去除输入内容中的所有空格
+        //itemName = itemName.replace(/\s+/g,"");
+        //itemCount = itemCount.replace(/\s+/g,"");                           //去除输入内容中的所有空格
 
         if(!warehouseId) {
             alert("未查询到仓库信息，请先添加仓库信息！");
             return false;
         }
 
+        if(0 != itemName.length && checkInput(itemName, 0)){
+            if((0 != itemCount.length && checkInput(itemCount, 1)) || (0 == itemCount.length)){
+                itemJSON = {
+                    "warehouse_id"  : warehouseId,
+                    "parent_id"     : itemSelectId,
+                    "item_name"     : itemName,
+                    "item_count"    : itemCount
+                };
+            }
+        }
+        else if(0 == itemName.length){
+            alert("请先输入一个分类名称！");
+            return false;
+        }
+
+//------------------------------
+/*
         if((0 == itemSelectId) && (0 == itemName.length)){
 
             alert("请先选择一个分类或者添加一个新的分类!");
@@ -287,10 +303,12 @@
         else {
             return false;
         }
+*/
         //提交数据
+        /*
         $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
             alert("添加成功");
-        });
+        }); */
     }
 
     //判断字符串是否合法字符串------------
@@ -300,22 +318,26 @@
 
         if(1 == flag && (!isNumberReg.test(content))){
             alert("输入的物品数量无效，请重新输入！");
-            document.getElementById('itemCountInput').value = "";
             document.getElementById('itemCountInput').focus();
             return false;
         }
         else if(0 == flag){
             let is_existC = 0;
-            let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
+            let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
                     '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
                     '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
-                    '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？');
+                    '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？', ' ', '　');
             for(let i = 0; i < content.length; i++) {
                 for(let j = 0; j < specialCharacter.length; j++){
                     if(content[i] == specialCharacter[j]){
                         is_existC = 1;
-                        alert("分类名称中不能含有字符：" + specialCharacter[j]);
-                        document.getElementById('itemNameInput').value = "";
+                        if((' ' == specialCharacter[j]) || ('　' == specialCharacter[j])){
+                            alert("分类名称中不能含有空格！");
+                        }
+                        else{
+                            alert("分类名称中不能含有字符：" + specialCharacter[j]);
+                        }
+
                         document.getElementById('itemNameInput').focus();
                         return false;
                     }
