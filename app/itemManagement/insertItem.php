@@ -1,28 +1,26 @@
 <?php
+    //定义根目录，加载数据库相关文件
     define('APP_ROOT', dirname(dirname(__DIR__)).'/');
     require_once (APP_ROOT.'include/dbConfig.php');
     require_once (APP_ROOT.'include/Msqli.class.php');
 
     //连接数据库
-    $mysql = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+    $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
-    $itemData = [];         //保存分类信息
-    $warehouseData = [];    //保存仓库信息
+    $itemData       = [];           //保存分类信息
+    $warehouseData  = [];           //保存仓库信息
 
     //查询分类信息，并保存在$itemData[]中
-    //$result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
     $column = array('id', 'item_name', 'parent_id', 'is_ended');
     $result = $mysql->select('item_t', $column);
 
     while($row = mysqli_fetch_assoc($result)){
         $itemData[] = $row;
     }
-
     //将查询的信息进行JSON转换，添加参数JSON_UNESCAPED_UNICODE解决中文乱码
     $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
 
     //查询仓库信息，并保存在$warehouseData[]中
-    //$result = $mysql->select('warehouse_t', 'warehouse_id, warehouse_name');
     $result = $mysql->select('warehouse_t', array('warehouse_id', 'warehouse_name'));
 
     while($row = mysqli_fetch_assoc($result)){
@@ -44,7 +42,7 @@
     }
 
     div{
-        width:200px;
+
     }
 
 </style>
@@ -74,20 +72,17 @@
 <script>
 
     window.onload = function(){
-        let itemJsonStr = '<?php echo $itemData; ?>'; 
-        let itemJsonObj = JSON.parse(itemJsonStr);              //记录分类信息，转换为JSON对象。
+        let itemJsonStr         = '<?php echo $itemData; ?>'; 
+        let itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
 
-        let warehouseJsonStr = '<?php echo $warehouseData; ?>';
-        let warehouseJsonObj = JSON.parse(warehouseJsonStr);    //记录仓库信息，转换为JSON对象
+        let warehouseJsonStr    = '<?php echo $warehouseData; ?>';
+        let warehouseJsonObj    = JSON.parse(warehouseJsonStr);         //获取仓库信息，转换为JSON对象
 
-        //定义分类列表显示相关变量
-        let itemSelectId = 0;                                   //初始分类为0
-        let itemListObj = document.getElementById('itemList');  //获取需要添加select的对象
-        let itemSelectName = -1;                                //第一个分类select列表name属性的值
+        let itemSelectId        = 0;                                    //初始分类为0
+        let itemListObj         = document.getElementById('itemList');  //获取需要添加select的对象
+        let itemSelectName      = -1;                                   //第一个分类select列表name属性的值
 
-        //定义仓库列表显示相关变量
-        let warehouseListObj = document.getElementById('warehouseList');
-
+        let warehouseListObj    = document.getElementById('warehouseList');
 
         //显示仓库信息
         showWarehouseInfo(warehouseJsonObj, warehouseListObj);
@@ -118,25 +113,24 @@
                     str += warehouseJsonObj[i].warehouse_id;
                     str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
                 }
-
             }
             warehouseListObj.innerHTML = str;
         }
     }
 
     //---------------定义显示下一级分类方法--------------
-    //return 当前创建成功的select的id即分类号(分类号表示第一级分类，第二季分类...)
+    //return 当前创建成功的select的id即分类号(分类号表示第一级分类，第二级分类...)
     function addItemSelect(itemListObj, itemSelectId, itemSelectName, itemJsonObj){
 
         let itemSelectObj = document.createElement('select');
         let itemOptionObj = document.createElement('option');
 
-        //创建一个select时的添加“请选择分类”项为默认值
+        //创建一个select时添加默认选择分类为空
         itemSelectObj.id = "itemSelectId_" + itemSelectId;
         itemSelectObj.name = "itemSelectName_" + itemSelectName;
 
         itemOptionObj.value= 'itemOption_0';
-        itemOptionObj.text = "--无--";
+        itemOptionObj.text = "请选择一个分类";
 
         itemSelectObj.appendChild(itemOptionObj);
 
@@ -167,9 +161,9 @@
     //-----------------select的change事件-------------------
     function itemChange(choose, itemListObj, itemJsonObj){
 
-        let will_selectedId = 0;        //保存要创建子分类的select的ID号码
-        let is_selectedId = 0;          //保存当前选择项的select的ID号
-        let will_selectedName = 0;      //保存要创建子分类的select的name号
+        let will_selectedId     = 0;    //保存要创建子分类的select的ID号码
+        let is_selectedId       = 0;    //保存当前选择项的select的ID号
+        let will_selectedName   = 0;    //保存要创建子分类的select的name号
 
         //子分类select的ID号码为当前选择项option的id号码
         will_selectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
@@ -181,7 +175,6 @@
         countSelect(will_selectedName);
 
         //判断是否选择了空项，默认第一项提示为空，选择空项时，不显示下一级分类，否则继续显示子分类
-        //if(!(0 == will_selectedId)){
         if(0 != will_selectedId){
             //获取到当前选择项在itemJsonObj中的位置
             for(let i = 0; i < itemJsonObj.length; i++) {
@@ -191,9 +184,8 @@
                 }
             }
 
-            //当前选择项有子分类时，显示子分类
+            //当前选择项的is_ended的值为0表示有子分类，显示子分类
             if( 0 == itemJsonObj[will_selectedId].is_ended) {
-                //existSelectList[existSelectListCount++] = addItemSelect(itemListObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
                 addItemSelect(itemListObj, itemJsonObj[will_selectedId].id, will_selectedName, itemJsonObj);
             }
         }
@@ -201,8 +193,9 @@
 
     //同一级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
     function  countSelect(will_selectedName){
-        let selectArr = document.getElementsByTagName("select");    //获取当前已存在的select列表
-        let selectName = "itemSelectName_" + will_selectedName;     //获取将要创建的select的Name属性
+
+        let selectArr   = document.getElementsByTagName("select");      //获取当前已存在的select列表
+        let selectName  = "itemSelectName_" + will_selectedName;        //获取将要创建的select的Name属性
 
         //在selectArr列表中查找已存在的selectName，当找到时候，移除当前列表及其后面的同胞节点。
         //返回上层function时，重新创建下一级select，达到同级分类显示在同一个select列表
@@ -220,20 +213,18 @@
     //---------------点击“添加”按钮-------------
     function addItem(){
 
-        let itemName = document.getElementById('itemNameInput').value;      //获取输入的分类名称
-        let itemCount = document.getElementById('itemCountInput').value;    //获取输入的物品数量
+        let itemName        = document.getElementById('itemNameInput').value;       //获取输入的分类名称
+        let itemCount       = document.getElementById('itemCountInput').value;      //获取输入的物品数量
 
-        let warehouseId = getWarehouseRadioValue();                         //存储当前选择的仓库信息
-        let itemSelectId = getItemSelectOptionValueList();                  //存储当前将要添加的分类的上一级分类ID
+        let warehouseId     = getWarehouseRadioValue();                             //存储当前选择的仓库信息
+        let itemSelectId    = getItemSelectOptionValueList();                       //存储当前将要添加的分类的上一级分类ID
 
-        let itemJSON;
+        let itemJSON;                                                               //构建JSON格式数据用来整体提交数据
 
-        itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
-        itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
+        itemName            = itemName.replace(/(^\s*)|(\s*$)/g, "");
+        itemCount           = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
 
-        //itemName = itemName.replace(/\s+/g,"");
-        //itemCount = itemCount.replace(/\s+/g,"");                           //去除输入内容中的所有空格
-
+        //验证输入数据的有效性
         if(!warehouseId) {
             alert("未查询到仓库信息，请先添加仓库信息！");
             return false;
@@ -241,7 +232,6 @@
 
         if(0 != itemName.length && checkInput(itemName, 0)){
             if((0 != itemCount.length && checkInput(itemCount, 1)) || (0 == itemCount.length)){
-
                 itemJSON = {
                     "warehouse_id"  : warehouseId,
                     "parent_id"     : itemSelectId,
@@ -261,58 +251,7 @@
             return false;
         }
 
-//------------------------------
-/*
-        if((0 == itemSelectId) && (0 == itemName.length)){
-
-            alert("请先选择一个分类或者添加一个新的分类!");
-            return false;
-        }
-        else if(0 != itemSelectId) {
-            if(0 == itemCount.length && 0 == itemName.length){
-                alert("请输入一个分类或者有效的物品数量！");
-                return false;
-            }
-            if(0 != itemCount.length){
-                if(!checkInput(itemCount, 1)){
-                    return false;
-                }
-            }
-        }
-        else if(0 == itemSelectId){
-            if(0 != itemCount.length){
-                if(!checkInput(itemCount, 1)){
-                    return false;
-                }
-            }
-        }
-        else {
-            alert("输入的数据有误，请修改后再提交!");
-            return false;
-        }
-
-        //原有分类添加数量，而不是添加了新分类
-        if(0 == itemName.length) {
-            itemJSON = {
-                "warehouse_id"  : warehouseId,
-                "id"            : itemSelectId,
-                "item_count"    : itemCount
-            };
-        }
-        else if(checkInput(itemName, 0)){
-            itemJSON = {
-                "warehouse_id"  : warehouseId,
-                "parent_id"     : itemSelectId,
-                "item_name"     : itemName,
-                "item_count"    : itemCount
-            };
-        }
-        else {
-            return false;
-        }
-*/
         //提交数据
-
         if(!itemJSON){
             alert("输入的数据有误！");
             return false;
@@ -324,7 +263,7 @@
         }
     }
 
-    //判断字符串是否合法字符串------------
+    //判断字符串是否合法，合法返回true，不合法返回false------------
     function checkInput(content, flag){
 
         let isNumberReg = /^[1-9]+[0-9]*]*$/; 
@@ -335,11 +274,14 @@
             return false;
         }
         else if(0 == flag){
-            let is_existC = 0;
-            let specialCharacter  = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
+
+            let is_existC           = 0;            //is_existC用来跳出双层FOR循环
+            //不接受下列字符的输入
+            let specialCharacter    = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
                     '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
                     '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
                     '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？', ' ', '　');
+
             for(let i = 0; i < content.length; i++) {
                 for(let j = 0; j < specialCharacter.length; j++){
                     if(content[i] == specialCharacter[j]){
@@ -355,8 +297,10 @@
                         return false;
                     }
                 }
+
                 if(is_existC) return false;
             }
+
             if(is_existC) return false;
             else return true;
         }
@@ -367,10 +311,10 @@
 
     //获取当前选择的仓库
     function getWarehouseRadioValue(){
+
         let radioObj = document.getElementsByName('warehouse');
 
         if(0 == radioObj.length){
-
             return false;
         }
 
@@ -381,20 +325,20 @@
         }
     }
 
-    //返回一个有效的上一级分类ID。0表示要添加的分类为第一级分类。
+    //返回一个有效的上一级分类ID。返回0表示要添加的分类为顶层分类。
     function getItemSelectOptionValueList(){
-        let selectArr = document.getElementsByTagName("select");
-        let val = [];
+
+        let selectArr   = document.getElementsByTagName("select");
+        let val         = [];
 
         for(let i = 0; i < selectArr.length; i++){
             //有时候会莫名其妙出现几个<select></select>为空项的bug，导致获取选择的option时出现undefined，所以加了if判断，返回分类数组时，去除undefined项。
             let optionNumber = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
             if((typeof(optionNumber) != "undefined") && (optionNumber != 0)){
-
                 val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
             }
         }
-
+        //获取所有祖先分类ID，返回父分类ID
         return val.length ? val[val.length - 1] : 0;
     }
 </script>
