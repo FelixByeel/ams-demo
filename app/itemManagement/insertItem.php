@@ -32,8 +32,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<script type = "text/javascript" src = "../../public/js/jquery-1.8.3/jquery.js"></script>
-<script></script>
+<script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+
 <style>
     select{
         width:199px;
