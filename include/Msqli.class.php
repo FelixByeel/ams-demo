@@ -53,7 +53,7 @@ class Msqli{
     public function select($tablename, $column, $condition = '') {
 
         $sql = "select ";
-        
+
         foreach ($column as $key => $value) {
             $sql .= $value.',';
         }
@@ -95,12 +95,19 @@ class Msqli{
     //update
     public function update($tablename, $col_val, $condition = '') {
 
-        if(empty($condition)) {
-            $sql = "update $tablename set $col_val";
+        $sql = "update $tablename set ";
+
+        foreach ($col_val as $key => $value) {
+            $sql .= "$key = $value,";
         }
-        else {
-            $sql = "update $tablename set $col_val where $condition";
+
+        $sql = rtrim($sql, ',');
+
+        if(!empty($condition)) {
+            $sql .= " where $condition";
         }
+
+        echo '<br />当前SQL语句：'.$sql;
         return $this->query($sql);
     }
 
