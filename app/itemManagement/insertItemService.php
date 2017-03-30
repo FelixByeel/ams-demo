@@ -16,6 +16,7 @@ if (!isset($_POST['itemData'])) {
     die('访问出现异常，无法查询到相关信息。');
 }
 
+//保存前端提交的数据
 $itemData = $_POST['itemData'];
 
 echo '处理前：<br />';
@@ -33,6 +34,10 @@ foreach ($itemData as $key => $value) {
 
 $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 
+if (4 !== count($itemData)) {
+    die("输入的数据有误，请重新输入！");
+}
+
 if (array_key_exists('warehouse_id', $itemData)) {
     if (!empty($itemData['warehouse_id'])) {
         if (!preg_match($isNumberReg, $itemData['warehouse_id'])) {
@@ -41,8 +46,7 @@ if (array_key_exists('warehouse_id', $itemData)) {
     } else {
         die("请选择一个仓库！");
     }
-}
-else{
+} else {
     die("请选择一个仓库！");
 }
 
@@ -56,12 +60,8 @@ if (array_key_exists('parent_id', $itemData)) {
     }
 }
 
-if (array_key_exists('id', $itemData)) {
-    if (!empty($itemData['id'])) {
-        if (!preg_match($isNumberReg, $itemData['id'])) {
-            die("分类ID应为正整数，请确认输入是否有误!");
-        }
-    } else {
+if (array_key_exists('item_name', $itemData)) {
+    if (empty($itemData['item_name'])) {
         die("分类ID不能为空!");
     }
 }
@@ -74,8 +74,7 @@ if (array_key_exists('item_count', $itemData)) {
     } else {
         $itemData['item_count'] = 0;
     }
-}
-else {
+} else {
     die('输入的数据有误，请重新输入！');
 }
 
@@ -83,37 +82,37 @@ else {
 $mysql = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'item_t';
 
-if (3 == count($itemData) && array_key_exists('id', $itemData) && (0 != $itemData['item_count'])) {
-    $count = $itemData['item_count'];
-    $id    = $itemData['id'];
-
-    $result = $mysql->update($tableName, "item_count = $count", "id = $id");
-
-    if ($result) {
-        echo '操作成功!';
-    } else {
-        echo '操作失败!';
-    }
+//检测当前将要添加的分类是否已经存在
+$conditionParam = $itemData['item_name'];
+$checkRow = $mysql->select($tableName, array('id'), "item_name = '$conditionParam'");
+if(mysqli_num_rows($checkRow)){
+    die("<br />$conditionParam 已经存在，请重新输入！");
 }
-else if (4 == count($itemData) && array_key_exists('item_name', $itemData) && (!empty($itemData['item_name']))) {
 
-    if(0 == $itemData['item_count']) {
-        
-        $result = $mysql->insert($tableName, $itemData);
-        if ($result) {
-            echo '操作成功!';
-        } else {
-            echo '操作失败!';
+$result = $mysql->insert($tableName, $itemData);
+
+//有上级分类时，修改上级分类的is_ended状态'
+if(!empty($itemData['parent_id'])){
+    $parentUpdate['is_ended'] = 0;
+    $conditionParam = $itemData['parent_id'];
+
+    $column[] = 'is_ended';
+    $result = $mysql->select($tableName, $column, " id = $conditionParam");
+    $row = mysqli_fetch_assoc($result);
+
+    if(1 == $row['is_ended']){
+        $mysql->update($tableName, $parentUpdate, " id = $conditionParam");
+
+        if($mysql->getAffectedRows() < 1){
+            die("上级分类状态修改失败！");
         }
     }
-    else {
-        $count = $itemData['item_count'];
-
-        $result = $mysql->insert($tableName, 'item_name, parent_id, warehouse_id, item_count', "$itemName, $parentId, $warehouseId, $count");
-    }
 }
-else {
-    die('输入的数据有误，请重新输入！');
+
+if ($result) {
+    echo '<br/>操作成功!';
+} else {
+    echo '<br/>操作失败!';
 }
 
 //测试输出
@@ -125,11 +124,14 @@ foreach ($itemData as $key => $value) {
 }
 
 echo '<br />';
-echo count($itemData);
+
 echo '<br />';
 echo "错误：".$mysql->getError();
-$result = $mysql->select($tableName, '*');
-while($row = mysqli_fetch_assoc($result)){
-    echo '<br />';
-    echo $row['id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
+$result = $mysql->select($tableName, array('*'));
+if($result){
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo '<br />';
+        echo $row['id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
+    }
 }
+

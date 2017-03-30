@@ -226,7 +226,7 @@
         let warehouseId = getWarehouseRadioValue();                         //存储当前选择的仓库信息
         let itemSelectId = getItemSelectOptionValueList();                  //存储当前将要添加的分类的上一级分类ID
 
-        let itemJSON = "";
+        let itemJSON;
 
         itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
         itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
@@ -241,6 +241,7 @@
 
         if(0 != itemName.length && checkInput(itemName, 0)){
             if((0 != itemCount.length && checkInput(itemCount, 1)) || (0 == itemCount.length)){
+
                 itemJSON = {
                     "warehouse_id"  : warehouseId,
                     "parent_id"     : itemSelectId,
@@ -248,9 +249,15 @@
                     "item_count"    : itemCount
                 };
             }
+            else {
+                return false;
+            }
         }
         else if(0 == itemName.length){
             alert("请先输入一个分类名称！");
+            return false;
+        }
+        else {
             return false;
         }
 
@@ -305,10 +312,16 @@
         }
 */
         //提交数据
-        /*
-        $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
-            alert("添加成功");
-        }); */
+
+        if(!itemJSON){
+            alert("输入的数据有误！");
+            return false;
+        }
+        else{
+            $("#tips").load("insertItemService.php", {"itemData" : itemJSON}, function(msg){
+                alert(msg);
+            });
+        }
     }
 
     //判断字符串是否合法字符串------------
