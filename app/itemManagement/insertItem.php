@@ -10,7 +10,10 @@
     $warehouseData = [];    //保存仓库信息
 
     //查询分类信息，并保存在$itemData[]中
-    $result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
+    //$result = $mysql->select('item_t', 'id, item_name, parent_id, is_ended');
+    $column = array('id', 'item_name', 'parent_id', 'is_ended');
+    $result = $mysql->select('item_t', $column);
+
     while($row = mysqli_fetch_assoc($result)){
         $itemData[] = $row;
     }
@@ -19,7 +22,9 @@
     $itemData = json_encode($itemData,JSON_UNESCAPED_UNICODE);
 
     //查询仓库信息，并保存在$warehouseData[]中
-    $result = $mysql->select('warehouse_t', 'warehouse_id, warehouse_name');
+    //$result = $mysql->select('warehouse_t', 'warehouse_id, warehouse_name');
+    $rsult = $mysql->select('warehouse_t', array('warehouse_id', 'warehouse_name'));
+
     while($row = mysqli_fetch_assoc($result)){
         $warehouseData[] = $row;
     }
