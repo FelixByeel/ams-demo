@@ -1,38 +1,47 @@
-//页面加载初始化部分数据
+//页面加载初始化，默认显示所有分类信息
 window.onload = function(){
 
-    loadWarehouse();
-    loadItem();
+    let searchCondition = '';   //查询条件
+
+    loadItem(searchCondition);
 }
 
-//加载仓库信息
-function loadWarehouse(){
-    //定义查询条件
-    let warehouseSearch = {
-        "tabelName" : "warehouse_t",
-        "columnArray" : Array("warehouse_id", "warehouse_name")
-    };
+//加载分类数据，ajax()方法,返回成功调用showWarehouseCallback
+function loadItem(searchCondition){
 
-    //ajax()方法,返回成功调用showWarehouseCallback
     $.ajax({
         type:"post",
         url : "selectTabelService.php",
-        data : sendData,
+        data : searchCondition,
         dataType : JSON,
         cache: false,
-        success : getCallbackData
+        success : showItemInfo
     });
 }
 
-function getCallbackData(data){
-    let warehouseJSON = JSON.parse(data);
-    
+//显示分类信息
+function showItemInfo(itemJSON){
+
+    let itemJSON = JSON.parse(itemJSON);
+
+    let itemListObj    = document.getElementById('itemList');
+    let itemDetailObj = document.getElementById('itemDetail');
+
+    let itemUlObj = new Array();
+
+    for(let i = 0, j = 0; i< itemJSON.length; i++){
+        if(0 == itemJSON[i].parent_id){
+            itemUlObj[j] = document.createElement("ul");
+            itemUlObj[j].id = "classOne_" + itemJSON[i].id;
+            j++;
+        }
+    }
+
+
+    for(let i = 0; i < itemJSON.length; i++){
+        itemLiObj.id = "item_" + itemJSON[i].id;
+        itemLiObj.innerHTML = itemJSON[i].item_name;
+        itemUlObj.appendChild(itemLiObj);
+    }
 }
 
-function loadItem(){
-    let itemSearch = {
-        "tabelName" : "item_t",
-        "columnArray" : Array("*"),
-        "conditionStr" : ''
-    };
-}
