@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +11,21 @@
             <button type="button">搜索</button>
         </div>
         <div id = "resultBox">
+            <div id = "warehouseBox">
+                <p>仓库信息</p>
+                <div id = "warehouseList"></div>
+            </div>
             <div id = "itemListBox">
+                <p>分类列表：</p>
+                <div id = "itemList"></div>
             </div>
             <div id = "itemDetailBox">
+                <p>详细信息：</p>
+                <div id = "itemDetail"></div>
             </div>
+        </div>
+        <div id = "actionBox">
+            <button type="button">编辑</button><button type="button">删除</button><button type="button">保存</button>
         </div>
     </body>
     <script src = "../../public/js/searchItem.js"></script>
