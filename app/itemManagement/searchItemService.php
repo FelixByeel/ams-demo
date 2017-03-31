@@ -8,9 +8,18 @@ define('APP_ROOT', dirname(dirname(__DIR__)).'/');
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
-$tabelName      = isset($_POST['tableName']) ? (!empty($_POST['tableName']) ? $_POST['tableName'] : die('请求异常！')): die('请求异常！');
-$columnArray    = isset($_POST['columnArray']) ? (!empty($_POST['columnArray']) ? $_POST['columnArray'] : array('*')): array('*');
-$conditionStr   = isset($_POST['conditionStr']) ? (!empty($_POST['conditionStr']) ? $_POST['conditionStr'] : ''): '';
+if(!isset($_POST['searchCondition'])){
+    die('请求异常');
+}
+
+$searchCondition = $_POST['searchCondition'];
+
+if(empty($searchCondition)){
+    $tabelName = 'item_t';
+    $columnArray = array('*');
+    $conditionStr = '';
+}
+
 
 //连接数据库
 $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
