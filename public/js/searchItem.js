@@ -2,46 +2,45 @@
 window.onload = function(){
 
     let searchCondition = '';   //查询条件
+    let itemMenuObj    = document.getElementById('itemUl');
 
-    loadItem(searchCondition);
-}
-
-//加载分类数据，ajax()方法,返回成功调用showWarehouseCallback
-function loadItem(searchCondition){
-
+    //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
     $.ajax({
         type:"post",
         url : "selectTabelService.php",
         data : searchCondition,
         dataType : JSON,
         cache: false,
-        success : showItemInfo
+        success : function(itemJSON){
+
+            itemJSON = JSON.parse(itemJSON);
+            showItemInfo(itemMenuObj, itemJSON, 0);
+        }
     });
 }
 
-//显示分类信息
-function showItemInfo(itemJSON){
-
-    let itemJSON = JSON.parse(itemJSON);
-
-    let itemListObj    = document.getElementById('itemList');
-    let itemDetailObj = document.getElementById('itemDetail');
-
-    let itemUlObj = new Array();
+//显示分类菜单
+function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
 
     for(let i = 0, j = 0; i< itemJSON.length; i++){
-        if(0 == itemJSON[i].parent_id){
-            itemUlObj[j] = document.createElement("ul");
-            itemUlObj[j].id = "classOne_" + itemJSON[i].id;
-            j++;
+        if(currentSelectedId == itemJSON[i].parent_id){
+            let itemLiObj = document.createElement("li");
+
+            itemLiObj.id = "itemMenuId_" + itemJSON[i].id;
+            itemLiObj.className = "itemMenuClass_" + itemJSON[i].parent_id;
+            itemLiObj.innerHTML = itemJSON[i].item_name;
+
+            itemLiObj.addEventListener("click", function(){
+                itemClicked(this, itemMenuObj, itemJSON);
+            });
+
+            itemMenuObj.appenChlid(itemLiObj);
         }
     }
+}
 
-
-    for(let i = 0; i < itemJSON.length; i++){
-        itemLiObj.id = "item_" + itemJSON[i].id;
-        itemLiObj.innerHTML = itemJSON[i].item_name;
-        itemUlObj.appendChild(itemLiObj);
-    }
+//菜单click事件
+function itemClicked(currentClickLi, itemMenuObj, itemJSON) {
+    
 }
 
