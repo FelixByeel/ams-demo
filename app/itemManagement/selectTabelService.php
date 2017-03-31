@@ -10,7 +10,7 @@ require_once (APP_ROOT.'include/Msqli.class.php');
 
 $tabelName      = isset($_POST['tableName']) ? (!empty($_POST['tableName']) ? $_POST['tableName'] : die('请求异常！')): die('请求异常！');
 $columnArray    = isset($_POST['columnArray']) ? (!empty($_POST['columnArray']) ? $_POST['columnArray'] : array('*')): array('*');
-$conditionStr   = isset($_POST['columnArray']) ? (!empty($_POST['columnArray']) ? $_POST['columnArray'] : ''): '';
+$conditionStr   = isset($_POST['conditionStr']) ? (!empty($_POST['conditionStr']) ? $_POST['conditionStr'] : ''): '';
 
 //连接数据库
 $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
