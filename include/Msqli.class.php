@@ -69,7 +69,7 @@ class Msqli{
            $sql .= " where $condition";
         }
 
-        echo '<br />当前SQL语句：'.$sql;
+        //echo '<br />当前SQL语句：'.$sql;
         return $this->query($sql);
     }
 

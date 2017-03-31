@@ -1,7 +1,7 @@
 //页面加载初始化，默认显示所有分类信息
 window.onload = function(){
 
-    let searchCondition = '';   //查询条件
+    let searchCondition = {'hello': "world"};   //查询条件
     let itemMenuObj    = document.getElementById('itemUl');
 
     loadAjaxGetData(itemMenuObj, searchCondition);
@@ -20,13 +20,14 @@ function loadAjaxGetData(itemMenuObj, searchCondition){
 
             showItemInfo(itemMenuObj, itemJSON, 0);
         },
-        error : function(){
-            alert("无法从服务器获取数据！");
+        error : function(msg,e){
+
+            alert( "请求数据发生异常：" + e);
         }
     });
 }
 
-//显示分类菜单
+//显示分类菜单，实现无限分类菜单
 function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
 
     for(let i = 0, j = 0; i< itemJSON.length; i++){
@@ -40,14 +41,13 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
             itemLiObj.addEventListener("click", function(){
                 itemClicked(this, itemMenuObj, itemJSON);
             });
-
-            itemMenuObj.appenChlid(itemLiObj);
+            itemMenuObj.appendChild(itemLiObj);
         }
     }
 }
 
 //菜单click事件
 function itemClicked(currentClickLi, itemMenuObj, itemJSON) {
-    alert("测试");
+    alert("测试click事件");
 }
 

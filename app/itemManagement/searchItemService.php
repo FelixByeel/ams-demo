@@ -8,18 +8,17 @@ define('APP_ROOT', dirname(dirname(__DIR__)).'/');
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
-if(!isset($_POST['searchCondition'])){
-    die('请求异常');
+if($_SERVER['REQUEST_METHOD'] != 'POST'){
+    die('请求的地址发生异常！');
 }
 
-$searchCondition = $_POST['searchCondition'];
+$searchCondition = $_POST;
 
-if(empty($searchCondition)){
+if(!empty($searchCondition)){
     $tabelName = 'item_t';
     $columnArray = array('*');
     $conditionStr = '';
 }
-
 
 //连接数据库
 $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
