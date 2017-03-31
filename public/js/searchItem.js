@@ -4,17 +4,24 @@ window.onload = function(){
     let searchCondition = '';   //查询条件
     let itemMenuObj    = document.getElementById('itemUl');
 
-    //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
+    loadAjaxGetData(itemMenuObj, searchCondition);
+
+}
+
+//ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
+function loadAjaxGetData(itemMenuObj, searchCondition){
     $.ajax({
         type:"post",
-        url : "selectTabelService.php",
+        url : "searchItemService.php",
         data : searchCondition,
-        dataType : JSON,
+        dataType : "json",
         cache: false,
         success : function(itemJSON){
 
-            itemJSON = JSON.parse(itemJSON);
             showItemInfo(itemMenuObj, itemJSON, 0);
+        },
+        error : function(){
+            alert("无法从服务器获取数据！");
         }
     });
 }
@@ -41,6 +48,6 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
 
 //菜单click事件
 function itemClicked(currentClickLi, itemMenuObj, itemJSON) {
-    
+    alert("测试");
 }
 
