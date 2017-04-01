@@ -2,7 +2,7 @@
 window.onload = function(){
 
     let searchCondition = {'hello': "world"};                   //查询条件
-    let itemMenuObj     = document.getElementById('itemUl');    //获取加载li列表的ul对象
+    let itemMenuObj     = document.getElementById('itemList');    //获取加载li列表的ul对象
 
     loadAjaxGetData(itemMenuObj, searchCondition);
 
@@ -30,24 +30,58 @@ function loadAjaxGetData(itemMenuObj, searchCondition){
 //显示分类菜单
 function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
 
+    let ulFlag = 1;
+    let itemUlObj;
+
     for(let i = 0, j = 0; i< itemJSON.length; i++){
         if(currentSelectedId == itemJSON[i].parent_id){
+            if(ulFlag){
+                    itemUlObj = document.createElement("ul");
+                    ulFlag = 0;
+            }
+
             let itemLiObj = document.createElement("li");
 
-            itemLiObj.id = "itemMenuId_" + itemJSON[i].id;
-            itemLiObj.className = "itemMenuClass_" + itemJSON[i].parent_id;
+            itemLiObj.id = "itemLiId_" + itemJSON[i].id;
             itemLiObj.innerHTML = itemJSON[i].item_name;
 
-            itemLiObj.addEventListener("click", function(){
+            itemLiObj.addEventListener("click", function(e){
                 itemClicked(this, itemMenuObj, itemJSON);
+                e.stopPropagation();
             });
-            itemMenuObj.appendChild(itemLiObj);
+
+            itemUlObj.id = "itemUlId_" + currentSelectedId;
+            itemUlObj.appendChild(itemLiObj);
         }
     }
+
+    if(itemUlObj){
+        itemMenuObj.appendChild(itemUlObj);
+    }
+
 }
 
 //分类菜单click事件
 function itemClicked(currentClickLi, itemMenuObj, itemJSON) {
-    alert("测试click事件");
+    let currentSelectedId = currentClickLi.id.split("_")[1];
+
+    //检测当前点击菜单项的子菜单是否存在
+    if(checkSubItem(currentSelectedId)){
+        itemMenuObj = document.getElementById("itemLiId_" + currentSelectedId);
+        showItemInfo(itemMenuObj, itemJSON, currentSelectedId);
+    }
+    //alert("测试click事件");
 }
 
+//检测当前点击菜单项的子菜单是否存在
+function checkSubItem(currentSelectedId){
+
+    let ulListObj = document.getElementById("itemList").getElementsByTagName("ul");
+
+    for(let i = 0; i < ulListObj.length; i++){
+        if((ulListObj[i].id.split("_")[1]) == currentSelectedId){
+            return false;
+        }
+    }
+    return true;
+}
