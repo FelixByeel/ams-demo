@@ -1,8 +1,8 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
 window.onload = function(){
 
-    let searchCondition = {'hello': "world"};                   //查询条件
-    let itemMenuDivObj     = document.getElementById('itemMenu');    //获取加载li列表的ul对象
+    let searchCondition = {'hello': "world"};                       //查询条件
+    let itemMenuDivObj  = document.getElementById('itemMenu');      //获取加载li列表的ul对象
 
     loadAjaxGetData(itemMenuDivObj, searchCondition);
 
@@ -75,7 +75,6 @@ function itemClicked(currentClickLi, itemMenuDivObj, itemJSON) {
         itemMenuDivObj = document.getElementById("itemLiId_" + currentSelectedId);
         showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId);
     }
-    //alert("测试click事件");
 }
 
 //检测当前点击菜单项的子菜单是否存在
@@ -105,14 +104,14 @@ function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
     str +="</tr>"
     for(let i = 0, j = 0; i < itemJSON.length; i++){
 
-
         if(currentSelectedId == itemJSON[i].parent_id){
             if(j % 2){
-                str += "<tr id = 'row_odd'>";
+                str += "<tr class = 'row_odd' onclick = 'showDetail(" + itemJSON[i].id + ")'>";
             }
             else {
-                str += "<tr id = 'row_even'>";
+                str += "<tr class = 'row_even' onclick = 'showDetail(" + itemJSON[i].id + ")'>";
             }
+
             str += "<td>" + itemJSON[i].item_name + "</td>";
             str += "<td>" + itemJSON[i].warehouse_id + "</td>";
             str += "<td>" + itemJSON[i].item_count + "</td>";
@@ -122,4 +121,8 @@ function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
     }
     str += "</table>";
     itemDetailDivObj.innerHTML = str;
+}
+
+function showDetail(id){
+    alert(id);
 }
