@@ -56,7 +56,7 @@ function showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId){
             itemUlObj.appendChild(itemLiObj);
         }
         else if((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)){
-            showCurrentSelectedDetail(currentSelectedId, itemJSON);
+            showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId);
         }
     }
 
@@ -93,7 +93,43 @@ function checkSubItem(currentSelectedId){
 }
 
 //显示当前分类下的详细信息
-function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
+function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) {
+
+    let itemDetailDivObj = document.getElementById("itemDetail");
+    let tableObj = document.createElement("table");
+    let trObj = tableObj.insertRow();
+
+    tableObj.id = "showDetailTable";
+    trObj.id = "trHead";
+    trObj.insertCell(0).innerHTML = "分类名称";
+    trObj.insertCell(1).innerHTML = "所属仓库";
+    trObj.insertCell(2).innerHTML = "数量";
+
+    for(let i = 0, j = 0; i < itemJSON.length; i++){
+        if(currentSelectedId == itemJSON[i].parent_id){
+            let trObj = tableObj.insertRow();
+            if(j % 2){
+                trObj.className = "row_odd";
+            }
+            else{
+                trObj.className = "row_even";
+            }
+            trObj.insertCell(0).innerHTML = itemJSON[i].item_name;
+            trObj.insertCell(1).innerHTML = itemJSON[i].warehouse_id;
+            trObj.insertCell(2).innerHTML = itemJSON[i].item_count;
+
+            j++;
+
+            trObj.addEventListener("click", function(e){
+                showDetail(itemMenuDivObj, itemJSON, currentSelectedId);
+            });
+        }
+    }
+    itemDetailDivObj.appendChild(tableObj);
+}
+/*
+//显示当前分类下的详细信息
+function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) {
     let itemDetailDivObj = document.getElementById("itemDetail");
     let str = "<table id = 'showDetailTable' >";
 
@@ -106,10 +142,10 @@ function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
 
         if(currentSelectedId == itemJSON[i].parent_id){
             if(j % 2){
-                str += "<tr class = 'row_odd' onclick = 'showDetail(" + itemJSON[i].id + ")'>";
+                str += "<tr class = 'row_odd' onclick = 'showDetail(" + itemMenuDivObj + "," + itemJSON + "," + itemJSON[i].id + ")'>";
             }
             else {
-                str += "<tr class = 'row_even' onclick = 'showDetail(" + itemJSON[i].id + ")'>";
+                str += "<tr class = 'row_even' onclick = 'showDetail(" + itemMenuDivObj + "," + itemJSON + "," + itemJSON[i].id + ")'>";
             }
 
             str += "<td>" + itemJSON[i].item_name + "</td>";
@@ -122,7 +158,8 @@ function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
     str += "</table>";
     itemDetailDivObj.innerHTML = str;
 }
+*/
+function showDetail(itemMenuDivObj, itemJSON, currentSelectedId){
 
-function showDetail(id){
-    alert(id);
+    showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId);
 }
