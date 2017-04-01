@@ -1,8 +1,8 @@
-//页面加载初始化，默认显示所有分类信息
+//页面加载初始化，默认显示所有分类信息，实现无限分类菜单
 window.onload = function(){
 
-    let searchCondition = {'hello': "world"};   //查询条件
-    let itemMenuObj    = document.getElementById('itemUl');
+    let searchCondition = {'hello': "world"};                   //查询条件
+    let itemMenuObj     = document.getElementById('itemUl');    //获取加载li列表的ul对象
 
     loadAjaxGetData(itemMenuObj, searchCondition);
 
@@ -22,12 +22,12 @@ function loadAjaxGetData(itemMenuObj, searchCondition){
         },
         error : function(msg,e){
 
-            alert( "请求数据发生异常：" + e);
+            alert( "请求的数据发生异常：" + e);
         }
     });
 }
 
-//显示分类菜单，实现无限分类菜单
+//显示分类菜单
 function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
 
     for(let i = 0, j = 0; i< itemJSON.length; i++){
@@ -46,7 +46,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId){
     }
 }
 
-//菜单click事件
+//分类菜单click事件
 function itemClicked(currentClickLi, itemMenuObj, itemJSON) {
     alert("测试click事件");
 }
