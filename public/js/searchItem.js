@@ -85,20 +85,41 @@ function checkSubItem(currentSelectedId){
 
     for(let i = 0; i < ulListObj.length; i++){
         if((ulListObj[i].id.split("_")[1]) == currentSelectedId){
-            ulListObj[i].remove();
+            let currentUl = "itemUlId_" + currentSelectedId
+            $("#" + currentUl).remove();
             return false;
         }
     }
     return true;
 }
 
+//显示当前分类下的详细信息
 function showCurrentSelectedDetail(currentSelectedId, itemJSON) {
     let itemDetailDivObj = document.getElementById("itemDetail");
-    let str = "";
-    for(let i = 0; i < itemJSON.length; i++){
+    let str = "<table id = 'showDetailTable' >";
+
+    str += "<tr id = 'head'>";
+    str += "<th>分类名称</th>";
+    str += "<th>所属仓库</th>";
+    str += "<th>数量</th>";
+    str +="</tr>"
+    for(let i = 0, j = 0; i < itemJSON.length; i++){
+
+
         if(currentSelectedId == itemJSON[i].parent_id){
+            if(j % 2){
+                str += "<tr id = 'row_odd'>";
+            }
+            else {
+                str += "<tr id = 'row_even'>";
+            }
             str += "<td>" + itemJSON[i].item_name + "</td>";
+            str += "<td>" + itemJSON[i].warehouse_id + "</td>";
+            str += "<td>" + itemJSON[i].item_count + "</td>";
+            str += "</tr>";
+            j++;
         }
     }
+    str += "</table>";
     itemDetailDivObj.innerHTML = str;
 }
