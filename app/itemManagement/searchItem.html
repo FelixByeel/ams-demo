@@ -19,7 +19,19 @@
                 <p>详细信息：</p>
                 <div id = "itemDetail"></div>
             </div>
-            <div id = "editBox" style = "display: none"></div>;
+            <div id = "editBox" style = "display: none">
+                <div id = "editBoxHead">
+                    <label id = "codeLabel">编号：<scan id = "codeScan"></scan></label>
+                    <button id = "delButton">删除</button>
+                </div>
+                <div id = "editBoxContent">
+                    <label id = "nameLabel">名称：<input id = "nameInput" type = "text" value = ""/></label>
+                    <label id = "classLabel">上级分类：<input id = "classInput" type = "text" value = ""/></label>
+                    <label id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
+                    <label id = "countLabel">数量：<input id = "countInput" type = "text" value = ""/></label>
+                    <button id = "cancelButton">取消</button><button id = "saveButton">保存</button>
+                </div>
+            </div>
         </div>
     </body>
     <script src = "../../public/js/searchItem.js"></script>
