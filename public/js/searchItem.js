@@ -180,19 +180,44 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
 //编辑操作
 function editItem(currentSelectedId){
 
+    let itemIndex;
+
     $("#editBox").show();
+    $("#classSelect").empty();
+    $("#warehouseSelect").empty();
     $("#codeSpan").text(currentSelectedId);
 
-    let i = 0;
-
-    for(; i < Global_itemJSON.length; i++){
+    //找到当前选择项在JSON中的位置，并保存下来
+    for(let i = 0; i < Global_itemJSON.length; i++){
         if(Global_itemJSON[i].id == currentSelectedId){
+            itemIndex = i;
             break;
         }
     }
-    console.log(Global_warehouseJSON);
-    $("#nameInput").val(Global_itemJSON[i].item_name);
-    $("#countInput").val(Global_itemJSON[i].item_count);
 
+    $("#nameInput").val(Global_itemJSON[itemIndex].item_name);
+    $("#countInput").val(Global_itemJSON[itemIndex].item_count);
 
+    //显示可选择的所有分类，默认直接上级分类为选择状态
+    for(let i = 0; i < Global_itemJSON.length; i++){
+        if(0 == Global_itemJSON[i].is_ended){
+            let str = "<option value = '" + Global_itemJSON[i].id + "'>" + Global_itemJSON[i].item_name + "</option>";
+            $("#classSelect").append(str);
+        }
+
+        if(Global_itemJSON[i].id == Global_itemJSON[itemIndex].parent_id){
+            $("#classSelect").find("option[value = " + Global_itemJSON[i].id + "]").attr("selected", true);
+        }
+    }
+
+    for(let j = 0; j < Global_warehouseJSON.length; j++){
+        let str = "<option value = '" + Global_warehouseJSON[j].warehouse_id + "'>";
+        str += Global_warehouseJSON[j].warehouse_name + "</option>";
+
+        $("#warehouseSelect").append(str);
+
+        if(Global_itemJSON[itemIndex].warehouse_id == Global_warehouseJSON[j].warehouse_id){
+            $("#warehouseSelect").find("option[value = " +Global_warehouseJSON[j].warehouse_id + "]").attr("selected", true);
+        }
+    }
 }
