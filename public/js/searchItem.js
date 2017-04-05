@@ -1,18 +1,17 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
 window.onload = function(){
 
-    let searchCondition = {'hello': "world"};                       //查询条件
     let itemMenuDivObj  = document.getElementById('itemMenu');      //获取加载li列表的ul对象
 
     let Global_warehouseJSON;
     let Global_itemJSON;
 
-    loadAjaxGetData(itemMenuDivObj, searchCondition);
+    loadAjaxGetData(itemMenuDivObj);
 
 }
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
-function loadAjaxGetData(itemMenuDivObj, searchCondition){
+function loadAjaxGetData(itemMenuDivObj){
     $.ajax({
         type:"post",
         url : "searchItemService.php",
