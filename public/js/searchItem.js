@@ -221,3 +221,18 @@ function editItem(currentSelectedId){
         }
     }
 }
+
+//保存
+$("#saveButton").click(function(){
+    alert("save");
+});
+
+//取消
+$("#cancelButton").click(function(){
+    alert("cancel");
+});
+
+//删除
+$("#delButton").click(function(){
+    alert("del");
+});
