@@ -12,6 +12,21 @@ window.onload = function(){
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
 function loadAjaxGetData(itemMenuDivObj){
+
+    $.ajax({
+        type:"post",
+        url : "searchItemService.php",
+        data : {"tableName":"warehouse"},
+        dataType : "json",
+        cache: false,
+        success : function(warehouseJSON){
+            Global_warehouseJSON = warehouseJSON;
+        },
+        error : function(msg,e){
+            alert( "请求的数据发生异常：" + e);
+        }
+    });
+
     $.ajax({
         type:"post",
         url : "searchItemService.php",
@@ -22,20 +37,6 @@ function loadAjaxGetData(itemMenuDivObj){
             Global_itemJSON = itemJSON;
             showItemInfo(itemMenuDivObj, itemJSON, 0);
             loadAllEndedItems(itemMenuDivObj, itemJSON);
-        },
-        error : function(msg,e){
-            alert( "请求的数据发生异常：" + e);
-        }
-    });
-
-    $.ajax({
-        type:"post",
-        url : "searchItemService.php",
-        data : {"tableName":"warehouse"},
-        dataType : "json",
-        cache: false,
-        success : function(warehouseJSON){
-            Global_warehouseJSON = warehouseJSON;
         },
         error : function(msg,e){
             alert( "请求的数据发生异常：" + e);
@@ -116,10 +117,11 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
 
     tableObj.id = "showDetailTable_" + currentSelectedId;
     trObj.id = "trHead";
-    trObj.insertCell(0).innerHTML = "分类名称";
-    trObj.insertCell(1).innerHTML = "所属仓库";
-    trObj.insertCell(2).innerHTML = "数量";
-    trObj.insertCell(3).innerHTML = "操作";
+    trObj.insertCell(0).innerHTML = "分类编号";
+    trObj.insertCell(1).innerHTML = "分类名称";
+    trObj.insertCell(2).innerHTML = "所属仓库";
+    trObj.insertCell(3).innerHTML = "数量";
+    trObj.insertCell(4).innerHTML = "操作";
 
     for(let i = 0, j = 0; i < itemJSON.length; i++){
         if((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)){
@@ -130,10 +132,17 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
             else{
                 trObj.className = "row_even";
             }
-            trObj.insertCell(0).innerHTML = itemJSON[i].item_name;
-            trObj.insertCell(1).innerHTML = itemJSON[i].warehouse_id;
-            trObj.insertCell(2).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(3).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
+            trObj.insertCell(0).innerHTML = itemJSON[i].id;
+            trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
+
+            for(var k = 0; k < Global_warehouseJSON.length; k++){
+                if(Global_warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id){
+                    break;
+                }
+            }
+            trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
+            trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
 
             j++;
         }
@@ -151,10 +160,11 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
 
     tableObj.id = "showDetailTable_allItems";
     trObj.id = "trHead";
-    trObj.insertCell(0).innerHTML = "分类名称";
-    trObj.insertCell(1).innerHTML = "所属仓库";
-    trObj.insertCell(2).innerHTML = "数量";
-    trObj.insertCell(3).innerHTML = " ";
+    trObj.insertCell(0).innerHTML = "分类编号";
+    trObj.insertCell(1).innerHTML = "分类名称";
+    trObj.insertCell(2).innerHTML = "所属仓库";
+    trObj.insertCell(3).innerHTML = "数量";
+    trObj.insertCell(4).innerHTML = " ";
 
     for(let i = 0, j = 0; i < itemJSON.length; i++){
         if(1 == itemJSON[i].is_ended){
@@ -165,10 +175,19 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
             else{
                 trObj.className = "row_even";
             }
-            trObj.insertCell(0).innerHTML = itemJSON[i].item_name;
-            trObj.insertCell(1).innerHTML = itemJSON[i].warehouse_id;
-            trObj.insertCell(2).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(3).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
+            trObj.insertCell(0).innerHTML = itemJSON[i].id;
+            trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
+
+            for(var k = 0; k < Global_warehouseJSON.length; k++){
+
+                if(Global_warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id){
+
+                    break;
+                }
+            }
+            trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
+            trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
 
             j++;
         }
@@ -217,7 +236,7 @@ function editItem(currentSelectedId){
         $("#warehouseSelect").append(str);
 
         if(Global_itemJSON[itemIndex].warehouse_id == Global_warehouseJSON[j].warehouse_id){
-            $("#warehouseSelect").find("option[value = " +Global_warehouseJSON[j].warehouse_id + "]").attr("selected", true);
+            $("#warehouseSelect").find("option[value = " + Global_warehouseJSON[j].warehouse_id + "]").attr("selected", true);
         }
     }
 }
