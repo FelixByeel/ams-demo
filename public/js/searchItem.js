@@ -16,7 +16,7 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
     $.ajax({
         type:"post",
         url : "searchItemService.php",
-        data : "item",
+        data : {"tableName":"item"},
         dataType : "json",
         cache: false,
         success : function(itemJSON){
@@ -25,7 +25,6 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
             loadAllEndedItems(itemMenuDivObj, itemJSON);
         },
         error : function(msg,e){
-
             alert( "请求的数据发生异常：" + e);
         }
     });
@@ -33,7 +32,7 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
     $.ajax({
         type:"post",
         url : "searchItemService.php",
-        data : "warehouse",
+        data : {"tableName":"warehouse"},
         dataType : "json",
         cache: false,
         success : function(warehouseJSON){
@@ -192,7 +191,7 @@ function editItem(currentSelectedId){
             break;
         }
     }
-    console.log(Global_itemJSON[i]);
+    console.log(Global_warehouseJSON);
     $("#nameInput").val(Global_itemJSON[i].item_name);
     $("#countInput").val(Global_itemJSON[i].item_count);
 

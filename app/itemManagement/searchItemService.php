@@ -12,14 +12,18 @@ if($_SERVER['REQUEST_METHOD'] != 'POST'){
     die('请求的地址发生异常！');
 }
 
-$searchCondition = $_POST;
+$searchCondition = $_POST["tableName"];
 
-if(!empty($searchCondition)){
+if($searchCondition == "item"){
     $tabelName = 'item_t';
     $columnArray = array('*');
     $conditionStr = '';
 }
-
+else if($searchCondition == "warehouse"){
+    $tabelName = 'warehouse_t';
+    $columnArray = array('*');
+    $conditionStr = '';
+}
 //连接数据库
 $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
