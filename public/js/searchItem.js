@@ -4,6 +4,7 @@ window.onload = function(){
     let searchCondition = {'hello': "world"};                       //查询条件
     let itemMenuDivObj  = document.getElementById('itemMenu');      //获取加载li列表的ul对象
 
+    let Global_itemJSON;
     loadAjaxGetData(itemMenuDivObj, searchCondition);
 
 }
@@ -17,7 +18,7 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
         dataType : "json",
         cache: false,
         success : function(itemJSON){
-
+            Global_itemJSON = itemJSON;
             showItemInfo(itemMenuDivObj, itemJSON, 0);
             loadAllEndedItems(itemMenuDivObj, itemJSON);
         },
@@ -165,5 +166,5 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
 
 //编辑操作
 function editItem(currentSelectedId){
-    alert(currentSelectedId);
+    
 }
