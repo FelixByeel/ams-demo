@@ -4,7 +4,9 @@ window.onload = function(){
     let searchCondition = {'hello': "world"};                       //查询条件
     let itemMenuDivObj  = document.getElementById('itemMenu');      //获取加载li列表的ul对象
 
+    let Global_warehouseJSON;
     let Global_itemJSON;
+
     loadAjaxGetData(itemMenuDivObj, searchCondition);
 
 }
@@ -14,7 +16,7 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
     $.ajax({
         type:"post",
         url : "searchItemService.php",
-        data : searchCondition,
+        data : "item",
         dataType : "json",
         cache: false,
         success : function(itemJSON){
@@ -24,6 +26,20 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
         },
         error : function(msg,e){
 
+            alert( "请求的数据发生异常：" + e);
+        }
+    });
+
+    $.ajax({
+        type:"post",
+        url : "searchItemService.php",
+        data : "warehouse",
+        dataType : "json",
+        cache: false,
+        success : function(warehouseJSON){
+            Global_warehouseJSON = warehouseJSON;
+        },
+        error : function(msg,e){
             alert( "请求的数据发生异常：" + e);
         }
     });
@@ -140,8 +156,7 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
     trObj.insertCell(0).innerHTML = "分类名称";
     trObj.insertCell(1).innerHTML = "所属仓库";
     trObj.insertCell(2).innerHTML = "数量";
-    trObj.insertCell(3).innerHTML = " "
-    trObj.insertCell(4).innerHTML = " "
+    trObj.insertCell(3).innerHTML = " ";
 
     for(let i = 0, j = 0; i < itemJSON.length; i++){
         if(1 == itemJSON[i].is_ended){
@@ -166,5 +181,20 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
 
 //编辑操作
 function editItem(currentSelectedId){
-    
+
+    $("#editBox").show();
+    $("#codeSpan").text(currentSelectedId);
+
+    let i = 0;
+
+    for(; i < Global_itemJSON.length; i++){
+        if(Global_itemJSON[i].id == currentSelectedId){
+            break;
+        }
+    }
+    console.log(Global_itemJSON[i]);
+    $("#nameInput").val(Global_itemJSON[i].item_name);
+    $("#countInput").val(Global_itemJSON[i].item_count);
+
+
 }
