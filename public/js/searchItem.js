@@ -19,6 +19,7 @@ function loadAjaxGetData(itemMenuDivObj, searchCondition){
         success : function(itemJSON){
 
             showItemInfo(itemMenuDivObj, itemJSON, 0);
+            loadAllEndedItems(itemMenuDivObj, itemJSON);
         },
         error : function(msg,e){
 
@@ -63,7 +64,6 @@ function showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId){
     if(itemUlObj){
         itemMenuDivObj.appendChild(itemUlObj);
     }
-
 }
 
 //菜单click事件
@@ -99,14 +99,15 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
     let tableObj = document.createElement("table");
     let trObj = tableObj.insertRow();
 
-    tableObj.id = "showDetailTable";
+    tableObj.id = "showDetailTable_" + currentSelectedId;
     trObj.id = "trHead";
     trObj.insertCell(0).innerHTML = "分类名称";
     trObj.insertCell(1).innerHTML = "所属仓库";
     trObj.insertCell(2).innerHTML = "数量";
+    trObj.insertCell(3).innerHTML = "操作";
 
     for(let i = 0, j = 0; i < itemJSON.length; i++){
-        if(currentSelectedId == itemJSON[i].parent_id){
+        if((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)){
             let trObj = tableObj.insertRow();
             if(j % 2){
                 trObj.className = "row_odd";
@@ -117,49 +118,52 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
             trObj.insertCell(0).innerHTML = itemJSON[i].item_name;
             trObj.insertCell(1).innerHTML = itemJSON[i].warehouse_id;
             trObj.insertCell(2).innerHTML = itemJSON[i].item_count;
+            trObj.insertCell(3).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
 
             j++;
-
-            trObj.addEventListener("click", function(e){
-                showDetail(itemMenuDivObj, itemJSON, currentSelectedId);
-            });
         }
     }
+    itemDetailDivObj.innerHTML = "";
     itemDetailDivObj.appendChild(tableObj);
 }
-/*
-//显示当前分类下的详细信息
-function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) {
+
+//页面加载时显示详细信息
+function loadAllEndedItems(itemMenuDivObj, itemJSON) {
+
     let itemDetailDivObj = document.getElementById("itemDetail");
-    let str = "<table id = 'showDetailTable' >";
+    let tableObj = document.createElement("table");
+    let trObj = tableObj.insertRow();
 
-    str += "<tr id = 'head'>";
-    str += "<th>分类名称</th>";
-    str += "<th>所属仓库</th>";
-    str += "<th>数量</th>";
-    str +="</tr>"
+    tableObj.id = "showDetailTable_allItems";
+    trObj.id = "trHead";
+    trObj.insertCell(0).innerHTML = "分类名称";
+    trObj.insertCell(1).innerHTML = "所属仓库";
+    trObj.insertCell(2).innerHTML = "数量";
+    trObj.insertCell(3).innerHTML = " "
+    trObj.insertCell(4).innerHTML = " "
+
     for(let i = 0, j = 0; i < itemJSON.length; i++){
-
-        if(currentSelectedId == itemJSON[i].parent_id){
+        if(1 == itemJSON[i].is_ended){
+            let trObj = tableObj.insertRow();
             if(j % 2){
-                str += "<tr class = 'row_odd' onclick = 'showDetail(" + itemMenuDivObj + "," + itemJSON + "," + itemJSON[i].id + ")'>";
+                trObj.className = "row_odd";
             }
-            else {
-                str += "<tr class = 'row_even' onclick = 'showDetail(" + itemMenuDivObj + "," + itemJSON + "," + itemJSON[i].id + ")'>";
+            else{
+                trObj.className = "row_even";
             }
+            trObj.insertCell(0).innerHTML = itemJSON[i].item_name;
+            trObj.insertCell(1).innerHTML = itemJSON[i].warehouse_id;
+            trObj.insertCell(2).innerHTML = itemJSON[i].item_count;
+            trObj.insertCell(3).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
 
-            str += "<td>" + itemJSON[i].item_name + "</td>";
-            str += "<td>" + itemJSON[i].warehouse_id + "</td>";
-            str += "<td>" + itemJSON[i].item_count + "</td>";
-            str += "</tr>";
             j++;
         }
     }
-    str += "</table>";
-    itemDetailDivObj.innerHTML = str;
+    itemDetailDivObj.innerHTML = "";
+    itemDetailDivObj.appendChild(tableObj);
 }
-*/
-function showDetail(itemMenuDivObj, itemJSON, currentSelectedId){
 
-    showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId);
+//编辑操作
+function editItem(currentSelectedId){
+    alert(currentSelectedId);
 }
