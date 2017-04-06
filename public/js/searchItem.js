@@ -214,8 +214,8 @@ function editItem(currentSelectedId) {
         }
     }
 
-    $("#nameInput").val(Global_itemJSON[itemIndex].item_name);
-    $("#countInput").val(Global_itemJSON[itemIndex].item_count);
+    $("#itemNameInput").val(Global_itemJSON[itemIndex].item_name);
+    $("#itemCountInput").val(Global_itemJSON[itemIndex].item_count);
 
     //显示可选择的所有分类，默认直接上级分类为选择状态
     for (let i = 0; i < Global_itemJSON.length; i++) {
@@ -248,8 +248,8 @@ $("#saveButton").click(function () {
     let itemID = $("#IDSpan").text();
     let parentID = $("#classSelect").val();
     let warehouseID = $("warehouseSelect").val();
-    let itemName = $("#nameInput").val();
-    let itemCount = $("#countInput").val();
+    let itemName = $("#itemNameInput").val();
+    let itemCount = $("#itemCountInput").val();
 
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
