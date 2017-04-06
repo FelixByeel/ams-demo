@@ -60,7 +60,7 @@ function showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId) {
 
             let itemLiObj = document.createElement("li");
 
-            itemLiObj.id = "itemLiId_" + itemJSON[i].id;
+            itemLiObj.id = "itemLiId_" + itemJSON[i].item_id;
             itemLiObj.innerHTML = itemJSON[i].item_name;
 
             itemLiObj.addEventListener("click", function (e) {
@@ -132,7 +132,7 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
             else {
                 trObj.className = "row_even";
             }
-            trObj.insertCell(0).innerHTML = itemJSON[i].id;
+            trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
             for (var k = 0; k < Global_warehouseJSON.length; k++) {
@@ -142,7 +142,7 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
             }
             trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
             j++;
         }
@@ -175,7 +175,7 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
             else {
                 trObj.className = "row_even";
             }
-            trObj.insertCell(0).innerHTML = itemJSON[i].id;
+            trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
             for (var k = 0; k < Global_warehouseJSON.length; k++) {
@@ -187,7 +187,7 @@ function loadAllEndedItems(itemMenuDivObj, itemJSON) {
             }
             trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
             j++;
         }
@@ -208,7 +208,7 @@ function editItem(currentSelectedId) {
 
     //找到当前选择项在JSON中的位置，并保存下来
     for (let i = 0; i < Global_itemJSON.length; i++) {
-        if (Global_itemJSON[i].id == currentSelectedId) {
+        if (Global_itemJSON[i].item_id == currentSelectedId) {
             itemIndex = i;
             break;
         }
@@ -220,12 +220,12 @@ function editItem(currentSelectedId) {
     //显示可选择的所有分类，默认直接上级分类为选择状态
     for (let i = 0; i < Global_itemJSON.length; i++) {
         if (0 == Global_itemJSON[i].is_ended) {
-            let str = "<option value = '" + Global_itemJSON[i].id + "'>" + Global_itemJSON[i].item_name + "</option>";
+            let str = "<option value = '" + Global_itemJSON[i].item_id + "'>" + Global_itemJSON[i].item_name + "</option>";
             $("#classSelect").append(str);
         }
 
         if (Global_itemJSON[i].id == Global_itemJSON[itemIndex].parent_id) {
-            $("#classSelect").find("option[value = " + Global_itemJSON[i].id + "]").attr("selected", true);
+            $("#classSelect").find("option[value = " + Global_itemJSON[i].item_id + "]").attr("selected", true);
         }
     }
 
@@ -244,7 +244,28 @@ function editItem(currentSelectedId) {
 
 //保存
 $("#saveButton").click(function () {
-    alert("save");
+
+    let itemID = $("#IDSpan").text();
+    let parentID = $("#classSelect").val();
+    let warehouse = $("warehouseSelect").val();
+    let itemName = $("#nameInput").val();
+    let itemCount = $("#countInput").val();
+
+    itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
+    itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
+
+    if(!checkInput(itemCount, 1)) return false;
+    if(!checkInput(itemName, 0)) return false;
+
+    $.post(
+        "deleteItemService.php",
+        { "tableName": "item", "id": itemID },
+        function (msg) {
+            if (msg) {
+                alert(msg);
+            }
+        });
+    $("#editBox").hide();
 });
 
 //取消
@@ -256,19 +277,6 @@ $("#cancelButton").click(function () {
 //删除
 $("#delButton").click(function () {
 
-    let result = confirm("确认删除？");
-    let itemID = $("#IDSpan").text();
-    if(result){
-        $.post(
-            "deleteItemService.php",
-            {"tableName": "item", "id": itemID},
-            function (msg) {
-                if(msg){
-                    alert (msg);
-                }
-            });
-    }
-    $("#editBox").hide();
 });
 
 //判断字符串是否合法，合法返回true，不合法返回false------------
