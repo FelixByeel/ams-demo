@@ -1,5 +1,5 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
-window.onload = function () {
+window.onload = function (){
 
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
@@ -9,6 +9,17 @@ window.onload = function () {
     loadAjaxGetData(itemMenuObj);
 
 }
+
+//点击search按钮事件
+$("#searchButton").click(function(){
+    let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
+
+    let warehouseJSON;
+    let itemJSON;
+
+    itemMenuObj.innerHTML = "";
+    loadAjaxGetData(itemMenuObj);
+});
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
 function loadAjaxGetData(itemMenuObj) {
@@ -71,7 +82,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             itemUlObj.id = "itemUlId_" + currentSelectedId;
             itemUlObj.appendChild(itemLiObj);
         }
-        else {
+        else if((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended == 1)){
             showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId);
         }
     }
@@ -333,3 +344,4 @@ function checkInput(content, flag) {
         return true;
     }
 }
+
