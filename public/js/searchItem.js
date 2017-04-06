@@ -259,9 +259,16 @@ $("#delButton").click(function () {
     let result = confirm("确认删除？");
     let itemID = $("#IDSpan").text();
     if(result){
-
+        $.post(
+            "deleteItemService.php",
+            {"tableName": "item", "id": itemID},
+            function (msg) {
+                if(msg){
+                    alert (msg);
+                }
+            });
     }
-
+    $("#editBox").hide();
 });
 
 //判断字符串是否合法，合法返回true，不合法返回false------------
