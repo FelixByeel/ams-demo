@@ -51,7 +51,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
     let itemUlObj;
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if ((currentSelectedId == itemJSON[i].parent_id)) {
+        if ((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended == 0)) {
             if (ulFlag) {
                 itemUlObj = document.createElement("ul");
                 ulFlag = 0;
@@ -71,7 +71,9 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             itemUlObj.id = "itemUlId_" + currentSelectedId;
             itemUlObj.appendChild(itemLiObj);
         }
-
+        else{
+            showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId);
+        }
     }
 
     if (itemUlObj) {
@@ -88,12 +90,6 @@ function itemClicked(currentClickLi, itemJSON) {
     if (checkSubItem(currentSelectedId)) {
 
         showItemInfo(itemMenuObj, itemJSON, currentSelectedId);
-    }
-
-    for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if(currentSelectedId == itemJSON[i].item_id && itemJSON[i].parent_id == 0){
-            showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId)
-        }
     }
 }
 
@@ -128,7 +124,7 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
     trObj.insertCell(4).innerHTML = "操作";
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if ((currentSelectedId == itemJSON[i].parent_id) || (0 == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
+        if ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
             let trObj = tableObj.insertRow();
             if (j % 2) {
                 trObj.className = "row_odd";
