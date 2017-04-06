@@ -1,17 +1,17 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
 window.onload = function () {
 
-    let itemMenuDivObj = document.getElementById('itemMenu');      //获取加载li列表的ul对象
+    let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
     let Global_warehouseJSON;
     let Global_itemJSON;
 
-    loadAjaxGetData(itemMenuDivObj);
+    loadAjaxGetData(itemMenuObj);
 
 }
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
-function loadAjaxGetData(itemMenuDivObj) {
+function loadAjaxGetData(itemMenuObj) {
 
     $.ajax({
         type: "post",
@@ -35,8 +35,8 @@ function loadAjaxGetData(itemMenuDivObj) {
         cache: false,
         success: function (itemJSON) {
             Global_itemJSON = itemJSON;
-            showItemInfo(itemMenuDivObj, itemJSON, 0);
-            loadAllEndedItems(itemMenuDivObj, itemJSON);
+            showItemInfo(itemMenuObj, itemJSON, 0);
+            loadAllEndedItems(itemMenuObj, itemJSON);
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
@@ -45,14 +45,13 @@ function loadAjaxGetData(itemMenuDivObj) {
 }
 
 //显示分类菜单
-function showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId) {
+function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
 
     let ulFlag = 1; //当前项有子项时才创建子项的容器ul，防止创建空的<ul></ul>标签
     let itemUlObj;
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if ((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended != 1)) {
-            //没有子分类的项不显示
+        if ((currentSelectedId == itemJSON[i].parent_id)) {
             if (ulFlag) {
                 itemUlObj = document.createElement("ul");
                 ulFlag = 0;
@@ -65,42 +64,47 @@ function showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId) {
 
             itemLiObj.addEventListener("click", function (e) {
 
-                itemClicked(this, itemMenuDivObj, itemJSON);
+                itemClicked(this, itemJSON);
                 e.stopPropagation();    //阻止事件冒泡，点击内层li不会触发上层li的click事件
             });
 
             itemUlObj.id = "itemUlId_" + currentSelectedId;
             itemUlObj.appendChild(itemLiObj);
         }
-        else if ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
-            showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId);
-        }
+
     }
 
     if (itemUlObj) {
-        itemMenuDivObj.appendChild(itemUlObj);
+        itemMenuObj.appendChild(itemUlObj);
     }
 }
 
 //菜单click事件
-function itemClicked(currentClickLi, itemMenuDivObj, itemJSON) {
+function itemClicked(currentClickLi, itemJSON) {
     let currentSelectedId = currentClickLi.id.split("_")[1];
-
+    let itemMenuObj = document.getElementById("itemLiId_" + currentSelectedId);
+    let itemMenuDivObj = document.getElementById('itemMenuDiv');
     //检测当前点击菜单项的子菜单是否存在
     if (checkSubItem(currentSelectedId)) {
-        itemMenuDivObj = document.getElementById("itemLiId_" + currentSelectedId);
-        showItemInfo(itemMenuDivObj, itemJSON, currentSelectedId);
+
+        showItemInfo(itemMenuObj, itemJSON, currentSelectedId);
+    }
+
+    for (let i = 0, j = 0; i < itemJSON.length; i++) {
+        if(currentSelectedId == itemJSON[i].item_id && itemJSON[i].parent_id == 0){
+            showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId)
+        }
     }
 }
 
-//检测当前点击菜单项的子菜单是否存在
+//检测当前点击菜单项的子菜单是否存在,没有返回true,有返回false
 function checkSubItem(currentSelectedId) {
 
-    let ulListObj = document.getElementById("itemMenu").getElementsByTagName("ul");
+    let ulListObj = document.getElementById("itemMenuDiv").getElementsByTagName("ul");
 
     for (let i = 0; i < ulListObj.length; i++) {
         if ((ulListObj[i].id.split("_")[1]) == currentSelectedId) {
-            let currentUl = "itemUlId_" + currentSelectedId
+            let currentUl = "itemUlId_" + currentSelectedId;
             $("#" + currentUl).remove();
             return false;
         }
@@ -109,7 +113,7 @@ function checkSubItem(currentSelectedId) {
 }
 
 //显示当前分类下的详细信息
-function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) {
+function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
 
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
@@ -124,7 +128,7 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
     trObj.insertCell(4).innerHTML = "操作";
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
+        if ((currentSelectedId == itemJSON[i].parent_id) || (0 == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
             let trObj = tableObj.insertRow();
             if (j % 2) {
                 trObj.className = "row_odd";
@@ -152,7 +156,7 @@ function showCurrentSelectedDetail(itemMenuDivObj, itemJSON, currentSelectedId) 
 }
 
 //页面加载时显示详细信息
-function loadAllEndedItems(itemMenuDivObj, itemJSON) {
+function loadAllEndedItems(itemMenuObj, itemJSON) {
 
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
