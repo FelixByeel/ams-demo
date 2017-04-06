@@ -253,6 +253,7 @@ $("#saveButton").click(function () {
 
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
+    tableName = "item";
 
     if (!checkInput(itemCount, 1)) return false;
     if (!checkInput(itemName, 0)) return false;
@@ -260,7 +261,7 @@ $("#saveButton").click(function () {
     $.post(
         "updateItem.php",
         {
-            "tableName": "item",
+            "tableName": tableName,
             "itemID": itemID,
             "parentID": parentID,
             "warehouseID": warehouseID,
