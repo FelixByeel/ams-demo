@@ -71,7 +71,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             itemUlObj.id = "itemUlId_" + currentSelectedId;
             itemUlObj.appendChild(itemLiObj);
         }
-        else{
+        else {
             showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId);
         }
     }
@@ -247,19 +247,26 @@ $("#saveButton").click(function () {
 
     let itemID = $("#IDSpan").text();
     let parentID = $("#classSelect").val();
-    let warehouse = $("warehouseSelect").val();
+    let warehouseID = $("warehouseSelect").val();
     let itemName = $("#nameInput").val();
     let itemCount = $("#countInput").val();
 
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
 
-    if(!checkInput(itemCount, 1)) return false;
-    if(!checkInput(itemName, 0)) return false;
+    if (!checkInput(itemCount, 1)) return false;
+    if (!checkInput(itemName, 0)) return false;
 
     $.post(
-        "deleteItemService.php",
-        { "tableName": "item", "id": itemID },
+        "updateItem.php",
+        {
+            "tableName": "item",
+            "itemID": itemID,
+            "parentID": parentID,
+            "warehouseID": warehouseID,
+            "itemName": itemName,
+            "itemCount": itemCount
+        },
         function (msg) {
             if (msg) {
                 alert(msg);
@@ -270,11 +277,11 @@ $("#saveButton").click(function () {
 
 //取消
 $("#cancelButton").click(function () {
-    alert("cancel");
+
     $("#editBox").hide();
 });
 
-//删除
+//删除(保留功能)
 $("#delButton").click(function () {
 
 });
