@@ -11,7 +11,7 @@
     $warehouseData  = [];           //保存仓库信息
 
     //查询分类信息，并保存在$itemData[]中
-    $column = array('id', 'item_name', 'parent_id', 'is_ended');
+    $column = array('item_id', 'item_name', 'parent_id', 'is_ended');
     $result = $mysql->select('item_t', $column);
 
     while($row = mysqli_fetch_assoc($result)){
@@ -48,7 +48,7 @@
 </style>
 </head>
 <body>
-    
+
     <div id = "warehouseBox">
         <p>请选择备货仓库：</p>
         <div id = "warehouseList"></div>
@@ -72,7 +72,7 @@
 <script>
 
     window.onload = function(){
-        let itemJsonStr         = '<?php echo $itemData; ?>'; 
+        let itemJsonStr         = '<?php echo $itemData; ?>';
         let itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
 
         let warehouseJsonStr    = '<?php echo $warehouseData; ?>';
@@ -141,7 +141,7 @@
 
             //显示当前分类下的所有子项
             if(itemSelectId == itemJsonObj[i].parent_id){
-               itemOptionObj.value = 'itemOption_' + itemJsonObj[i].id;
+               itemOptionObj.value = 'itemOption_' + itemJsonObj[i].item_id;
                itemOptionObj.text = itemJsonObj[i].item_name;
                itemSelectObj.appendChild(itemOptionObj);
            }
@@ -178,7 +178,7 @@
         if(0 != currentSelectedId){
             //获取到当前选择项在itemJsonObj中的位置
             for(let i = 0; i < itemJsonObj.length; i++) {
-                if(currentSelectedId == itemJsonObj[i].id){
+                if(currentSelectedId == itemJsonObj[i].item_id){
                     currentSelectedId = i;
                     break;
                 }
@@ -186,7 +186,7 @@
 
             //当前选择项的is_ended的值为0表示有子分类，显示子分类
             if( 0 == itemJsonObj[currentSelectedId].is_ended) {
-                showSubItem(itemListObj, itemJsonObj[currentSelectedId].id, currentSelectedName, itemJsonObj);
+                showSubItem(itemListObj, itemJsonObj[currentSelectedId].item_id, currentSelectedName, itemJsonObj);
             }
         }
     }
@@ -270,7 +270,7 @@
     //判断字符串是否合法，合法返回true，不合法返回false------------
     function checkInput(content, flag){
 
-        let isNumberReg = /^[1-9]+[0-9]*]*$/; 
+        let isNumberReg = /^[1-9]+[0-9]*]*$/;
 
         if(1 == flag && (!isNumberReg.test(content))){
             alert("输入的物品数量无效，请重新输入！");

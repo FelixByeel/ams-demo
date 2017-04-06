@@ -84,7 +84,7 @@ $tableName = 'item_t';
 
 //检测当前将要添加的分类是否已经存在
 $conditionParam = $itemData['item_name'];
-$checkRow = $mysql->select($tableName, array('id'), "item_name = '$conditionParam'");
+$checkRow = $mysql->select($tableName, array('item_id'), "item_name = '$conditionParam'");
 if (mysqli_num_rows($checkRow)) {
     die("<br />$conditionParam 已经存在，请重新输入！");
 }
@@ -97,11 +97,11 @@ if (!empty($itemData['parent_id'])) {
     $conditionParam = $itemData['parent_id'];
 
     $column[] = 'is_ended';
-    $result = $mysql->select($tableName, $column, " id = $conditionParam");
+    $result = $mysql->select($tableName, $column, " item_id = $conditionParam");
     $row = mysqli_fetch_assoc($result);
 
     if (1 == $row['is_ended']) {
-        $mysql->update($tableName, $parentUpdate, " id = $conditionParam");
+        $mysql->update($tableName, $parentUpdate, " item_id = $conditionParam");
 
         if ($mysql->getAffectedRows() < 1) {
             die("上级分类状态修改失败！");
@@ -131,6 +131,6 @@ $result = $mysql->select($tableName, array('*'));
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         echo '<br />';
-        echo $row['id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
+        echo $row['item_id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
     }
 }
