@@ -1,5 +1,5 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
-window.onload = function (){
+window.onload = function () {
 
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
@@ -11,7 +11,7 @@ window.onload = function (){
 }
 
 //点击search按钮事件
-$("#searchButton").click(function(){
+$("#searchButton").click(function () {
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
     let warehouseJSON;
@@ -82,7 +82,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             itemUlObj.id = "itemUlId_" + currentSelectedId;
             itemUlObj.appendChild(itemLiObj);
         }
-        else if((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended == 1)){
+        else if ((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended == 1)) {
             showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId);
         }
     }
@@ -270,16 +270,16 @@ $("#saveButton").click(function () {
     if (!checkInput(itemName, 0)) return false;
     alert(warehouseID);
     let itemData = {
-            "tableName": tableName,
-            "itemID": itemID,
-            "itemName": itemName,
-            "parentID": parentID,
-            "warehouseID": warehouseID,
-            "itemCount": itemCount
-        };
+        "tableName": tableName,
+        "itemID": itemID,
+        "itemName": itemName,
+        "parentID": parentID,
+        "warehouseID": warehouseID,
+        "itemCount": itemCount
+    };
     $.post(
         "updateItem.php",
-        {"itemData": itemData},
+        { "itemData": itemData },
         function (msg) {
             if (msg) {
                 alert(msg);
