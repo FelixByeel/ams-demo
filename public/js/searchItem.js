@@ -3,8 +3,8 @@ window.onload = function () {
 
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
-    let Global_warehouseJSON;
-    let Global_itemJSON;
+    let warehouseJSON;
+    let itemJSON;
 
     loadAjaxGetData(itemMenuObj);
 
@@ -19,8 +19,8 @@ function loadAjaxGetData(itemMenuObj) {
         data: { "tableName": "warehouse" },
         dataType: "json",
         cache: false,
-        success: function (warehouseJSON) {
-            Global_warehouseJSON = warehouseJSON;
+        success: function (warehouseJSON_s) {
+            warehouseJSON = warehouseJSON_s;
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
@@ -33,8 +33,8 @@ function loadAjaxGetData(itemMenuObj) {
         data: { "tableName": "item" },
         dataType: "json",
         cache: false,
-        success: function (itemJSON) {
-            Global_itemJSON = itemJSON;
+        success: function (itemJSON_s) {
+            itemJSON = itemJSON_s;
             showItemInfo(itemMenuObj, itemJSON, 0);
             loadAllEndedItems(itemMenuObj, itemJSON);
         },
@@ -135,12 +135,12 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
             trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
-            for (var k = 0; k < Global_warehouseJSON.length; k++) {
-                if (Global_warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
+            for (var k = 0; k < warehouseJSON.length; k++) {
+                if (warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
                     break;
                 }
             }
-            trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
+            trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
             trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
@@ -178,14 +178,14 @@ function loadAllEndedItems(itemMenuObj, itemJSON) {
             trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
-            for (var k = 0; k < Global_warehouseJSON.length; k++) {
+            for (var k = 0; k < warehouseJSON.length; k++) {
 
-                if (Global_warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
+                if (warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
 
                     break;
                 }
             }
-            trObj.insertCell(2).innerHTML = Global_warehouseJSON[k].warehouse_name;
+            trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
             trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
@@ -207,37 +207,37 @@ function editItem(currentSelectedId) {
     $("#IDSpan").text(currentSelectedId);
 
     //找到当前选择项在JSON中的位置，并保存下来
-    for (let i = 0; i < Global_itemJSON.length; i++) {
-        if (Global_itemJSON[i].item_id == currentSelectedId) {
+    for (let i = 0; i < itemJSON.length; i++) {
+        if (itemJSON[i].item_id == currentSelectedId) {
             itemIndex = i;
             break;
         }
     }
 
-    $("#itemNameInput").val(Global_itemJSON[itemIndex].item_name);
-    $("#itemCountInput").val(Global_itemJSON[itemIndex].item_count);
+    $("#itemNameInput").val(itemJSON[itemIndex].item_name);
+    $("#itemCountInput").val(itemJSON[itemIndex].item_count);
 
     //显示可选择的所有分类，默认直接上级分类为选择状态
-    for (let i = 0; i < Global_itemJSON.length; i++) {
-        if (0 == Global_itemJSON[i].is_ended) {
-            let str = "<option value = '" + Global_itemJSON[i].item_id + "'>" + Global_itemJSON[i].item_name + "</option>";
+    for (let i = 0; i < itemJSON.length; i++) {
+        if (0 == itemJSON[i].is_ended) {
+            let str = "<option value = '" + itemJSON[i].item_id + "'>" + itemJSON[i].item_name + "</option>";
             $("#classSelect").append(str);
         }
 
-        if (Global_itemJSON[i].id == Global_itemJSON[itemIndex].parent_id) {
-            $("#classSelect").find("option[value = " + Global_itemJSON[i].item_id + "]").attr("selected", true);
+        if (itemJSON[i].item_id == itemJSON[itemIndex].parent_id) {
+            $("#classSelect").find("option[value = " + itemJSON[i].item_id + "]").attr("selected", true);
         }
     }
 
     //显示仓库，并默认选择当前仓库
-    for (let j = 0; j < Global_warehouseJSON.length; j++) {
-        let str = "<option value = '" + Global_warehouseJSON[j].warehouse_id + "'>";
-        str += Global_warehouseJSON[j].warehouse_name + "</option>";
+    for (let j = 0; j < warehouseJSON.length; j++) {
+        let str = "<option value = '" + warehouseJSON[j].warehouse_id + "'>";
+        str += warehouseJSON[j].warehouse_name + "</option>";
 
         $("#warehouseSelect").append(str);
 
-        if (Global_itemJSON[itemIndex].warehouse_id == Global_warehouseJSON[j].warehouse_id) {
-            $("#warehouseSelect").find("option[value = " + Global_warehouseJSON[j].warehouse_id + "]").attr("selected", true);
+        if (itemJSON[itemIndex].warehouse_id == warehouseJSON[j].warehouse_id) {
+            $("#warehouseSelect").find("option[value = " + warehouseJSON[j].warehouse_id + "]").attr("selected", true);
         }
     }
 }
@@ -247,7 +247,7 @@ $("#saveButton").click(function () {
 
     let itemID = $("#IDSpan").text();
     let parentID = $("#classSelect").val();
-    let warehouseID = $("warehouseSelect").val();
+    let warehouseID = $("#warehouseSelect").val();
     let itemName = $("#itemNameInput").val();
     let itemCount = $("#itemCountInput").val();
 
@@ -257,17 +257,18 @@ $("#saveButton").click(function () {
 
     if (!checkInput(itemCount, 1)) return false;
     if (!checkInput(itemName, 0)) return false;
-
-    $.post(
-        "updateItem.php",
-        {
+    alert(warehouseID);
+    let itemData = {
             "tableName": tableName,
             "itemID": itemID,
+            "itemName": itemName,
             "parentID": parentID,
             "warehouseID": warehouseID,
-            "itemName": itemName,
             "itemCount": itemCount
-        },
+        };
+    $.post(
+        "updateItem.php",
+        {"itemData": itemData},
         function (msg) {
             if (msg) {
                 alert(msg);
