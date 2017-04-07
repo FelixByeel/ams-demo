@@ -278,9 +278,14 @@ $("#saveButton").click(function () {
         "itemCount": itemCount
     };
 
+    let status = "edit"; //标识动作
+
     $.post(
         "updateItem.php",
-        { "itemData": itemData },
+        {
+            "status": status,
+            "itemData": itemData
+        },
         function (msg) {
             if (msg) {
                 alert(msg);
