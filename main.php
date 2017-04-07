@@ -60,7 +60,7 @@ function createDiv(div_id,div_url){
         $("#"+con.id).attr("class","div_enable");
 
         let frameName = "framePage_" + div_id;
-        $("#"+con.id).append("<iframe name = '" + frameName +"'></iframe>");
+        $("#"+con.id).append("<iframe style = 'border:0px; position: absolute; width:100%; height:100%' name = '" + frameName +"'></iframe>");
         window.open(div_url, frameName);
         //$("#"+con.id).load(div_url,{"con":div_id});
         $("#"+con.id).siblings().attr("class","div_disable");
