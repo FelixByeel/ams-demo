@@ -299,7 +299,7 @@ $("#saveButton").click(function () {
     let status = "edit"; //标识动作
 
     $.post(
-        "updateItemService.php",
+        "editItemService.php",
         {
             "status": status,
             "itemData": itemData
