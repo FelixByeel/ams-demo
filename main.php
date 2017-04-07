@@ -145,7 +145,7 @@ $(document).ready(function(){
                     <?php
                         if (($_SESSION['username'] == 'admin') && $_SESSION['role_group'] == 99) {
                             echo "
-                            <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.php', '用户管理');\">用户管理</li>
+                            <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.html', '用户管理');\">用户管理</li>
                             ";
                         }
                     ?>
