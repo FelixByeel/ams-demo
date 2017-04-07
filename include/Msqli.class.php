@@ -107,7 +107,7 @@ class Msqli{
         $sql = "update $tablename set ";
 
         foreach ($col_val as $key => $value) {
-            $sql .= "$key = $value,";
+            $sql .= "$key = '$value',";
         }
 
         $sql = rtrim($sql, ',');
