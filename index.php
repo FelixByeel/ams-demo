@@ -100,9 +100,7 @@ function login_submit(){
         return false;
     }
     else{
-        is_checked = document.getElementById("rememberpwd").checked?1:0;
-
-        $("#errorinfo").load("app/login/loginAction.php",{"username":username.value,"userpwd":password.value,"rememberpwd":is_checked});
+        $("#errorinfo").load("app/login/loginAction.php",{"username":username.value,"userpwd":password.value});
     }
 }
 
@@ -122,10 +120,10 @@ document.onkeydown=function(event){
     <span id="errorinfo"></span>
         <div id = "form_box">
                 <br/>
-                <input id = "username" name="username" type = "text" placeholder="用户名" value="<?php echo empty($_COOKIE['name'])?'':$_COOKIE['name'];?>"/>
+                <input id = "username" name="username" type = "text" placeholder="用户名" value=""/>
                 <br/>
                 <br/>
-                <input id = "userpwd" name= "userpwd" type = "password" placeholder="密码" value="<?php echo empty($_COOKIE['pwd'])?'':$_COOKIE['pwd'];?>"/>
+                <input id = "userpwd" name= "userpwd" type = "password" placeholder="密码" value=""/>
                 <br/>
                 <br/>
                 <label>
