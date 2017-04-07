@@ -296,12 +296,9 @@ $("#saveButton").click(function () {
         "currentCount": currentCount
     };
 
-    let status = "edit"; //标识动作
-
     $.post(
         "editItemService.php",
         {
-            "status": status,
             "itemData": itemData
         },
         function (msg) {
