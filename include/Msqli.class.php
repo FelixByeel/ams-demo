@@ -33,6 +33,11 @@ class Msqli{
         $this->con = mysqli_connect($this->host,$this->username,$this->userpwd,$this->db_name,$this->port) or die('连接失败');
     }
 
+    //return $this->con
+    public function getLink(){
+        return $this->con;
+    }
+
     //get mysqli_affected_rows
     public function getAffectedRows(){
         return mysqli_affected_rows($this->con);
