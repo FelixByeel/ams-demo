@@ -1,25 +1,24 @@
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
+var itemMenuObj;
+var warehouseJSON;
+var itemJSON;
+
 window.onload = function () {
 
-    let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
-
-    var warehouseJSON;
-    var itemJSON;
-
-    loadAjaxGetData(itemMenuObj);
-
+    initData();
 }
 
 //点击search按钮事件
 $("#searchButton").click(function () {
-    let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
+    initData();
+});
 
-    var warehouseJSON;
-    var itemJSON;
+function initData(){
 
+    itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
     itemMenuObj.innerHTML = "";
     loadAjaxGetData(itemMenuObj);
-});
+}
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
 function loadAjaxGetData(itemMenuObj) {
@@ -304,6 +303,9 @@ $("#saveButton").click(function () {
         function (msg) {
             if (msg) {
                 alert(msg);
+
+                //操作后刷新当前页面
+                initData();
             }
         });
     $("#editBox").hide();
