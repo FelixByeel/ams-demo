@@ -79,17 +79,17 @@ if (array_key_exists('item_count', $itemData)) {
 }
 
 //写入数据到数据库
-$mysql = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+$mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'item_t';
 
 //检测当前将要添加的分类是否已经存在
 $conditionParam = $itemData['item_name'];
-$checkRow = $mysql->select($tableName, array('item_id'), "item_name = '$conditionParam'");
+$checkRow = $mysqli->select($tableName, array('item_id'), "item_name = '$conditionParam'");
 if (mysqli_num_rows($checkRow)) {
     die("<br />$conditionParam 已经存在，请重新输入！");
 }
 
-$result = $mysql->insert($tableName, $itemData);
+$result = $mysqli->insert($tableName, $itemData);
 
 //有上级分类时，修改上级分类的is_ended状态'
 if (!empty($itemData['parent_id'])) {
@@ -97,13 +97,13 @@ if (!empty($itemData['parent_id'])) {
     $conditionParam = $itemData['parent_id'];
 
     $column[] = 'is_ended';
-    $result = $mysql->select($tableName, $column, " item_id = $conditionParam");
+    $result = $mysqli->select($tableName, $column, " item_id = $conditionParam");
     $row = mysqli_fetch_assoc($result);
 
     if (1 == $row['is_ended']) {
-        $mysql->update($tableName, $parentUpdate, " item_id = $conditionParam");
+        $mysqli->update($tableName, $parentUpdate, " item_id = $conditionParam");
 
-        if ($mysql->getAffectedRows() < 1) {
+        if ($mysqli->getAffectedRows() < 1) {
             die("上级分类状态修改失败！");
         }
     }
@@ -126,8 +126,8 @@ foreach ($itemData as $key => $value) {
 echo '<br />';
 
 echo '<br />';
-echo "错误：".$mysql->getError();
-$result = $mysql->select($tableName, array('*'));
+echo "错误：".$mysqli->getError();
+$result = $mysqli->select($tableName, array('*'));
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         echo '<br />';

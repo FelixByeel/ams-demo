@@ -25,13 +25,13 @@ else if($searchCondition == "warehouse"){
     $conditionStr = '';
 }
 //连接数据库
-$mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+$mysqli          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
 $tabelData      = [];           //保存查询信息
 
 //查询tabelName表的信息
 
-$result = $mysql->select($tabelName, $columnArray, $conditionStr);
+$result = $mysqli->select($tabelName, $columnArray, $conditionStr);
 
 while ($row = mysqli_fetch_assoc($result)) {
     $tabelData[] = $row;
