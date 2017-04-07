@@ -261,12 +261,11 @@ $("#saveButton").click(function () {
     let parentID = $("#classSelect").val();
     let warehouseID = $("#warehouseSelect").val();
     let itemName = $("#itemNameInput").val();
+    let currentCount = $("#currentCountSpan").text();
     let itemCount = $("#itemCountInput").val();
 
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
-
-    let sign = 0; //符号标识，用来判断 itemCount 是正数还是负数。
 
     if(itemName == ''){
         alert("分类名称不能为空！");
@@ -293,7 +292,8 @@ $("#saveButton").click(function () {
         "itemName": itemName,
         "parentID": parentID,
         "warehouseID": warehouseID,
-        "itemCount": itemCount
+        "itemCount": itemCount,
+        "currentCount": currentCount
     };
 
     let status = "edit"; //标识动作

@@ -25,7 +25,16 @@ $status = $_POST['status'];
 $itemData = $_POST['itemData'];
 
 foreach ($itemData as $key => $value) {
-    if (checkInput($value)) {
-        die('输入的内容不能包含字符 ：' . checkInput($value));
+    if(($key == 'itemCount') && ($value[0] == '-')){
+        if(checkInput(substr($value,1))){
+            die('输入的内容不能包含字符 ：' . checkInput($value));
+        }
+    }
+    else {
+        if (checkInput($value)) {
+            die('输入的内容不能包含字符 ：' . checkInput($value));
+        }
     }
 }
+
+print_r($itemData);
