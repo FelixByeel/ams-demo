@@ -265,7 +265,17 @@ $("#saveButton").click(function () {
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
 
-    if (!checkInput(itemCount, 1)) return false;
+    if(itemName == ''){
+        alert("分类名称不能为空！");
+        return false;
+    }
+
+    if(itemCount == ''){
+        itemCount = 0;
+    }
+
+    if (0 != itemCount && !checkInput(itemCount, 1)) return false;
+
     if (!checkInput(itemName, 0)) return false;
 
     let tableName = "item";
