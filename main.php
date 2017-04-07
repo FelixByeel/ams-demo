@@ -139,8 +139,8 @@ $(document).ready(function(){
                     <li class = "nav_li" onclick = "loadCon('addPerson','app/piechart/piechart.php','查询库存');">查询库存</li>
                     <li class = "nav_li" onclick = "loadCon('seaorchPerson','search.php','物品出库');">物品出库</li>
                     <li class = "nav_li" onclick = "loadCon('111','notice.php','物品入库');">物品入库</li>
-                    <li class = "nav_li" onclick = "loadCon('333','notice.php','添加分类');">添加分类</li>
-                    <li class = "nav_li" onclick = "loadCon('555','notice.php','添加物品');">添加物品</li>
+                    <li class = "nav_li" onclick = "loadCon('addItem','app/itemManagement/addItem.php','添加分类');">添加分类</li>
+                    <li class = "nav_li" onclick = "loadCon('editItem','app/itemManagement/editItem.html','分类管理');">分类管理</li>
                     <li class = "nav_li" onclick = "loadCon('666','notice.php','超长字段测试文字溢出效果');">长字段测试</li>
                     <?php
                         if (($_SESSION['username'] == 'admin') && $_SESSION['role_group'] == 99) {
@@ -171,5 +171,6 @@ $(document).ready(function(){
         <div id = "footer">&copy <script>document.write((new Date().getFullYear()));</script>.</div>
     </div>
 </body>
+
 </html>
 
