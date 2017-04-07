@@ -1,13 +1,13 @@
-<?php session_start(); ?>
-<!--验证登陆-->
-<!-- 工作区 -->
+<?php
+    require_once('app/login/loginCheck.php');
+?>
 <!DOCTYPE>
 <html>
 <head>
 <title>资产管理系统</title>
 <META http-equiv="Content-Type" content="text/html;  charset=UTF-8;">
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
-<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <link href="public/css/main.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="public/js/jquery-1.8.3/jquery.js"></script>
@@ -35,11 +35,11 @@ function createTab(tab_id,title){
     var obj = document.getElementById("tab_ul");
     var tab = document.createElement("li");
 
-    tab.id = "tab_"+tab_id;	
+    tab.id = "tab_"+tab_id;
 
     if(!document.getElementById(tab.id)){
-        tab.innerHTML ="<span class = 'tab_title' onmouseover = 'showCompleteTitle();' title = '" + title + "'>" + title + "</span>" +"<span"+" id ='close_"+tab_id+"' class = 'close'>&times;</span>";
-        //tab.innerHTML ="<span class = 'tab_title'>" + title + "</span>" +"<span"+" id ='close_"+tab_id+"' class = 'close'>&times;</span>";
+        //tab.innerHTML ="<span class = 'tab_title' onmouseover = 'showCompleteTitle();' title = '" + title + "'>" + title + "</span>" +"<span"+" id ='close_"+tab_id+"' class = 'close'>&times;</span>";
+        tab.innerHTML ="<span class = 'tab_title'>" + title + "</span>" + "<span" + " id ='close_" + tab_id + "' class = 'close'>&times;</span>";
         obj.appendChild(tab);
         $('#'+tab.id).attr("class","tab_enable");
         $('#'+tab.id).siblings().attr("class","tab_disable");
@@ -62,7 +62,7 @@ function createDiv(div_id,div_url){
         $("#"+con.id).siblings().attr("class","div_disable");
     }
     else{
-        
+
         $("#"+con.id).attr("class","div_enable");
         $("#"+con.id).siblings().attr("class","div_disable");
     }
@@ -81,7 +81,7 @@ $(document).ready(function(){
         var tab_id = this.id;
         var con = "con_";
         var con_id = con + tab_id.substr(4);
-        
+
         $("#" + tab_id).attr("class","tab_enable");
         $("#" + tab_id).siblings().attr("class","tab_disable");
 
@@ -98,7 +98,7 @@ $(document).ready(function(){
         var tab_id = "tab_" + str_id;
         var con_id = "con_" + str_id;
         if(this.id.substr(0,5) =='close' ){
-            
+
             if($("#" + con_id).is(":hidden")){
                 $("#" + tab_id).remove();
                 $("#" + con_id).remove();
@@ -109,7 +109,7 @@ $(document).ready(function(){
                 $("#" + tab_id).remove();
                 $("#" + con_id).remove();
             }
-            
+
         }
     });
 });
@@ -123,7 +123,7 @@ $(document).ready(function(){
         <div id = "headbox">
             <span id="title">资产管理系统-AMS</span>
             <span id="welcome" onmouseover = "showProfileBox()">
-                    <?php  echo $_SESSION['username'];?>，欢迎。
+                    <?php  echo $_SESSION['nick_name'];?>，欢迎。
             </span>
             <div id = "profile_box" >
                 <ul id = "profile_box_ul">
@@ -131,7 +131,7 @@ $(document).ready(function(){
                     <li  onClick = "location.href='app/login/logOff.php'">注销</li>
                 </ul>
             </div>
-        </div> 
+        </div>
 
         <!-- 导航栏-->
         <div id = "nav_box">
@@ -142,10 +142,17 @@ $(document).ready(function(){
                     <li class = "nav_li" onclick = "loadCon('333','notice.php','添加分类');">添加分类</li>
                     <li class = "nav_li" onclick = "loadCon('555','notice.php','添加物品');">添加物品</li>
                     <li class = "nav_li" onclick = "loadCon('666','notice.php','超长字段测试文字溢出效果');">长字段测试</li>
+                    <?php
+                        if (($_SESSION['username'] == 'admin') && $_SESSION['role_group'] == 99) {
+                            echo "
+                            <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.php', '用户管理');\">用户管理</li>
+                            ";
+                        }
+                    ?>
                 </ul>
         </div>
 
-        <!-- 主体内容区 -->	
+        <!-- 主体内容区 -->
         <div id="main_box">
             <!--TAB标签box-->
             <div id = "tab_box">
