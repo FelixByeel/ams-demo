@@ -226,7 +226,8 @@ function editItem(currentSelectedId) {
     }
 
     $("#itemNameInput").val(itemJSON[itemIndex].item_name);
-    $("#itemCountInput").val(itemJSON[itemIndex].item_count);
+    $("#itemCountInput").val(0);
+    $("#currentCountSpan").text(itemJSON[itemIndex].item_count);
 
     //显示可选择的所有分类，默认直接上级分类为选择状态
     for (let i = 0; i < itemJSON.length; i++) {
@@ -265,6 +266,8 @@ $("#saveButton").click(function () {
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
 
+    let sign = 0; //符号标识，用来判断 itemCount 是正数还是负数。
+
     if(itemName == ''){
         alert("分类名称不能为空！");
         return false;
@@ -274,7 +277,12 @@ $("#saveButton").click(function () {
         itemCount = 0;
     }
 
-    if (0 != itemCount && !checkInput(itemCount, 1)) return false;
+    if(itemCount[0] == '-') {
+        if(!checkInput(itemCount.substr(1), 1)) return false;
+    }
+    else{
+        if (0 != itemCount && !checkInput(itemCount, 1)) return false;
+    }
 
     if (!checkInput(itemName, 0)) return false;
 
