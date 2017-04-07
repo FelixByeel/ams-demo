@@ -26,8 +26,10 @@ function hideProfileBox() {
     obj.style.display = "none";
 }
 
-$(document).click(function(e){
-    hideProfileBox();
+$(document).ready(function(){
+    $("#profile_box").mouseleave(function(){
+        hideProfileBox();
+    });
 });
 
 //创建tab
