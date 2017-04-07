@@ -127,7 +127,7 @@ document.onkeydown=function(event){
                 <br/>
                 <br/>
                 <label>
-                    <input id = "rememberpwd" name = "rememberpwd" type="checkbox" <?php if(!empty($_COOKIE['check'])){echo "checked='checked'";} ?> />记住密码
+                    <input id = "rememberpwd" name = "rememberpwd" type="checkbox"/>记住密码
                 </label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="forget" href="#">忘记密码</a>
             <button id = "login_btn" onclick = "login_submit()">登录</button>
