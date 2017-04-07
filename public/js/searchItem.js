@@ -3,8 +3,8 @@ window.onload = function () {
 
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
-    let warehouseJSON;
-    let itemJSON;
+    var warehouseJSON;
+    var itemJSON;
 
     loadAjaxGetData(itemMenuObj);
 
@@ -14,8 +14,8 @@ window.onload = function () {
 $("#searchButton").click(function () {
     let itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
 
-    let warehouseJSON;
-    let itemJSON;
+    var warehouseJSON;
+    var itemJSON;
 
     itemMenuObj.innerHTML = "";
     loadAjaxGetData(itemMenuObj);
@@ -268,7 +268,7 @@ $("#saveButton").click(function () {
 
     if (!checkInput(itemCount, 1)) return false;
     if (!checkInput(itemName, 0)) return false;
-    alert(warehouseID);
+
     let itemData = {
         "tableName": tableName,
         "itemID": itemID,
@@ -277,6 +277,7 @@ $("#saveButton").click(function () {
         "warehouseID": warehouseID,
         "itemCount": itemCount
     };
+
     $.post(
         "updateItem.php",
         { "itemData": itemData },
@@ -294,7 +295,7 @@ $("#cancelButton").click(function () {
     $("#editBox").hide();
 });
 
-//删除(保留功能)
+//删除(此为保留功能，暂不实现)
 $("#delButton").click(function () {
 
 });
