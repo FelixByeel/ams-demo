@@ -58,7 +58,11 @@ function createDiv(div_id,div_url){
     if(!document.getElementById(con.id)){
         obj.appendChild(con);
         $("#"+con.id).attr("class","div_enable");
-        $("#"+con.id).load(div_url,{"con":div_id});
+
+        let frameName = "framePage_" + div_id;
+        $("#"+con.id).append("<iframe name = '" + frameName +"'></iframe>");
+        window.open(div_url, frameName);
+        //$("#"+con.id).load(div_url,{"con":div_id});
         $("#"+con.id).siblings().attr("class","div_disable");
     }
     else{
