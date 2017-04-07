@@ -264,11 +264,11 @@ $("#saveButton").click(function () {
 
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
-    tableName = "item";
 
     if (!checkInput(itemCount, 1)) return false;
     if (!checkInput(itemName, 0)) return false;
 
+    let tableName = "item";
     let itemData = {
         "tableName": tableName,
         "itemID": itemID,
