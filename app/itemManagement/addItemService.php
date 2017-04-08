@@ -15,7 +15,7 @@ require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
 //验证用户权限
-if($_SESSION['role_group'] != 2) {
+if ($_SESSION['role_group'] < 2) {
     die('当前用户无法进行此操作！');
 }
 
@@ -113,7 +113,6 @@ if ($mysqli->getAffectedRows() < 1) {
 
 //有上级分类时，修改上级分类的is_ended状态,如果is_ended为1，则置为0, 同时将上级分类的count清空
 if (!empty($itemData['parent_id'])) {
-
     $parentItem['is_ended'] = 0;
     $parentItem['item_count'] = 0;
 
