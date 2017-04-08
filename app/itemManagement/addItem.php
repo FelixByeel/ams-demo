@@ -5,6 +5,11 @@
     require_once (APP_ROOT.'include/dbConfig.php');
     require_once (APP_ROOT.'include/Msqli.class.php');
 
+    //验证用户权限
+    if($_SESSION['role_group'] != 99) {
+        die('当前用户无法进行此操作！');
+    }
+
     //连接数据库
     $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
