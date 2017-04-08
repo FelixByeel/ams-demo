@@ -70,9 +70,9 @@
         <div id = "addWarehouseDiv" class = 'addWarehouseDivHide'>
             <span id = "closeDiv" onclick = "closePopLayer()">&times;</span>
             <p>仓库名称：</p>
-            <input type="text" name="warehouseName" value=""/>
+            <input id = "warehouseInput" type="text" name="warehouseName" value=""/>
             <br />
-            <button id = "saveWarehouseName">保存</button>
+            <button id = "saveWarehouseName" onclick = "saveWarehouse()">保存</button>
         </div>
 </body>
 
@@ -300,13 +300,13 @@
                     if(content[i] == specialCharacter[j]){
                         is_existC = 1;
                         if((' ' == specialCharacter[j]) || ('　' == specialCharacter[j])){
-                            alert("分类名称中不能含有空格！");
+                            alert("名称中不能含有空格！");
                         }
                         else{
-                            alert("分类名称中不能含有字符：" + specialCharacter[j]);
+                            alert("名称中不能含有字符：" + specialCharacter[j]);
                         }
 
-                        document.getElementById('itemNameInput').focus();
+                        //document.getElementById('itemNameInput').focus();
                         return false;
                     }
                 }
@@ -355,6 +355,8 @@
         return val.length ? val[val.length - 1] : 0;
     }
 
+    //---------------------仓库弹出层操作--------------------
+
     //显示添加仓库弹出层
     function showAddWarehouseDiv() {
         document.getElementById('addWarehouseDiv').style.display = "block";
@@ -369,6 +371,29 @@
 
         document.getElementById('shadeDiv').style.width = '0';
         document.getElementById('shadeDiv').style.height = '0';
+    }
+
+    //添加仓库--保存
+    function saveWarehouse(){
+
+        document.getElementById('addWarehouseDiv').style.display = "none";
+
+        document.getElementById('shadeDiv').style.width = '0';
+        document.getElementById('shadeDiv').style.height = '0';
+
+        let getInputValue = document.getElementById("warehouseInput").value;
+
+        getInputValue = getInputValue.replace(/(^\s*)|(\s*$)/g, "");
+
+        if(checkInput(getInputValue, 0)){
+            $.post(
+                "addItem-warehouseService.php",
+                {"warehouseName":getInputValue},
+                function(msg){
+                    alert(msg);
+                }
+            );
+        }
     }
 
 </script>
