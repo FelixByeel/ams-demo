@@ -159,6 +159,7 @@ $(document).ready(function(){
                                 echo "
                                     <li class = 'nav_li' onclick = \"loadCon('editItem','app/itemManagement/editItem.php','分类管理');\">分类管理</li>
                                     <li class = 'nav_li' onclick = \"loadCon('addItem','app/itemManagement/addItem.php','添加分类');\">添加分类</li>
+                                    <li class = 'nav_li' onclick = \"loadCon('addwarehouse','app/warehouseManagement/addWarehouse.html','仓库管理');\">仓库管理</li>
                                 ";
                             }
                         }
