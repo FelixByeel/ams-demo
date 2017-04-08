@@ -62,8 +62,10 @@
     <div id = "inputBox">
         <p>请输入分类（物品）名称：</p>
         <input id = "itemNameInput" type = "text"/>
+        <!--
         <p>请输入物品数量：</p>
         <input id = "itemCountInput" type = "text"/>
+        -->
     </div>
     <button id = "addItem2" onclick = "addItem()">添加</button>
     <div id = "tips" ></div>
@@ -219,7 +221,7 @@
     function addItem(){
 
         let itemName        = document.getElementById('itemNameInput').value;       //获取输入的分类名称
-        let itemCount       = document.getElementById('itemCountInput').value;      //获取输入的物品数量
+        //let itemCount       = document.getElementById('itemCountInput').value;      //获取输入的物品数量
 
         let warehouseId     = getWarehouseRadioValue();                             //存储当前选择的仓库信息
         let itemSelectId    = getItemSelectOptionValueList();                       //存储当前将要添加的分类的上一级分类ID
@@ -227,7 +229,7 @@
         let itemJSON;                                                               //构建JSON格式数据用来整体提交数据
 
         itemName            = itemName.replace(/(^\s*)|(\s*$)/g, "");
-        itemCount           = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
+        //itemCount           = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
 
         //验证输入数据的有效性
         if(!warehouseId) {
@@ -236,17 +238,17 @@
         }
 
         if(0 != itemName.length && checkInput(itemName, 0)){
-            if((0 != itemCount.length && checkInput(itemCount, 1)) || (0 == itemCount.length)){
+            //if((0 != itemCount.length && checkInput(itemCount, 1)) || (0 == itemCount.length)){
                 itemJSON = {
                     "warehouse_id"  : warehouseId,
                     "parent_id"     : itemSelectId,
-                    "item_name"     : itemName,
-                    "item_count"    : itemCount
+                    "item_name"     : itemName
+                    //"item_count"    : itemCount
                 };
-            }
-            else {
-                return false;
-            }
+            //}
+            //else {
+            //    return false;
+            //}
         }
         else if(0 == itemName.length){
             alert("请先输入一个分类名称！");
@@ -263,6 +265,7 @@
         }
         else{
             $("#tips").load("addItemService.php", {"itemData" : itemJSON}, function(msg){
+                document.getElementById('itemNameInput').value = '';
                 alert(msg);
             });
         }
@@ -275,7 +278,7 @@
 
         if(1 == flag && (!isNumberReg.test(content))){
             alert("输入的物品数量无效，请重新输入！");
-            document.getElementById('itemCountInput').focus();
+            //document.getElementById('itemCountInput').focus();
             return false;
         }
         else if(0 == flag){

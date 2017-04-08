@@ -4,12 +4,20 @@
 */
 define('APP_ROOT', dirname(dirname(__DIR__)).'/');
 
+//加载用户登陆验证
+require_once (APP_ROOT.'app/login/loginCheck.php');
+
 //加载数据验证
 require_once (APP_ROOT.'include/checkInput.php');
 
 //加载数据库配置
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
+
+//验证用户权限
+if($_SESSION['role_group'] != 99) {
+    die('当前用户无法进行此操作！');
+}
 
 //验证是否正确提交数据
 if (!isset($_POST['itemData'])) {
@@ -19,11 +27,13 @@ if (!isset($_POST['itemData'])) {
 //保存前端提交的数据
 $itemData = $_POST['itemData'];
 
+/*
 echo '处理前：<br />';
 foreach ($itemData as $key => $value) {
     echo '<br />';
     echo $key.' : '.$value;
 }
+*/
 
 //验证提交的数据是否安全
 foreach ($itemData as $key => $value) {
@@ -34,7 +44,7 @@ foreach ($itemData as $key => $value) {
 
 $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 
-if (4 !== count($itemData)) {
+if (3 !== count($itemData)) {
     die("输入的数据有误，请重新输入！");
 }
 
@@ -65,7 +75,7 @@ if (array_key_exists('item_name', $itemData)) {
         die("分类ID不能为空!");
     }
 }
-
+/*
 if (array_key_exists('item_count', $itemData)) {
     if (!empty($itemData['item_count'])) {
         if (!preg_match($isNumberReg, $itemData['item_count'])) {
@@ -77,44 +87,52 @@ if (array_key_exists('item_count', $itemData)) {
 } else {
     die('输入的数据有误，请重新输入！');
 }
-
+*/
 //写入数据到数据库
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'item_t';
 
 //检测当前将要添加的分类是否已经存在
-$conditionParam = $itemData['item_name'];
-$checkRow = $mysqli->select($tableName, array('item_id'), "item_name = '$conditionParam'");
+$condition = $itemData['item_name'];
+$checkRow = $mysqli->select($tableName, array('item_id'), "item_name = '$condition'");
 if (mysqli_num_rows($checkRow)) {
-    die("<br />$conditionParam 已经存在，请重新输入！");
+    die("$condition  已经存在，请重新输入！");
 }
 
+//将新记录写入数据库
 $result = $mysqli->insert($tableName, $itemData);
 
-//有上级分类时，修改上级分类的is_ended状态'
-if (!empty($itemData['parent_id'])) {
-    $parentUpdate['is_ended'] = 0;
-    $conditionParam = $itemData['parent_id'];
+//判断写入是否成功
+if ($mysqli->getAffectedRows() > 0) {
+    echo "添加成功！";
+}
 
+if ($mysqli->getAffectedRows() < 1) {
+    die("添加失败！");
+}
+
+//有上级分类时，修改上级分类的is_ended状态,如果is_ended为1，则置为0, 同时将上级分类的count清空
+if (!empty($itemData['parent_id'])) {
+
+    $parentItem['is_ended'] = 0;
+    $parentItem['item_count'] = 0;
+
+    $condition = " item_id = {$itemData['parent_id']}";
     $column[] = 'is_ended';
-    $result = $mysqli->select($tableName, $column, " item_id = $conditionParam");
+
+    $result = $mysqli->select($tableName, $column, $condition);
     $row = mysqli_fetch_assoc($result);
 
     if (1 == $row['is_ended']) {
-        $mysqli->update($tableName, $parentUpdate, " item_id = $conditionParam");
+        $mysqli->update($tableName, $parentItem, $condition);
 
         if ($mysqli->getAffectedRows() < 1) {
-            die("上级分类状态修改失败！");
+            echo "上级分类状态修改失败！";
         }
     }
 }
 
-if ($result) {
-    echo '<br/>操作成功!';
-} else {
-    echo '<br/>操作失败!';
-}
-
+/*
 //测试输出
 echo '<br />';
 echo '<br /> 处理后：<br />';
@@ -134,3 +152,4 @@ if ($result) {
         echo $row['item_id'].' : '.$row['item_name'].' : '.$row['parent_id'].' : '.$row['warehouse_id'].' : '.$row['item_count'];
     }
 }
+*/
