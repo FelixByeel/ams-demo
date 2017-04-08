@@ -38,30 +38,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<link href="../../public/css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../public/css/addItem.css" rel="stylesheet" type="text/css" />
 <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
 </head>
 <body>
+    <div id = 'bodyBox'>
+        <div id = "warehouseBox" class = "itemDiv">
+            <p>请选择备货仓库：</p>
+            <div id = "warehouseList"></div>
+            <button id = "addWarehouse" onclick = "" >添加仓库</button>
+        </div>
+        <div id = "itemBox" class = "itemDiv">
+            <p>请选择上级分类：</p>
+            <div id = "itemList"></div>
+        </div>
 
-    <div id = "warehouseBox">
-        <p>请选择备货仓库：</p>
-        <div id = "warehouseList"></div>
+        <div id = "inputBox" class = "itemDiv">
+            <p>请输入分类（物品）名称：</p>
+            <input id = "itemNameInput" type = "text"/>
+            <!--
+            <p>请输入物品数量：</p>
+            <input id = "itemCountInput" type = "text"/>
+            -->
+        </div>
+        <button id = "addItem" onclick = "addItem()">添加</button>
+        <div id = "tips" ></div>
     </div>
-    <div id = "itemBox">
-        <p>请选择上级分类：</p>
-        <div id = "itemList"></div>
-    </div>
-
-    <div id = "inputBox">
-        <p>请输入分类（物品）名称：</p>
-        <input id = "itemNameInput" type = "text"/>
-        <!--
-        <p>请输入物品数量：</p>
-        <input id = "itemCountInput" type = "text"/>
-        -->
-    </div>
-    <button id = "addItem2" onclick = "addItem()">添加</button>
-    <div id = "tips" ></div>
 </body>
 
 <!--script-->
