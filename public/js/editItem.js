@@ -303,9 +303,6 @@ $("#saveButton").click(function () {
         function (msg) {
             if (msg) {
                 alert(msg);
-
-                //操作后刷新当前页面
-                initData();
             }
         });
     $("#editBox").hide();
