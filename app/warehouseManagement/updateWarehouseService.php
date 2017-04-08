@@ -20,6 +20,13 @@ if ($_SESSION['role_group'] < 2) {
 }
 
 //验证是否正确提交数据
+if (!isset($_POST['warehouseID']) || empty($_POST['warehouseID'])) {
+    die('提交的数据有误，请重新输入！');
+}
+else {
+    $warehouseID['warehouse_id'] = $_POST['warehouseID'];
+}
+
 if (!isset($_POST['warehouseName']) || empty($_POST['warehouseName'])) {
     die('提交的数据有误，请重新输入！');
 }
@@ -31,25 +38,26 @@ if (checkInput($warehouseName['warehouse_name'])) {
     die('输入的内容不能包含字符 ：' . checkInput($warehouseName['warehouse_name']));
 }
 
+$isNumberReg = '/^[1-9]+[0-9]*]*$/';
+
+if (!preg_match($isNumberReg, $warehouseID['warehouse_id'])) {
+    die("仓库选择有误!");
+}
+
 //写入数据到数据库
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'warehouse_t';
 
 //检测当前将要添加的分类是否已经存在
-$condition = $warehouseName['warehouse_name'];
-$checkRow = $mysqli->select($tableName, array('warehouse_name'), "warehouse_name = '$condition'");
-if (mysqli_num_rows($checkRow)) {
-    die("$condition  已经存在，请重新输入！");
-}
+$condition = $warehouseID['warehouse_id'];
 
-//将新记录写入数据库
-$result = $mysqli->insert($tableName, $warehouseName);
+$mysqli->update($tableName, $warehouseName, "warehouse_id = $condition");
 
 //判断写入是否成功
 if ($mysqli->getAffectedRows() > 0) {
-    echo "添加成功！";
+    echo "更新成功！";
 }
 
 if ($mysqli->getAffectedRows() < 1) {
-    die("添加失败！");
+    die("更新失败！");
 }

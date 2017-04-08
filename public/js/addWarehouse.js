@@ -47,27 +47,61 @@ function loadWarehouseInfo(warehouseListBoxObj) {
         let trObj = tableObj.insertRow();
 
         trObj.insertCell(0).innerHTML = warehouseJSON[i].warehouse_name;
-        trObj.insertCell(1).innerHTML = "<button id = 'warehouseID_" + warehouseJSON[i].warehouse_id + "' onclick = 'editWarehouseName(" + warehouseJSON[i].warehouse_id + "'>编辑</button>";
-        trObj.insertCell(2).innerHTML = "<button id = 'warehouseID_" + warehouseJSON[i].warehouse_id + "' onclick = 'delWarehouseName(" + warehouseJSON[i].warehouse_id + "'>删除</button>";
+        trObj.insertCell(1).innerHTML = "<button id = 'warehouseID_" + warehouseJSON[i].warehouse_id + "' onclick = 'editWarehouseName(" + warehouseJSON[i].warehouse_id + ")'>编辑</button>";
+        trObj.insertCell(2).innerHTML = "<button id = 'warehouseID_" + warehouseJSON[i].warehouse_id + "' onclick = 'delWarehouseName(" + warehouseJSON[i].warehouse_id + ")'>删除</button>";
     }
     warehouseListBoxObj.innerHTML = '';
     warehouseListBoxObj.appendChild(tableObj);
 }
 
 function editWarehouseName(warehouseID) {
+    let warehouseName = '';
+
+    for(let i = 0; i < warehouseJSON.length; i++){
+        if(warehouseID == warehouseJSON[i].warehouse_id) {
+            warehouseName  = warehouseJSON[i].warehouse_name;
+            break;
+        }
+    }
+
+    document.getElementById('warehouseCodeSpan').innerHTML = warehouseID;
+    document.getElementById('editWarehouseInput').value = warehouseName;
+
+    document.getElementById('editWarehousePopLayer').style.display = 'block';
     
 }
 
 function delWarehouseName(warehouseID) {
-    
+    let isNumberReg = /^[1-9]+[0-9]*]*$/;
+    //warehouseID = warehouseID.replace(/(^\s*)|(\s*$)/g, "");
+    let conf = confirm("确认删除？");
+
+    if(!isNumberReg.test(warehouseID)){
+        alert("操作异常！");
+    }
+    else if(conf){
+        $.post(
+            "delWarehouseService.php",
+            { "warehouseID": warehouseID },
+            function (msg) {
+                alert(msg);
+                initData();
+            }
+        );
+    }
 }
 
 //添加仓库
 function addWarehouse(){
     let inputObj = document.getElementById('warehouseInput');
-    let warehouseName  = inputObj.value.replace(/(^\s*)|(\s*$)/g, "");;
+    let warehouseName  = inputObj.value.replace(/(^\s*)|(\s*$)/g, "");
 
     let str = checkInput(warehouseName);
+
+    if(warehouseName.length == 0) {
+        alert("仓库名称不能为空！");
+        return false;
+    }
 
     if(str){
         alert("输入名称不能包含字符：" + str);
@@ -107,4 +141,45 @@ function checkInput(str) {
         return specialCharacter[i];
     }
     else return flag;
+}
+
+//弹出层更新动作
+function updateWarehouse(){
+    let warehouseID = document.getElementById('warehouseCodeSpan').innerHTML;
+    let warehouseName =  document.getElementById('editWarehouseInput').value;
+
+    let isNumberReg = /^[1-9]+[0-9]*]*$/;
+    warehouseName  = warehouseName.replace(/(^\s*)|(\s*$)/g, "");
+
+    let str = checkInput(warehouseName);
+
+    if(!isNumberReg.test(warehouseID)){
+        alert("操作异常！");
+        return false;
+    }
+
+    if(warehouseName.length == 0) {
+        alert("仓库名称不能为空！");
+        return false;
+    }
+
+    if(str){
+        alert("输入名称不能包含字符：" + str);
+        document.getElementById('editWarehouseInput').focus();
+        return false;
+    }
+
+    $.post(
+        "updateWarehouseService.php",
+        { 
+            "warehouseID": warehouseID,
+            "warehouseName": warehouseName 
+        },
+        function (msg) {
+            alert(msg);
+            initData();
+        }
+    );
+
+    document.getElementById('editWarehousePopLayer').style.display = 'none';
 }
