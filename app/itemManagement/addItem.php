@@ -42,12 +42,11 @@
 <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
 </head>
 <body>
-    <div id = "shadeDiv"></div>
+
         <div id = 'bodyBox'>
             <div id = "warehouseBox" class = "itemDiv">
                 <p>请选择备货仓库：</p>
                 <div id = "warehouseList"></div>
-                <button id = "addWarehouse" onclick = "showAddWarehouseDiv()" >添加仓库</button>
             </div>
             <div id = "itemBox" class = "itemDiv">
                 <p>请选择上级分类：</p>
@@ -64,15 +63,6 @@
             </div>
             <button id = "addItem" onclick = "addItem()">保存</button>
             <div id = "tips" ></div>
-        </div>
-
-        <!-- 弹出层-->
-        <div id = "addWarehouseDiv" class = 'addWarehouseDivHide'>
-            <span id = "closeDiv" onclick = "closePopLayer()">&times;</span>
-            <p>仓库名称：</p>
-            <input id = "warehouseInput" type="text" name="warehouseName" value=""/>
-            <br />
-            <button id = "saveWarehouseName" onclick = "saveWarehouse()">保存</button>
         </div>
 </body>
 
@@ -353,47 +343,6 @@
         }
         //获取所有祖先分类ID，返回父分类ID
         return val.length ? val[val.length - 1] : 0;
-    }
-
-    //---------------------仓库弹出层操作--------------------
-
-    //显示添加仓库弹出层
-    function showAddWarehouseDiv() {
-        document.getElementById('addWarehouseDiv').style.display = "block";
-
-        document.getElementById('shadeDiv').style.width = '100%';
-        document.getElementById('shadeDiv').style.height = '100%';
-    }
-
-    //关闭添加仓库弹出层
-    function closePopLayer() {
-        document.getElementById('addWarehouseDiv').style.display = "none";
-
-        document.getElementById('shadeDiv').style.width = '0';
-        document.getElementById('shadeDiv').style.height = '0';
-    }
-
-    //添加仓库--保存
-    function saveWarehouse(){
-
-        document.getElementById('addWarehouseDiv').style.display = "none";
-
-        document.getElementById('shadeDiv').style.width = '0';
-        document.getElementById('shadeDiv').style.height = '0';
-
-        let getInputValue = document.getElementById("warehouseInput").value;
-
-        getInputValue = getInputValue.replace(/(^\s*)|(\s*$)/g, "");
-
-        if(checkInput(getInputValue, 0)){
-            $.post(
-                "addItem-warehouseService.php",
-                {"warehouseName":getInputValue},
-                function(msg){
-                    alert(msg);
-                }
-            );
-        }
     }
 
 </script>
