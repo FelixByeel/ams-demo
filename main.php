@@ -142,17 +142,25 @@ $(document).ready(function(){
         <!-- 导航栏-->
         <div id = "nav_box">
                 <ul id = "nav_ul">
-                    <li class = "nav_li" onclick = "loadCon('addPerson','app/piechart/piechart.php','查询库存');">查询库存</li>
-                    <li class = "nav_li" onclick = "loadCon('seaorchPerson','search.php','物品出库');">物品出库</li>
-                    <li class = "nav_li" onclick = "loadCon('111','notice.php','物品入库');">物品入库</li>
-                    <li class = "nav_li" onclick = "loadCon('addItem','app/itemManagement/addItem.php','添加分类');">添加分类</li>
-                    <li class = "nav_li" onclick = "loadCon('editItem','app/itemManagement/editItem.php','分类管理');">分类管理</li>
-                    <li class = "nav_li" onclick = "loadCon('666','notice.php','超长字段测试文字溢出效果');">长字段测试</li>
+
                     <?php
                         if (($_SESSION['username'] == 'admin') && $_SESSION['role_group'] == 99) {
                             echo "
-                            <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.html', '用户管理');\">用户管理</li>
+                                <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.html', '用户管理');\">用户管理</li>
                             ";
+                        }
+                        else{
+
+                            echo "
+                                <li class = 'nav_li' onclick = \"loadCon('addPerson','app/piechart/piechart.php','查询库存');\">查询库存</li>
+                            ";
+
+                            if ($_SESSION['role_group'] >= 2) {
+                                echo "
+                                    <li class = 'nav_li' onclick = \"loadCon('editItem','app/itemManagement/editItem.php','分类管理');\">分类管理</li>
+                                    <li class = 'nav_li' onclick = \"loadCon('addItem','app/itemManagement/addItem.php','添加分类');\">添加分类</li>
+                                ";
+                            }
                         }
                     ?>
                 </ul>
