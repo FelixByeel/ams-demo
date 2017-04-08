@@ -1,5 +1,5 @@
 <?php
-//过滤一些特殊符号
+//过滤一些特殊符号,找到特殊字符，返回该字符，否则返回false
 function checkInput($str){
     $specialCharacter  = array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
                 '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
@@ -11,7 +11,7 @@ function checkInput($str){
     }
 
     if($result){
-        if((' ' == $specialCharacter[j]) || ('　' == $specialCharacter[j])){
+        if((' ' == $specialCharacter[$result]) || ('　' == $specialCharacter[$result])){
             return '空格';
         }
         else{
