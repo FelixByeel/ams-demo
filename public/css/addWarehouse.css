@@ -1,0 +1,177 @@
+html,body {
+    width: 100%;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    font-family: Arial,"Microsoft YaHei",sans-serif;
+}
+
+
+/*遮罩层*/
+#shadeBox{
+
+    background-color: #555;
+    opacity: 0.5;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 1;
+}
+
+#contentBox{
+    height: 100%;
+    width: 60%;
+    margin: 5% auto;
+
+}
+/*---添加BOX样式----*/
+#addBox{
+    width: 100%;
+    margin-bottom: 50px;
+    float: left;
+    border-bottom: 1px solid #6D8EA0;
+}
+
+#addBox p{
+    margin-top: 12px;
+    margin-left: 0px;
+    margin-right: 20px;
+    float: left;
+    width: 150px;
+    line-height: 30px;
+
+}
+
+#warehouseInput{
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    border: 1px solid #999;
+    border-radius: 3px;
+}
+
+#addWarehouseButton{
+    margin-left: 55px;
+    margin-top: 14px;
+}
+
+/*---列表样式----*/
+#listBox{
+    float: left;
+    width:100%;
+    height: 100%;
+    border-bottom: 1px solid #6D8EA0;
+}
+
+#listBox p{
+    margin-top: 0px;
+    float: left;
+    width: 150px;
+    line-height: 30px;
+    background-color: #FFF;
+}
+
+#warehouseListBox{
+    width: 500px;
+    float: left;
+    background-color: #FFF;
+}
+
+
+
+/*----table 样式----*/
+#warehouseTable {
+    width: 400px;
+    border-collapse: collapse;
+}
+
+#warehouseTable tr{
+    margin: 5px;
+    border-bottom: 1px dotted #888;
+}
+
+#warehouseTable td{
+    text-align: center;
+    width:100px;
+
+}
+
+#addBox{
+    float: left;
+}
+
+/*--- 按钮----*/
+
+button{
+    width:100px;
+    height: 30px;
+    border: none;
+    background-color: #00BFFF;
+    color: #FFF;
+    border-radius: 5px;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: #5CD6FF;
+    transition: background-color 0.3s;
+}
+
+button:active {
+    position: relative;
+    top:1px;
+}
+
+/*---弹出层样式---*/
+#editWarehousePopLayer{
+    width: 50%;
+    height: 300px;
+    position: absolute;
+    z-index: 10;
+    background-color: #FFF;
+    text-align: center;
+    box-shadow: 1px 1px 10px 1px #000;
+    border-radius: 5px;
+}
+
+#closeSpan{
+    float: right;
+    width: 30px;
+    margin-right: 1px;
+    line-height: 20px;
+    font-size: 1.5em;
+    background-color: #FFF;
+}
+
+#closeSpan:hover{
+    background-color: red;
+    color: #FFF;
+    cursor: pointer;
+}
+
+
+#actionEditBox{
+    width: 100%;
+    margin-top: 100px;
+}
+
+#warehouseCodeP{
+    width: 200px;
+
+}
+
+#editWarehouseInput{
+    margin-left: 20px;
+    width: 200px;
+    height: 30px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding:0 5px;
+}
+
+#saveWarehouseButton{
+    margin-left: 40px;
+}

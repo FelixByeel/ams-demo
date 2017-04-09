@@ -54,6 +54,7 @@ function loadWarehouseInfo(warehouseListBoxObj) {
     warehouseListBoxObj.appendChild(tableObj);
 }
 
+//----编辑-----
 function editWarehouseName(warehouseID) {
     let warehouseName = '';
 
@@ -67,10 +68,15 @@ function editWarehouseName(warehouseID) {
     document.getElementById('warehouseCodeSpan').innerHTML = warehouseID;
     document.getElementById('editWarehouseInput').value = warehouseName;
 
-    document.getElementById('editWarehousePopLayer').style.display = 'block';
+    //显示遮罩层
+    document.getElementById('shadeBox').style.width = '100%';
+    document.getElementById('shadeBox').style.height = '100%';
+
+    document.getElementById('editWarehousePopLayer').style.display = 'block'; //弹出编辑界面
     
 }
 
+//-----删除--------
 function delWarehouseName(warehouseID) {
     let isNumberReg = /^[1-9]+[0-9]*]*$/;
     //warehouseID = warehouseID.replace(/(^\s*)|(\s*$)/g, "");
@@ -181,5 +187,15 @@ function updateWarehouse(){
         }
     );
 
+    //关闭弹出层，关闭遮罩层
+    document.getElementById('shadeBox').style.width = '0';
+    document.getElementById('shadeBox').style.height = '0';
+    document.getElementById('editWarehousePopLayer').style.display = 'none';
+}
+
+//关闭弹出层，关闭遮罩层
+function closePopLayer(){
+    document.getElementById('shadeBox').style.width = '0';
+    document.getElementById('shadeBox').style.height = '0';
     document.getElementById('editWarehousePopLayer').style.display = 'none';
 }

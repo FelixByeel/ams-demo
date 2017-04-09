@@ -67,34 +67,24 @@ select{
     border-radius: 3px;
 }
 
-#addItem{
-    width:100px;
-    height: 30px;
-    margin-left: 300px;
-    margin-top: 100px;
-}
+/*--- 按钮----*/
 
-#addWarehouse{
-    margin-top: 17px;
-    margin-left: 50px;
+button{
     width:100px;
-    height: 30px;
-}
-
-#addItem, #addWarehouse {
+    height: 35px;
     border: none;
     background-color: #00BFFF;
     color: #FFF;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
-#addItem:hover, #addWarehouse:hover{
+button:hover{
     cursor: pointer;
-    background-color: #00AEE8;
-    transition: background-color 0.2s;
+    background-color: #5CD6FF;
+    transition: background-color 0.3s;
 }
 
-#addItem:active, #addWarehouse:active {
+button:active {
     position: relative;
     top:1px;
 }
