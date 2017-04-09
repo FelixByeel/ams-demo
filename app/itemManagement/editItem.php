@@ -19,12 +19,14 @@
         <!--搜索模块 start-->
         <div id = "searchBox">
             <div id = "searchConditionBox">
-                <label>分类编号：<input id = "searchItemCodeInput" type = "text" /></label>
+                <label>分类编号：<input id = "searchItemIDInput" type = "text" /></label>
                 <label>分类名称：
                     <select id = "searchItemNameSelect"></select>
                     <input id = "searchItemNameInput" type = "text" />
                 </label>
-                <label>所属仓库：<select id = "searchWarehouseNameSelect"></select></label>
+                <label>所属仓库：
+                    <span id = "searchWarehouseNameSpan">无</span>
+                </label>
             </div>
             <button id = "searchButton" type="button">搜索</button>
         </div>

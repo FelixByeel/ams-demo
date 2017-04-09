@@ -8,11 +8,6 @@ window.onload = function () {
     initData();
 }
 
-//点击search按钮事件
-$("#searchButton").click(function () {
-    initData();
-});
-
 function initData() {
 
     itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
@@ -26,6 +21,8 @@ function initData() {
         cache: false,
         success: function (warehouseJSON_s) {
             warehouseJSON = warehouseJSON_s;
+
+            initWarehouseSpan(warehouseJSON)
             loadAjaxGetData(itemMenuObj);
         },
         error: function (msg, e) {
@@ -46,6 +43,8 @@ function loadAjaxGetData(itemMenuObj) {
         cache: false,
         success: function (itemJSON_s) {
             itemJSON = itemJSON_s;
+
+            initItemSelect(itemJSON)
             showItemInfo(itemMenuObj, itemJSON, 0);
             loadAllEndedItems(itemMenuObj, itemJSON);
         },
@@ -293,13 +292,22 @@ $("#saveButton").click(function () {
     }
 
     if (itemCount[0] == '-') {
-        if (!checkInput(itemCount.substr(1), 1)) return false;
+        if (!checkInput(itemCount.substr(1), 1)) {
+            alert("数量输入错误！");
+            return false;
+        }
     }
     else {
-        if (0 != itemCount && !checkInput(itemCount, 1)) return false;
+        if (0 != itemCount && !checkInput(itemCount, 1)) {
+            alert("数量输入错误！");
+            return false;
+        }
     }
 
-    if (!checkInput(itemName, 0)) return false;
+    if (!checkInput(itemName, 0)){
+        alert("名称输入错误！");
+        return false;
+    } 
 
     let tableName = "item";
     let itemData = {
@@ -343,8 +351,7 @@ function checkInput(content, flag) {
     let isNumberReg = /^[1-9]+[0-9]*]*$/;
 
     if (1 == flag && (!isNumberReg.test(content))) {
-        alert("输入的物品数量无效，请重新输入！");
-        document.getElementById('itemCountInput').focus();
+
         return false;
     }
     else if (0 == flag) {
@@ -367,7 +374,6 @@ function checkInput(content, flag) {
                         alert("分类名称中不能含有字符：" + specialCharacter[j]);
                     }
 
-                    document.getElementById('itemNameInput').focus();
                     return false;
                 }
             }
@@ -384,3 +390,89 @@ function checkInput(content, flag) {
 }
 
 //------搜索-------
+
+//分类选择列表初始化。
+function initItemSelect(itemJSON) {
+    let itemSelectObj = document.getElementById('searchItemNameSelect');
+    let warehouseSelectObj = document.getElementById('searchWarehouseNameSelect');
+
+    let optionObj = document.createElement('option');
+    optionObj.value = '0';
+    optionObj.text = "无";
+
+    itemSelectObj.appendChild(optionObj);
+
+    for(let i = 0; i < itemJSON.length; i++){
+        if(0 == itemJSON[i].is_ended){
+            let optionObj = document.createElement('option');
+            optionObj.value = itemJSON[i].item_id;
+            optionObj.text = itemJSON[i].item_name;
+
+            itemSelectObj.appendChild(optionObj);
+        }
+    }
+}
+
+//仓库选择列表初始化
+function initWarehouseSpan(warehouseJSON) {
+    let warehouseSpanObj = document.getElementById('searchWarehouseNameSpan');
+
+    let str = '';
+
+    for(let i = 0; i < warehouseJSON.length; i++){
+        str += "<label><input id = 'warehouse_" + i + "' name = 'warehouseName' type = 'checkbox' value = '" + warehouseJSON[i].warehouse_id +"' />"+ warehouseJSON[i].warehouse_name + "</label>";
+    }
+
+    if(!str.length){
+        str = '未查询到仓库信息，请先添加仓库信息！';
+    }
+    warehouseSpanObj.innerHTML = str;
+}
+
+
+//点击搜索按钮
+$("#searchButton").click(function(){
+    searchItem();
+});
+
+//获取输入的搜索条件
+function searchItem() {
+    //获取输入的ID
+    let itemID = $("#searchItemIDInput").val();
+    itemID = itemID.replace(/(^\s*)|(\s*$)/g, "");
+
+    //获取选择的上级分类
+    let itemParentName = $("#searchItemNameSelect option:selected").val();
+
+    //获取输入的分类名
+    let itemName = $("#searchItemNameInput").val();
+    itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
+
+    //获取仓库信息
+    let checkInputObj = document.getElementsByName("warehouseName");
+    let checkInputValueArray = new Array();
+    for(let i = 0; i < checkInputObj.length; i++) {
+        if(checkInputObj[i].checked) {
+            checkInputValueArray.push(checkInputObj[i].value);
+        }
+    }
+    console.log(checkInputObj);
+    console.log(checkInputValueArray);
+    console.log(itemParentName);
+
+    if(!checkInput(itemID, 1)){
+        alert("编号只能为数字或空！");
+        $("#searchItemIDInput").val('');
+        $("#searchItemIDInput").focus();
+        return ;
+    }
+
+    if(!checkInput(itemName, 0)){
+
+        $("#searchItemNameInput").val('');
+        $("#searchItemNameInput").focus();
+        return ;
+    }
+
+
+}
