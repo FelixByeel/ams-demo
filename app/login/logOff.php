@@ -3,7 +3,8 @@
 session_start();
 unset($_SESSION['username']);
 unset($_SESSION['password']);
-unset($_SESSION['userflag']);
+unset($_SESSION['role_group']);
+unset($_SESSION['uid']);
 echo "<script language='javascript' type='text/javascript'> 
         window.location.href='../../';
       </script>";
