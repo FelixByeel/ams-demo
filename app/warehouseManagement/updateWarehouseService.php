@@ -48,9 +48,15 @@ if (!preg_match($isNumberReg, $warehouseID['warehouse_id'])) {
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'warehouse_t';
 
-//检测当前将要添加的分类是否已经存在
-$condition = $warehouseID['warehouse_id'];
+//检测当前将要添加的仓库是否已经存在
+$condition = $warehouseName['warehouse_name'];
+$checkRow = $mysqli->select($tableName, array('warehouse_name'), "warehouse_name = '$condition'");
+if (mysqli_num_rows($checkRow)) {
+    die("$condition  已经存在，请重新输入！");
+}
 
+//更新操作
+$condition = $warehouseID['warehouse_id'];
 $mysqli->update($tableName, $warehouseName, "warehouse_id = $condition");
 
 //判断写入是否成功
@@ -60,4 +66,8 @@ if ($mysqli->getAffectedRows() > 0) {
 
 if ($mysqli->getAffectedRows() < 1) {
     die("更新失败！");
+}
+
+if (!$mysqli->getAffectedRows()) {
+    die("无更新操作！");
 }

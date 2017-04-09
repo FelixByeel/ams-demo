@@ -120,6 +120,7 @@ function addWarehouse(){
         { "warehouseName": warehouseName },
         function (msg) {
             alert(msg);
+            initData();
         }
     );
 }
