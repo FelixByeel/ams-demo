@@ -26,7 +26,7 @@ function loadAjaxGetData(itemMenuObj) {
 
     $.ajax({
         type: "post",
-        url: "searchItemService.php",
+        url: "getItemService.php",
         data: { "tableName": "warehouse" },
         dataType: "json",
         cache: false,
@@ -40,7 +40,7 @@ function loadAjaxGetData(itemMenuObj) {
 
     $.ajax({
         type: "post",
-        url: "searchItemService.php",
+        url: "getItemService.php",
         data: { "tableName": "item" },
         dataType: "json",
         cache: false,

@@ -20,7 +20,7 @@ function loadAjaxGetData(warehouseListBoxObj) {
 
     $.ajax({
         type: "post",
-        url: "../itemManagement/searchItemService.php",
+        url: "../itemManagement/getItemService.php",
         data: { "tableName": "warehouse" },
         dataType: "json",
         cache: false,
