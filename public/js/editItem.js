@@ -145,12 +145,20 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
             trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
-            for (var k = 0; k < warehouseJSON.length; k++) {
+            let k = 0;
+            for (; k < warehouseJSON.length; k++) {
                 if (warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
                     break;
                 }
             }
-            trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
+
+            if('undefined' == typeof(warehouseJSON[k])){
+                trObj.insertCell(2).innerHTML = '无';
+            }
+            else {
+                trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
+            }
+
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
             trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
@@ -188,14 +196,22 @@ function loadAllEndedItems(itemMenuObj, itemJSON) {
             trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
 
-            for (var k = 0; k < warehouseJSON.length; k++) {
+            let k = 0;
+            for (; k < warehouseJSON.length; k++) {
 
                 if (warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
 
                     break;
                 }
             }
-            trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
+
+            if('undefined' == typeof(warehouseJSON[k])){
+                trObj.insertCell(2).innerHTML = '无';
+            }
+            else {
+                trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
+            }
+
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
             trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
 
@@ -303,6 +319,7 @@ $("#saveButton").click(function () {
         function (msg) {
             if (msg) {
                 alert(msg);
+                initData();
             }
         });
     $("#editBox").hide();

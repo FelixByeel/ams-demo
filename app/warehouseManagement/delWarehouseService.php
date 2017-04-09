@@ -1,5 +1,6 @@
 <?php
 /*
+*删除仓库
 *处理接收的数据，添加到数据库
 */
 define('APP_ROOT', dirname(dirname(__DIR__)).'/');
@@ -37,10 +38,13 @@ if (!preg_match($isNumberReg, $warehouseName['warehouse_id'])) {
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'warehouse_t';
 
-//检测当前将要添加的分类是否已经存在
 $condition = $warehouseName['warehouse_id'];
 
 $mysqli->delete($tableName, "warehouse_id = $condition");
+
+//更新分类列表中对应的仓库信息
+$warehouse['warehouse_id'] = 0;
+$mysqli->update('item_t', $warehouse, "warehouse_id = $condition");
 
 //判断写入是否成功
 if ($mysqli->getAffectedRows() > 0) {
