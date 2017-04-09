@@ -13,15 +13,10 @@ $("#searchButton").click(function () {
     initData();
 });
 
-function initData(){
+function initData() {
 
     itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
     itemMenuObj.innerHTML = "";
-    loadAjaxGetData(itemMenuObj);
-}
-
-//ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
-function loadAjaxGetData(itemMenuObj) {
 
     $.ajax({
         type: "post",
@@ -31,11 +26,17 @@ function loadAjaxGetData(itemMenuObj) {
         cache: false,
         success: function (warehouseJSON_s) {
             warehouseJSON = warehouseJSON_s;
+            loadAjaxGetData(itemMenuObj);
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
         }
     });
+
+}
+
+//ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
+function loadAjaxGetData(itemMenuObj) {
 
     $.ajax({
         type: "post",
@@ -152,7 +153,7 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
                 }
             }
 
-            if('undefined' == typeof(warehouseJSON[k])){
+            if ('undefined' == typeof (warehouseJSON[k])) {
                 trObj.insertCell(2).innerHTML = '无';
             }
             else {
@@ -205,7 +206,7 @@ function loadAllEndedItems(itemMenuObj, itemJSON) {
                 }
             }
 
-            if('undefined' == typeof(warehouseJSON[k])){
+            if ('undefined' == typeof (warehouseJSON[k])) {
                 trObj.insertCell(2).innerHTML = '无';
             }
             else {
@@ -282,19 +283,19 @@ $("#saveButton").click(function () {
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
     itemCount = itemCount.replace(/(^\s*)|(\s*$)/g, "");
 
-    if(itemName == ''){
+    if (itemName == '') {
         alert("分类名称不能为空！");
         return false;
     }
 
-    if(itemCount == ''){
+    if (itemCount == '') {
         itemCount = 0;
     }
 
-    if(itemCount[0] == '-') {
-        if(!checkInput(itemCount.substr(1), 1)) return false;
+    if (itemCount[0] == '-') {
+        if (!checkInput(itemCount.substr(1), 1)) return false;
     }
-    else{
+    else {
         if (0 != itemCount && !checkInput(itemCount, 1)) return false;
     }
 
@@ -382,3 +383,4 @@ function checkInput(content, flag) {
     }
 }
 
+//------搜索-------
