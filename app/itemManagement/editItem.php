@@ -16,6 +16,7 @@
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
     </head>
     <body>
+        <!--搜索模块 start-->
         <div id = "searchBox">
             <div id = "searchConditionBox">
                 <label>分类编号：<input id = "searchItemCodeInput" type = "text" /></label>
@@ -27,6 +28,8 @@
             </div>
             <button id = "searchButton" type="button">搜索</button>
         </div>
+
+        <!--搜索结果显示区域-->
         <div id = "resultBox">
             <div id = "itemMenuBox">
                 <p>分类列表：</p>
@@ -36,6 +39,9 @@
                 <p>详细信息：</p>
                 <div id = "itemDetail"></div>
             </div>
+        </div>
+
+            <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
                 <div id = "editBoxHead">
                     <label id = "IDLabel">编号：<span id = "IDSpan"></span></label>
@@ -53,7 +59,6 @@
                     <button id = "saveButton">保存</button><button id = "cancelButton">取消</button>
                 </div>
             </div>
-        </div>
     </body>
     <script src = "../../public/js/editItem.js"></script>
 </html>
