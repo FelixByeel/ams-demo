@@ -1,3 +1,14 @@
+<?php
+    //定义根目录，加载数据库相关文件
+    define('APP_ROOT', dirname(dirname(__DIR__)).'/');
+    require_once (APP_ROOT.'app/login/loginCheck.php');
+
+    //验证用户权限
+    if($_SESSION['role_group'] < 2) {
+        die('当前用户无法进行此操作！');
+    }
+?>
+<!--仓库管理-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,7 +48,4 @@
         </div>
     </body>
     <script src = "../../public/js/addWarehouse.js"></script>
-    <script>
-
-    </script>
 </html>
