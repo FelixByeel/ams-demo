@@ -121,6 +121,8 @@ function addWarehouse(){
         function (msg) {
             alert(msg);
             initData();
+            document.getElementById('warehouseInput').value = '';
+            document.getElementById('warehouseInput').focus();
         }
     );
 }
