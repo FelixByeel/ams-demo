@@ -456,6 +456,7 @@ function searchItem() {
             checkInputValueArray.push(checkInputObj[i].value);
         }
     }
+
     console.log(checkInputObj);
     console.log(checkInputValueArray);
     console.log(itemParentName);
