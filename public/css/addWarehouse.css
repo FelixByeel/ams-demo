@@ -141,7 +141,8 @@ button:active {
 #closeSpan{
     float: right;
     width: 30px;
-    margin-right: 1px;
+    margin-top: 2px;
+    margin-right: 2px;
     line-height: 20px;
     font-size: 1.5em;
     background-color: #FFF;
