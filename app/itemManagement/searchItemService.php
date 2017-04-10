@@ -3,7 +3,7 @@
 *处理所有表的查询请求，将查询结果转为JSON格式并返回
 */
 
-//定义根目录
+//定义根目录,加载相关文件
 define('APP_ROOT', dirname(dirname(__DIR__)).'/');
 
 //加载用户登陆验证
@@ -75,19 +75,19 @@ else{
     die("上级分类ID异常");
 }
 
-
 //连接数据库
 $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tabelName      = 'item_t';
 $columnArray    = array('*');
 $tabelData      = [];           //保存查询信息
 $conditionStr   = '';
-//组合查询
+
+//组合查询条件
 if(!empty($searchCondition['itemID'])){
-    $conditionStr = 'item_id = ' . $searchCondition['itemID'];
+    $conditionStr .= 'item_id like \'' . $searchCondition['itemID'] . '%\'';
 }
 else if(!empty($searchCondition['itemParentID'])){
-    $conditionStr .= 'and parent_id = ' . $searchCondition['itemParentID'];
+    $conditionStr .= 'item_id like \'' . $searchCondition['itemParentID'] . '%\'';
 
 }
 
