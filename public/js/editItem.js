@@ -46,7 +46,7 @@ function loadAjaxGetData(itemMenuObj) {
 
             initItemSelect(itemJSON)
             showItemInfo(itemMenuObj, itemJSON, 0);
-            loadAllEndedItems(itemMenuObj, itemJSON);
+            loadAllEndedItems(itemJSON);
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
@@ -170,7 +170,7 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
 }
 
 //页面加载时显示详细信息
-function loadAllEndedItems(itemMenuObj, itemJSON) {
+function loadAllEndedItems(itemJSON) {
 
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
@@ -389,7 +389,7 @@ function checkInput(content, flag) {
     }
 }
 
-//------搜索-------
+//--------------------------搜索----------------------------------------
 
 //分类选择列表初始化。
 function initItemSelect(itemJSON) {
@@ -432,48 +432,67 @@ function initWarehouseSpan(warehouseJSON) {
 
 //点击搜索按钮
 $("#searchButton").click(function(){
-    searchItem();
+    getSearchItemResult(getSearchItemCondition());
 });
 
-//获取输入的搜索条件
-function searchItem() {
+//获取输入的搜索条件，并return整合后的条件对象
+function getSearchItemCondition() {
     //获取输入的ID
     let itemID = $("#searchItemIDInput").val();
     itemID = itemID.replace(/(^\s*)|(\s*$)/g, "");
 
     //获取选择的上级分类
-    let itemParentName = $("#searchItemNameSelect option:selected").val();
+    let itemParentID = $("#searchItemNameSelect option:selected").val();
 
     //获取输入的分类名
     let itemName = $("#searchItemNameInput").val();
     itemName = itemName.replace(/(^\s*)|(\s*$)/g, "");
 
     //获取仓库信息
-    let checkInputObj = document.getElementsByName("warehouseName");
-    let checkInputValueArray = new Array();
-    for(let i = 0; i < checkInputObj.length; i++) {
-        if(checkInputObj[i].checked) {
-            checkInputValueArray.push(checkInputObj[i].value);
+    let warehouseCheckInputObj = document.getElementsByName("warehouseName");
+    let warehouseCheckInputValueArray = new Array();
+    for(let i = 0; i < warehouseCheckInputObj.length; i++) {
+        if(warehouseCheckInputObj[i].checked) {
+            warehouseCheckInputValueArray.push(warehouseCheckInputObj[i].value);
         }
     }
 
-    console.log(checkInputObj);
-    console.log(checkInputValueArray);
-    console.log(itemParentName);
-
-    if(!checkInput(itemID, 1)){
-        alert("编号只能为数字或空！");
-        $("#searchItemIDInput").val('');
-        $("#searchItemIDInput").focus();
-        return ;
+    //验证用户输入的数据
+    if(0 != itemID.length){
+        if(!checkInput(itemID, 1)){
+            alert("分类编号只能为数字或空！");
+            $("#searchItemIDInput").val('');
+            $("#searchItemIDInput").focus();
+            return false;
+        }
+    }
+    else{
+        itemID = 0 ;
     }
 
     if(!checkInput(itemName, 0)){
-
         $("#searchItemNameInput").val('');
         $("#searchItemNameInput").focus();
-        return ;
+        return false;
     }
 
+    //整合用户输入的搜索条件数据。
+    let searchConditionData = {
+        "itemID": itemID,
+        "itemName":itemName,
+        "itemParentID":itemParentID,
+        "warehouseID":warehouseCheckInputValueArray
+    };
 
+    return searchConditionData;
+}
+
+function getSearchItemResult(searchConditionData) {
+    $.post(
+        "searchItemService.php",
+        {"searchConditionData": searchConditionData},
+        function (searchItemResultJSON) {
+            loadAllEndedItems(searchItemResultJSON);
+        }
+    );
 }
