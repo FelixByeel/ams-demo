@@ -287,7 +287,7 @@ $("#saveButton").click(function () {
         return false;
     }
 
-    if (itemCount == '') {
+    if (('' == itemCount) || (0 == itemCount)) {
         itemCount = 0;
     }
 
@@ -307,7 +307,7 @@ $("#saveButton").click(function () {
     if (!checkInput(itemName, 0)){
         alert("名称输入错误！");
         return false;
-    } 
+    }
 
     let tableName = "item";
     let itemData = {
