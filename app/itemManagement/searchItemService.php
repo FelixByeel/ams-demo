@@ -21,13 +21,59 @@ if($_SESSION['role_group'] < 2) {
     die('当前用户无法进行此操作！');
 }
 
-if(!isset($_POST["searchConditionData"]) || empty($_POST["searchConditionData"])) {
+if(!isset($_POST['searchConditionData']) || empty($_POST['searchConditionData'])) {
     die("查询失败");
 }
 
-$searchCondition = $_POST["searchConditionData"];
+$searchCondition = $_POST['searchConditionData'];
 
-//处理全部查询条件组合
+//验证提交的数据是否异常
+$isNumberReg = '/^[1-9]+[0-9]*]*$/';
+
+//检查是否含有特殊字符
+
+foreach ($searchCondition as $key => $value) {
+
+    if('warehouseID' != $key){
+        if($checkChar = checkInput($searchCondition[$i])){
+            die ('输入的内容不能包含：' + $checkChar);
+        }
+    }
+    else if('warehouseID' == $key ) {
+        $warehouseIDArr = $value;
+        if(count($warehouseIDArr)) {
+            foreach ($warehouseIDArr as $key => $value) {
+                if(!preg_match($isNumberReg, $value)){
+                    die("仓库选择异常");
+                }
+            }
+        }
+    }
+}
+
+//------------------------------------------------
+if(array_key_exists('itemID', $searchCondition)){
+    if(!empty($searchCondition['itemID'])){
+        if(!preg_match($isNumberReg, $searchCondition['itemID'])){
+            die("分类ID异常");
+        }
+    }
+}
+else{
+    die("分类ID异常");
+}
+
+//------------------------------------------------
+if(array_key_exists('itemParentID', $searchCondition)){
+    if(!empty($searchCondition['itemParentID'])){
+        if(!preg_match($isNumberReg, $searchCondition['itemParentID'])){
+            die("上级分类ID异常");
+        }
+    }
+}
+else{
+    die("上级分类ID异常");
+}
 
 
 //连接数据库
@@ -35,7 +81,7 @@ $mysqli          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
 $tabelData      = [];           //保存查询信息
 
-//查询tabelName表的信息
+
 
 $result = $mysqli->select($tabelName, $columnArray, $conditionStr);
 
