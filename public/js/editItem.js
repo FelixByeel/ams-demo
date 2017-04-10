@@ -82,7 +82,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             itemUlObj.appendChild(itemLiObj);
         }
         else if ((currentSelectedId == itemJSON[i].parent_id) && (itemJSON[i].is_ended == 1)) {
-            showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId);
+            showCurrentSelectedDetail(itemJSON, currentSelectedId);
         }
     }
 
@@ -119,7 +119,7 @@ function checkSubItem(currentSelectedId) {
 }
 
 //显示当前分类下的详细信息
-function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
+function showCurrentSelectedDetail(itemJSON, currentSelectedId) {
 
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
