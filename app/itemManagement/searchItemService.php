@@ -35,7 +35,7 @@ $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 foreach ($searchCondition as $key => $value) {
 
     if('warehouseID' != $key){
-        if($checkChar = checkInput($searchCondition[$i])){
+        if($checkChar = checkInput($value)){
             die ('输入的内容不能包含：' + $checkChar);
         }
     }
@@ -81,7 +81,7 @@ $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tabelName      = 'item_t';
 $columnArray    = array('*');
 $tabelData      = [];           //保存查询信息
-
+$conditionStr   = '';
 //组合查询
 if(!empty($searchCondition['itemID'])){
     $conditionStr = 'item_id = ' . $searchCondition['itemID'];

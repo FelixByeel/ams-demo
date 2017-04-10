@@ -170,8 +170,8 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
 }
 
 //页面加载时显示详细信息
-function loadAllEndedItems(itemJSON) {
-
+function loadAllEndedItems(itemJSONFun) {
+alert('f_' + itemJSONFun);
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
     let trObj = tableObj.insertRow();
@@ -184,8 +184,9 @@ function loadAllEndedItems(itemJSON) {
     trObj.insertCell(3).innerHTML = "数量";
     trObj.insertCell(4).innerHTML = "操作";
 
-    for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if (1 == itemJSON[i].is_ended) {
+    for (let i = 0, j = 0; i < itemJSONFun.length; i++) {
+        //console.log('f_' + itemJSONFun);
+        if (1 == itemJSONFun[i].is_ended) {
             let trObj = tableObj.insertRow();
             if (j % 2) {
                 trObj.className = "row_odd";
@@ -193,13 +194,15 @@ function loadAllEndedItems(itemJSON) {
             else {
                 trObj.className = "row_even";
             }
-            trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
-            trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
+            trObj.insertCell(0).innerHTML = itemJSONFun[i].item_id;
+            trObj.insertCell(1).innerHTML = itemJSONFun[i].item_name;
+
+
 
             let k = 0;
             for (; k < warehouseJSON.length; k++) {
 
-                if (warehouseJSON[k].warehouse_id == itemJSON[i].warehouse_id) {
+                if (warehouseJSON[k].warehouse_id == itemJSONFun[i].warehouse_id) {
 
                     break;
                 }
@@ -213,7 +216,7 @@ function loadAllEndedItems(itemJSON) {
             }
 
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSONFun[i].item_id + ")'>编辑</button>";
 
             j++;
         }
@@ -389,8 +392,6 @@ function checkInput(content, flag) {
     }
 }
 
-//--------------------------搜索----------------------------------------
-
 //分类选择列表初始化。
 function initItemSelect(itemJSON) {
     let itemSelectObj = document.getElementById('searchItemNameSelect');
@@ -429,6 +430,7 @@ function initWarehouseSpan(warehouseJSON) {
     warehouseSpanObj.innerHTML = str;
 }
 
+//--------------------------搜索----------------------------------------
 
 //点击搜索按钮
 $("#searchButton").click(function(){
@@ -488,6 +490,8 @@ function getSearchItemCondition() {
 }
 
 function getSearchItemResult(searchConditionData) {
+
+    let = searchItemResultJSON = '';
     $.post(
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
