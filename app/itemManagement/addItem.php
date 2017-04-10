@@ -350,7 +350,7 @@ if($_SESSION['role_group'] < 2) {
         }
         //获取所有祖先分类ID，返回父分类ID
 
-        return val.length ? val: 0;
+        return val.length ? val[val.length - 1]: 0;
     }
 
 </script>

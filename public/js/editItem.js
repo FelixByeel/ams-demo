@@ -216,7 +216,7 @@ function loadAllEndedItems(itemJSONFun) {
                 trObj.insertCell(2).innerHTML = warehouseJSON[k].warehouse_name;
             }
 
-            trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
+            trObj.insertCell(3).innerHTML = itemJSONFun[i].item_count;
             trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSONFun[i].item_id + ")'>编辑</button>";
 
             j++;
@@ -497,7 +497,7 @@ function getSearchItemResult(searchConditionData) {
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
         function (searchItemResultJSON) {
-
+            console.log(searchItemResultJSON);
             loadAllEndedItems(searchItemResultJSON);
         },
         'json'

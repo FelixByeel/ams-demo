@@ -32,13 +32,13 @@ $itemData = $_POST['itemData'];
 //验证提交的数据是否安全
 foreach ($itemData as $key => $value) {
 
-    if('parent_id' == $key && $value != 0){
-        foreach ($value as $key_ => $value_) {
-            if (checkInput($value_)) {
-                die('输入的内容不能包含字符 ：' . checkInput($value_));
+    //if('parent_id' == $key && $value != 0){
+        //foreach ($value as $key_ => $value_) {
+            if (checkInput($value)) {
+                die('输入的内容不能包含字符 ：' . checkInput($value));
             }
-        }
-    }
+        //}
+    //}
 }
 
 $isNumberReg = '/^[1-9]+[0-9]*]*$/';
@@ -60,6 +60,7 @@ if (array_key_exists('warehouse_id', $itemData)) {
 }
 
 if (array_key_exists('parent_id', $itemData)) {
+    /*
     $itemParentID = $itemData['parent_id'];
     if ($itemParentID != 0) {
 
@@ -70,6 +71,16 @@ if (array_key_exists('parent_id', $itemData)) {
         }
         $itemData['parent_id'] = $itemParentID[count($itemParentID) -1];    //上级分类不为空时，表示这是一个包含所有上级分类的数组，返回数组最后一个值，就是父分类id
     } else {
+        $itemData['parent_id'] = 0;
+    }
+    */
+
+    if(!empty($itemData['parent_id'])) {
+        if (!preg_match($isNumberReg, $itemData['parent_id'])) {
+            die("分类ID应为正整数，请确认输入是否有误!");
+        }
+    }
+    else {
         $itemData['parent_id'] = 0;
     }
 }
@@ -99,16 +110,13 @@ if ($mysqli->getAffectedRows() > 0) {
     echo "添加成功！";
     //插入记录成功后，更新当前插入记录的item_id。 item_id由所有parent_id构成。
     $itemID = '';
-    $checkRow = $mysqli->select($tableName, array('id'), "item_name = '$condition'");
+    $result = $mysqli->select($tableName, array('id'), "item_name = '$condition'");
 
-    if($itemParentID != 0){
-        foreach ($itemParentID as $key => $value) {
-            //$itemID .= $value;
-        }
-        $itemID .= $itemParentID[count($itemParentID) - 1];
+    if($itemData['parent_id']) {
+        $itemID .= $itemData['parent_id'];
     }
 
-    $row = mysqli_fetch_assoc($checkRow);
+    $row = mysqli_fetch_assoc($result);
     $itemID .= $row['id'];
 
     $currentItem['item_id'] = $itemID;
@@ -122,11 +130,11 @@ if ($mysqli->getAffectedRows() < 1) {
 }
 
 //有上级分类时，修改上级分类的is_ended状态,如果is_ended为1，则置为0, 同时将上级分类的count清空
-if (0 != $itemParentID) {
+if ($itemData['parent_id']) {
     $parentItem['is_ended'] = 0;
     $parentItem['item_count'] = 0;
 
-    $condition = " item_id = {$itemParentID[count($itemParentID) - 1]}";
+    $condition = " item_id = {$itemData['parent_id']}";
     $column[] = 'is_ended';
 
     $result = $mysqli->select($tableName, $column, $condition);
