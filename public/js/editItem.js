@@ -182,7 +182,7 @@ function loadAllEndedItems(itemJSON) {
     trObj.insertCell(1).innerHTML = "分类名称";
     trObj.insertCell(2).innerHTML = "所属仓库";
     trObj.insertCell(3).innerHTML = "数量";
-    trObj.insertCell(4).innerHTML = " ";
+    trObj.insertCell(4).innerHTML = "操作";
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
         if (1 == itemJSON[i].is_ended) {
