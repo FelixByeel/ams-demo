@@ -134,7 +134,7 @@ if ($itemData['parent_id']) {
     $parentItem['is_ended'] = 0;
     $parentItem['item_count'] = 0;
 
-    $condition = " item_id = {$itemData['parent_id']}";
+    $condition = " id = {$itemData['parent_id']}";
     $column[] = 'is_ended';
 
     $result = $mysqli->select($tableName, $column, $condition);

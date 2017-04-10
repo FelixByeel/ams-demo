@@ -16,7 +16,7 @@ create table user_t(
 
 CREATE TABLE item_t(
 	id int(10) unsigned not null auto_increment comment '自增主键',
-	item_id int(10) unsigned not null default 0 comment '自增主键',
+	item_id varchar(20) not null default 0 comment '自增主键',
     item_name varchar(20) not null default '' comment '类目显示名称',
     parent_id int(10) unsigned not null default 0 comment '记录父ID',
     is_ended tinyint(3) unsigned not null default 1 comment '是否最终项，1是，0否',
