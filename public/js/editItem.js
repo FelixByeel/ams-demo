@@ -490,9 +490,9 @@ function getSearchItemCondition() {
     return searchConditionData;
 }
 
+//获取服务器返回数据，转为json对象
 function getSearchItemResult(searchConditionData) {
 
-    let = searchItemResultJSON = '';
     $.post(
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
