@@ -171,7 +171,7 @@ function showCurrentSelectedDetail(itemMenuObj, itemJSON, currentSelectedId) {
 
 //页面加载时显示详细信息
 function loadAllEndedItems(itemJSONFun) {
-alert('f_' + itemJSONFun);
+    //console.log('f_' + itemJSONFun);
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
     let trObj = tableObj.insertRow();
@@ -185,8 +185,9 @@ alert('f_' + itemJSONFun);
     trObj.insertCell(4).innerHTML = "操作";
 
     for (let i = 0, j = 0; i < itemJSONFun.length; i++) {
-        //console.log('f_' + itemJSONFun);
+
         if (1 == itemJSONFun[i].is_ended) {
+
             let trObj = tableObj.insertRow();
             if (j % 2) {
                 trObj.className = "row_odd";
@@ -496,7 +497,9 @@ function getSearchItemResult(searchConditionData) {
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
         function (searchItemResultJSON) {
+
             loadAllEndedItems(searchItemResultJSON);
-        }
+        },
+        'json'
     );
 }
