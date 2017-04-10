@@ -77,11 +77,19 @@ else{
 
 
 //连接数据库
-$mysqli          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-
+$mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+$tabelName      = 'item_t';
+$columnArray    = array('*');
 $tabelData      = [];           //保存查询信息
 
+//组合查询
+if(!empty($searchCondition['itemID'])){
+    $conditionStr = 'item_id = ' . $searchCondition['itemID'];
+}
+else if(!empty($searchCondition['itemParentID'])){
+    $conditionStr .= 'and parent_id = ' . $searchCondition['itemParentID'];
 
+}
 
 $result = $mysqli->select($tabelName, $columnArray, $conditionStr);
 
