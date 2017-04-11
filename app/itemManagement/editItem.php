@@ -55,7 +55,7 @@ if($_SESSION['role_group'] < 2) {
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
                 <div id = "editBoxHead">
-                    <label id = "IDLabel">编号：<span id = "IDSpan"></span></label>
+                    <label id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
                     <button id = "delButton">删除</button>
                 </div>
                 <div id = "editBoxContent">

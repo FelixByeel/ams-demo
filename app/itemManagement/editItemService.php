@@ -48,7 +48,7 @@ foreach ($itemData as $key => $value) {
 if (array_key_exists('tableName', $itemData)) {
     if (empty($itemData['tableName'])) {
         die("当前操作的表名异常");
-    } 
+    }
 } else {
     die("当前操作的表名异常");
 }
@@ -130,32 +130,46 @@ else{
     die("物品数量异常");
 }
 
-//保存当前要操作的表名和当前更新项的ID
+//保存当前要操作的表名和当前更新项的条件，以及要更新的内容
 $tableName = $itemData['tableName'].'_t';
-$condition = "item_id = " .$itemData['itemID'];
+$condition = "id = " .$itemData['itemID'];
 
-$columnToValue['item_name'] = $itemData['itemName'];
-$columnToValue['parent_id'] = $itemData['parentID'];
-$columnToValue['warehouse_id'] = $itemData['warehouseID'];
+$itemColumnToValue['item_name'] = $itemData['itemName'];
 
-$columnToValue['item_count'] = (int)$itemData['currentCount'] + (int)$itemData['itemCount'];
+$itemColumnToValue['warehouse_id'] = $itemData['warehouseID'];
 
-if($columnToValue['item_count'] < 0) {
+$itemColumnToValue['item_count'] = (int)$itemData['currentCount'] + (int)$itemData['itemCount'];
+
+if($itemColumnToValue['item_count'] < 0) {
     die("物品数量不能为负数");
 }
 
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
-$result = $mysqli->update($tableName, $columnToValue, $condition);
-
-if($mysqli->getAffectedRows() > 0){
-    echo '更新成功';
-}
-else if($mysqli->getAffectedRows() < 0){
-    echo '更新失败';
-}
-else if($mysqli->getAffectedRows() == 0){
-    echo '当前无更新';
-}
+$result = $mysqli->update($tableName, $itemColumnToValue, $condition);
 
 
+//处理item_id是否需要更新，如果parent_id改变，则相应的item_id也需要改变。
+//当前记录的item_id由上级分类item_id加上当前记录的id构成
+$itemParentID['parent_id'] = $itemData['parentID'];
+
+$result = $mysqli->update($tableName, $itemParentID, $condition);
+
+if(1 == $mysqli->getAffectedRows()){
+
+    $itemID[] = 'item_id';
+    $condition = 'id = ' . $itemData['parentID'];
+    $result = $mysqli->select($tableName, $itemID, $condition); //  获取上级分类的item_id
+
+    if(1 == $mysqli->getAffectedRows()) {
+        //更新当前记录的item_id
+        $currentItemID['item_id'] = mysqli_fetch_assoc($result)['item_id'] . '-' . $itemData['itemID'];
+        $condition = " id = " .$itemData['itemID'];
+
+        $mysqli->update($tableName, $currentItemID, $condition);
+    }
+}
+
+if($mysqli->getAffectedRows() < 0){
+    die('更新失败');
+}
