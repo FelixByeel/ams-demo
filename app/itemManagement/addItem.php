@@ -24,7 +24,7 @@ if($_SESSION['role_group'] < 2) {
     $warehouseData  = [];           //保存仓库信息
 
     //查询分类信息，并保存在$itemData[]中
-    $column = array('item_id', 'item_name', 'parent_id', 'is_ended');
+    $column = array('id', 'item_id', 'item_name', 'parent_id', 'is_ended');
     $result = $mysql->select('item_t', $column);
 
     while($row = mysqli_fetch_assoc($result)){
@@ -183,7 +183,7 @@ if($_SESSION['role_group'] < 2) {
         if(0 != currentSelectedId){
             //获取到当前选择项在itemJsonObj中的位置
             for(let i = 0; i < itemJsonObj.length; i++) {
-                if(currentSelectedId == itemJsonObj[i].item_id){
+                if(currentSelectedId == itemJsonObj[i].id){
                     currentSelectedId = i;
                     break;
                 }
@@ -191,7 +191,7 @@ if($_SESSION['role_group'] < 2) {
 
             //当前选择项的is_ended的值为0表示有子分类，显示子分类
             if( 0 == itemJsonObj[currentSelectedId].is_ended) {
-                showSubItem(itemListObj, itemJsonObj[currentSelectedId].item_id, currentSelectedName, itemJsonObj);
+                showSubItem(itemListObj, itemJsonObj[currentSelectedId].id, currentSelectedName, itemJsonObj);
             }
         }
     }

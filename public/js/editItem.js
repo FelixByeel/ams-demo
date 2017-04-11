@@ -69,7 +69,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
 
             let itemLiObj = document.createElement("li");
 
-            itemLiObj.id = "itemLiId_" + itemJSON[i].item_id;
+            itemLiObj.id = "itemLiId_" + itemJSON[i].id;
             itemLiObj.innerHTML = itemJSON[i].item_name;
 
             itemLiObj.addEventListener("click", function (e) {
@@ -160,7 +160,7 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId) {
             }
 
             trObj.insertCell(3).innerHTML = itemJSON[i].item_count;
-            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].item_id + ")'>编辑</button>";
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button>";
 
             j++;
         }
@@ -217,7 +217,7 @@ function loadAllEndedItems(itemJSONFun) {
             }
 
             trObj.insertCell(3).innerHTML = itemJSONFun[i].item_count;
-            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSONFun[i].item_id + ")'>编辑</button>";
+            trObj.insertCell(4).innerHTML = "<button id = 'edit' onclick = 'editItem(" + itemJSONFun[i].id + ")'>编辑</button>";
 
             j++;
         }
@@ -238,7 +238,7 @@ function editItem(currentSelectedId) {
 
     //找到当前选择项在JSON中的位置，并保存下来
     for (let i = 0; i < itemJSON.length; i++) {
-        if (itemJSON[i].item_id == currentSelectedId) {
+        if (itemJSON[i].id == currentSelectedId) {
             itemIndex = i;
             break;
         }
@@ -251,12 +251,12 @@ function editItem(currentSelectedId) {
     //显示可选择的所有分类，默认直接上级分类为选择状态
     for (let i = 0; i < itemJSON.length; i++) {
         if (0 == itemJSON[i].is_ended) {
-            let str = "<option value = '" + itemJSON[i].item_id + "'>" + itemJSON[i].item_name + "</option>";
+            let str = "<option value = '" + itemJSON[i].id + "'>" + itemJSON[i].item_name + "</option>";
             $("#classSelect").append(str);
         }
 
-        if (itemJSON[i].item_id == itemJSON[itemIndex].parent_id) {
-            $("#classSelect").find("option[value = " + itemJSON[i].item_id + "]").attr("selected", true);
+        if (itemJSON[i].id == itemJSON[itemIndex].parent_id) {
+            $("#classSelect").find("option[value = " + itemJSON[i].id + "]").attr("selected", true);
         }
     }
 
@@ -407,7 +407,7 @@ function initItemSelect(itemJSON) {
     for(let i = 0; i < itemJSON.length; i++){
         if(0 == itemJSON[i].is_ended){
             let optionObj = document.createElement('option');
-            optionObj.value = itemJSON[i].item_id;
+            optionObj.value = itemJSON[i].id;
             optionObj.text = itemJSON[i].item_name;
 
             itemSelectObj.appendChild(optionObj);
