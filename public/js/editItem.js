@@ -497,7 +497,7 @@ function getSearchItemResult(searchConditionData) {
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
         function (searchItemResultJSON) {
-            console.log(searchItemResultJSON);
+
             loadAllEndedItems(searchItemResultJSON);
         },
         'json'

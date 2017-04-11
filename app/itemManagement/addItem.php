@@ -176,7 +176,7 @@ if($_SESSION['role_group'] < 2) {
         }
         else{
             currentSelectedId = choose.options[choose.selectedIndex].value.split('_')[1];
-            console.log(choose.options[choose.selectedIndex].value.split('_'));
+
         }
 
         //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类

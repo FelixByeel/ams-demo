@@ -84,10 +84,12 @@ $conditionStr   = '';
 
 //组合查询条件
 if(!empty($searchCondition['itemID'])){
-    $conditionStr .= 'item_id like \'%' . $searchCondition['itemID'] . '%\'';
+    $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '-%\' or ';
+    $conditionStr .= 'item_id like \'' . $searchCondition['itemID'] . '-%\' or ';
+    $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '\'';
 }
 else if(!empty($searchCondition['itemParentID'])){
-    $conditionStr .= 'item_id like \'%' . $searchCondition['itemParentID'] . '%\'';
+    $conditionStr .= 'item_id like \'%-' . $searchCondition['itemParentID'] . '-%\' or ' . 'item_id like \'' . $searchCondition['itemParentID'] . '-%\'';
 
 }
 
