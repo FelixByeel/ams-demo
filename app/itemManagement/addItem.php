@@ -167,7 +167,17 @@ if($_SESSION['role_group'] < 2) {
         let currentSelectedName   = 0;    //保存要创建子分类的select的name号
 
         //子分类select的ID号码为当前选择项option的id号码
-        currentSelectedId = (choose.options[choose.selectedIndex].value).split("_")[1];
+
+        currentSelectedItemID = choose.options[choose.selectedIndex].value;
+
+        if(currentSelectedItemID.indexOf('-') != -1){
+            currentSelectedItemIDArr = currentSelectedItemID.split("-");
+            currentSelectedId = currentSelectedItemIDArr[currentSelectedItemIDArr.length - 1];
+        }
+        else{
+            currentSelectedId = choose.options[choose.selectedIndex].value.split('_')[1];
+            console.log(choose.options[choose.selectedIndex].value.split('_'));
+        }
 
         //获取当前select的ID号，当前select的ID号作为下一个创建的select的Name号，用来表示分类等级，name号一样，表示同一级分类
         currentSelectedName  = choose.id.split("_")[1];
@@ -344,8 +354,12 @@ if($_SESSION['role_group'] < 2) {
         for(let i = 0; i < selectArr.length; i++){
             //有时候会莫名其妙出现几个<select></select>为空项的bug，导致获取选择的option时出现undefined，所以加了if判断，返回分类数组时，去除undefined项。
             let optionNumber = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+            //let optionValueArr = selectArr[i].options[selectArr[i].selectedIndex].value.split('-');
+            //let optionNumber = optionValueArr[optionValueArr.length - 1];
+
             if((typeof(optionNumber) != "undefined") && (optionNumber != 0)){
-                val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+                //val[i] = selectArr[i].options[selectArr[i].selectedIndex].value.split("_")[1];
+                val[i] = optionNumber;
             }
         }
         //获取所有祖先分类ID，返回父分类ID
