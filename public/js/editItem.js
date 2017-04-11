@@ -8,11 +8,13 @@ window.onload = function () {
     initData();
 }
 
+//初始化内容
 function initData() {
 
     itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
     itemMenuObj.innerHTML = "";
 
+    //初始化仓库信息
     $.ajax({
         type: "post",
         url: "getItemService.php",
@@ -497,7 +499,24 @@ function getSearchItemResult(searchConditionData) {
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
         function (searchItemResultJSON) {
+            let warehouseArr = searchConditionData['warehouseID'];
+            if(warehouseArr.length){
 
+                for(let i = 0; i < warehouseArr.length; i++){
+                    for(let j = 0; j < searchItemResultJSON.length; j++){
+                        if(warehouseArr[i] != searchItemResultJSON[j].warehouse_id && (searchItemResultJSON[j].is_ended == 1)){
+                            console.log(searchItemResultJSON[j].item_name);
+                            console.log(searchItemResultJSON[j].warehouse_id);
+                            console.log('W:' + warehouseArr[i]);
+                            searchItemResultJSON.splice(j, 1);
+                            console.log(searchItemResultJSON.length);
+                            j = 0;
+                        }
+                    }
+                }
+            }
+
+            console.log(searchItemResultJSON);
             loadAllEndedItems(searchItemResultJSON);
         },
         'json'
