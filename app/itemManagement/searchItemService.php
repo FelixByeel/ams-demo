@@ -17,11 +17,11 @@ require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
 //验证用户权限
-if($_SESSION['role_group'] < 2) {
+if ($_SESSION['role_group'] < 2) {
     die('当前用户无法进行此操作！');
 }
 
-if(!isset($_POST['searchConditionData']) || empty($_POST['searchConditionData'])) {
+if (!isset($_POST['searchConditionData']) || empty($_POST['searchConditionData'])) {
     die("查询失败");
 }
 
@@ -33,17 +33,15 @@ $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 //检查是否含有特殊字符
 
 foreach ($searchCondition as $key => $value) {
-
-    if('warehouseID' != $key){
-        if($checkChar = checkInput($value)){
+    if ('warehouseID' != $key) {
+        if ($checkChar = checkInput($value)) {
             die ('输入的内容不能包含：' + $checkChar);
         }
-    }
-    else if('warehouseID' == $key ) {
+    } elseif ('warehouseID' == $key) {
         $warehouseIDArr = $value;
-        if(count($warehouseIDArr)) {
+        if (count($warehouseIDArr)) {
             foreach ($warehouseIDArr as $key => $value) {
-                if(!preg_match($isNumberReg, $value)){
+                if (!preg_match($isNumberReg, $value)) {
                     die("仓库选择异常");
                 }
             }
@@ -52,26 +50,24 @@ foreach ($searchCondition as $key => $value) {
 }
 
 //------------------------------------------------
-if(array_key_exists('itemID', $searchCondition)){
-    if(!empty($searchCondition['itemID'])){
-        if(!preg_match($isNumberReg, $searchCondition['itemID'])){
+if (array_key_exists('itemID', $searchCondition)) {
+    if (!empty($searchCondition['itemID'])) {
+        if (!preg_match($isNumberReg, $searchCondition['itemID'])) {
             die("分类ID异常");
         }
     }
-}
-else{
+} else {
     die("分类ID异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('itemParentID', $searchCondition)){
-    if(!empty($searchCondition['itemParentID'])){
-        if(!preg_match($isNumberReg, $searchCondition['itemParentID'])){
+if (array_key_exists('itemParentID', $searchCondition)) {
+    if (!empty($searchCondition['itemParentID'])) {
+        if (!preg_match($isNumberReg, $searchCondition['itemParentID'])) {
             die("上级分类ID异常");
         }
     }
-}
-else{
+} else {
     die("上级分类ID异常");
 }
 
@@ -83,15 +79,21 @@ $tabelData      = [];           //保存查询信息
 $conditionStr   = '';
 
 //组合查询条件
-if(!empty($searchCondition['itemID'])){
+if (!empty($searchCondition['itemID'])) {
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '\'';
-}
-else if(!empty($searchCondition['itemParentID'])){
+} elseif (!empty($searchCondition['itemParentID'])) {
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemParentID'] . '-%\' or ' . 'item_id like \'' . $searchCondition['itemParentID'] . '-%\'';
-
 }
+
+/*
+if (!empty($searchCondition['warehouseID'])) {
+    foreach ($searchCondition['warehouseID'] as $key => $value) {
+        $conditionStr .= ' and '
+    }
+}
+*/
 
 $result = $mysqli->select($tabelName, $columnArray, $conditionStr);
 
