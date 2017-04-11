@@ -396,8 +396,7 @@ function checkInput(content, flag) {
 //分类选择列表初始化。
 function initItemSelect(itemJSON) {
     let itemSelectObj = document.getElementById('searchItemNameSelect');
-    let warehouseSelectObj = document.getElementById('searchWarehouseNameSelect');
-
+    $('#searchItemNameSelect').empty();
     let optionObj = document.createElement('option');
     optionObj.value = '0';
     optionObj.text = "无";
@@ -428,6 +427,7 @@ function initWarehouseSpan(warehouseJSON) {
     if(!str.length){
         str = '未查询到仓库信息，请先添加仓库信息！';
     }
+    warehouseSpanObj.innerHTML = '';
     warehouseSpanObj.innerHTML = str;
 }
 
