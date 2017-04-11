@@ -144,32 +144,56 @@ if($itemColumnToValue['item_count'] < 0) {
     die("物品数量不能为负数");
 }
 
+//--------------数据库操作处理--------------
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
+$flag = 0;
+
 $result = $mysqli->update($tableName, $itemColumnToValue, $condition);
-
-
-//处理item_id是否需要更新，如果parent_id改变，则相应的item_id也需要改变。
-//当前记录的item_id由上级分类item_id加上当前记录的id构成
-$itemParentID['parent_id'] = $itemData['parentID'];
-
-$result = $mysqli->update($tableName, $itemParentID, $condition);
-
-if(1 == $mysqli->getAffectedRows()){
-
-    $itemID[] = 'item_id';
-    $condition = 'id = ' . $itemData['parentID'];
-    $result = $mysqli->select($tableName, $itemID, $condition); //  获取上级分类的item_id
-
-    if(1 == $mysqli->getAffectedRows()) {
-        //更新当前记录的item_id
-        $currentItemID['item_id'] = mysqli_fetch_assoc($result)['item_id'] . '-' . $itemData['itemID'];
-        $condition = " id = " .$itemData['itemID'];
-
-        $mysqli->update($tableName, $currentItemID, $condition);
-    }
-}
-
+//上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
 if($mysqli->getAffectedRows() < 0){
     die('更新失败');
 }
+else {
+    $flag++;
+    //处理item_id是否需要更新，如果parent_id改变，则相应的item_id也需要改变。
+    //当前记录的item_id由上级分类item_id加上当前记录的id构成
+    $itemParentID['parent_id'] = $itemData['parentID'];
+
+    $result = $mysqli->update($tableName, $itemParentID, $condition);
+    //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
+    if($mysqli->getAffectedRows() < 0){
+        die('更新失败');
+    }
+    else if($mysqli->getAffectedRows() > 0){
+        $flag++;
+
+        $itemID[] = 'item_id';
+        $condition = 'id = ' . $itemData['parentID'];
+        $result = $mysqli->select($tableName, $itemID, $condition); //  获取上级分类的item_id
+
+        if(1 == $mysqli->getAffectedRows()) {
+            //更新当前记录的item_id
+            $currentItemID['item_id'] = mysqli_fetch_assoc($result)['item_id'] . '-' . $itemData['itemID'];
+            $condition = " id = " .$itemData['itemID'];
+
+            $mysqli->update($tableName, $currentItemID, $condition);
+            //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
+            if($mysqli->getAffectedRows() < 0){
+                die('更新失败');
+            }
+            else if($mysqli->getAffectedRows() > 0) {
+                $flag++;
+            }
+        }
+    }
+}
+
+if($flag > 0) {
+    echo '更新成功';
+}
+else {
+    echo '当前无更新';
+}
+
+
