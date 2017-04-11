@@ -90,7 +90,7 @@ if (!empty($searchCondition['itemID'])) {
 /*
 if (!empty($searchCondition['warehouseID'])) {
     foreach ($searchCondition['warehouseID'] as $key => $value) {
-        $conditionStr .= ' and '
+        $conditionStr .= ' and warehouse_id = ' . $value;
     }
 }
 */
