@@ -24,7 +24,7 @@ function initData() {
         success: function (warehouseJSON_s) {
             warehouseJSON = warehouseJSON_s;
 
-            initWarehouseSpan(warehouseJSON)
+            initWarehouseSpan(warehouseJSON);
             loadAjaxGetData(itemMenuObj);
         },
         error: function (msg, e) {
@@ -46,7 +46,7 @@ function loadAjaxGetData(itemMenuObj) {
         success: function (itemJSON_s) {
             itemJSON = itemJSON_s;
 
-            initItemSelect(itemJSON)
+            initItemSelect(itemJSON);
             showItemInfo(itemMenuObj, itemJSON, 0);
             loadAllEndedItems(itemJSON);
         },
