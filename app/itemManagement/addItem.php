@@ -75,6 +75,67 @@ if($_SESSION['role_group'] < 2) {
 
 <!--script-->
 <script>
+//页面加载初始化，默认显示所有分类信息，实现无限分类菜单
+var itemMenuObj;
+var warehouseJSON;
+var itemJSON;
+//-----
+var itemJsonObj;
+var warehouseJsonObj;
+window.onload = function () {
+
+    initData();
+}
+
+//初始化内容
+function initData() {
+
+    itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
+    itemMenuObj.innerHTML = "";
+
+    //初始化仓库信息
+    $.ajax({
+        type: "post",
+        url: "getItemService.php",
+        data: { "tableName": "warehouse" },
+        dataType: "json",
+        cache: false,
+        success: function (warehouseJSON_s) {
+            warehouseJSON = warehouseJSON_s;
+
+            initWarehouseSpan(warehouseJSON)
+            loadAjaxGetData(itemMenuObj);
+        },
+        error: function (msg, e) {
+            alert("请求的数据发生异常：" + e);
+        }
+    });
+
+}
+
+//ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
+function loadAjaxGetData(itemMenuObj) {
+
+    $.ajax({
+        type: "post",
+        url: "getItemService.php",
+        data: { "tableName": "item" },
+        dataType: "json",
+        cache: false,
+        success: function (itemJSON_s) {
+            itemJSON = itemJSON_s;
+
+            initItemSelect(itemJSON)
+            showItemInfo(itemMenuObj, itemJSON, 0);
+            loadAllEndedItems(itemJSON);
+        },
+        error: function (msg, e) {
+            alert("请求的数据发生异常：" + e);
+        }
+    });
+}
+
+//-----------------------------------------------------------------------
         let itemJsonStr         = '<?php echo $itemData; ?>';
         var itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
 
@@ -95,7 +156,7 @@ if($_SESSION['role_group'] < 2) {
         //调用显示下一级分类
         showSubItem(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
-
+//--------------------------------------------------------------------------------------------------
     //----------------------显示仓库信息--------------------------------------
     function showWarehouseInfo(warehouseJsonObj, warehouseListObj){
 
@@ -109,12 +170,12 @@ if($_SESSION['role_group'] < 2) {
             for(let i = 0; i < warehouseJsonObj.length; i++){
 
                 if(0 == i) {
-                    str +="<label><input type = 'radio' checked = 'checked' name = 'warehouse' value = '";
+                    str +="<label><input id = 'warehouseInput_" + warehouseJsonObj[i].warehouse_id + "' type = 'radio' checked = 'checked' name = 'warehouse' value = '";
                     str += warehouseJsonObj[i].warehouse_id;
                     str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
                 }
                 else {
-                    str +="<label><input type = 'radio' name = 'warehouse' value = '";
+                    str +="<label><input id = 'warehouseInput_" + warehouseJsonObj[i].warehouse_id + "' type = 'radio' name = 'warehouse' value = '";
                     str += warehouseJsonObj[i].warehouse_id;
                     str +="'/>" + warehouseJsonObj[i].warehouse_name + "</label>";
                 }
@@ -168,10 +229,10 @@ if($_SESSION['role_group'] < 2) {
 
         //子分类select的ID号码为当前选择项option的id号码
 
-        currentSelectedItemID = choose.options[choose.selectedIndex].value;
+        let currentSelectedItem = choose.options[choose.selectedIndex].value;
 
-        if(currentSelectedItemID.indexOf('-') != -1){
-            currentSelectedItemIDArr = currentSelectedItemID.split("-");
+        if(currentSelectedItem.indexOf('-') != -1){
+            currentSelectedItemIDArr = currentSelectedItem.split("-");
             currentSelectedId = currentSelectedItemIDArr[currentSelectedItemIDArr.length - 1];
         }
         else{
@@ -183,7 +244,7 @@ if($_SESSION['role_group'] < 2) {
         currentSelectedName  = choose.id.split("_")[1];
 
         //当前选择分类项改变时，所属仓库显示同步
-        changeWarehouse(currentSelectedId);
+        setWarehouseRadio(choose);
 
         //当前选择分类项改变时，下一级分类显示同步：
         //先移除当前分类下所有显示的子分类，然后通过showSubItem()显示为更换分类选择后的子分类
@@ -206,9 +267,38 @@ if($_SESSION['role_group'] < 2) {
         }
     }
 
-    //同步仓库显示
-    function changeWarehouse(currentSelectedId){
+    //根据选择分类，同步仓库显示状态
+    function setWarehouseRadio(choose){
 
+        if(choose.id == 'itemSelectId_0' && choose.options[choose.selectedIndex].value != 'itemOption_0'){
+            let currentSelectedItemID = choose.options[choose.selectedIndex].value.split('_')[1];
+
+            let inputRadioID;
+            for(let i = 0; i < itemJsonObj.length; i++){
+                if(itemJsonObj[i].id == currentSelectedItemID) {
+
+                    inputRadioID = 'warehouseInput_' +  itemJsonObj[i].warehouse_id;
+                }
+            }
+
+            document.getElementById(inputRadioID).checked = 'checked';
+
+        }
+
+
+        if(choose.id == 'itemSelectId_0' && choose.options[choose.selectedIndex].value == 'itemOption_0') {
+
+                let warehouseArr = document.getElementsByName('warehouse');
+                for(let i = 0; i < warehouseArr.length; i++){
+                    warehouseArr[i].disabled = false;
+                }
+
+        }else{
+            let warehouseArr = document.getElementsByName('warehouse');
+            for(let i = 0; i < warehouseArr.length; i++){
+                warehouseArr[i].disabled = true;
+            }
+        }
     }
 
     //同一级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
@@ -243,7 +333,6 @@ if($_SESSION['role_group'] < 2) {
 
         itemName            = itemName.replace(/(^\s*)|(\s*$)/g, "");
         //itemCount           = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
-        console.log(itemSelectId);
         if(itemSelectId == 0) {
             warehouseId = getWarehouseRadioValue();
         }else{
