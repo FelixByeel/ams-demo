@@ -24,7 +24,7 @@ if($_SESSION['role_group'] < 2) {
     $warehouseData  = [];           //保存仓库信息
 
     //查询分类信息，并保存在$itemData[]中
-    $column = array('id', 'item_id', 'item_name', 'parent_id', 'is_ended');
+    $column = array('id', 'item_id', 'item_name', 'parent_id', 'is_ended', 'warehouse_id');
     $result = $mysql->select('item_t', $column);
 
     while($row = mysqli_fetch_assoc($result)){
@@ -75,13 +75,13 @@ if($_SESSION['role_group'] < 2) {
 
 <!--script-->
 <script>
-
-    window.onload = function(){
         let itemJsonStr         = '<?php echo $itemData; ?>';
-        let itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
+        var itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
 
         let warehouseJsonStr    = '<?php echo $warehouseData; ?>';
-        let warehouseJsonObj    = JSON.parse(warehouseJsonStr);         //获取仓库信息，转换为JSON对象
+        var warehouseJsonObj    = JSON.parse(warehouseJsonStr);         //获取仓库信息，转换为JSON对象
+    window.onload = function(){
+
 
         let itemSelectId        = 0;                                    //初始分类为0
         let itemListObj         = document.getElementById('itemList');  //获取需要添加select的对象
@@ -208,6 +208,7 @@ if($_SESSION['role_group'] < 2) {
 
     //同步仓库显示
     function changeWarehouse(currentSelectedId){
+
     }
 
     //同一级分类select的name为共同上级分类select的id，同级分类在同一个select列表显示-----------------
@@ -235,13 +236,24 @@ if($_SESSION['role_group'] < 2) {
         let itemName        = document.getElementById('itemNameInput').value;       //获取输入的分类名称
         //let itemCount       = document.getElementById('itemCountInput').value;      //获取输入的物品数量
 
-        let warehouseId     = getWarehouseRadioValue();                             //存储当前选择的仓库信息
+        let warehouseId     = 0;                             //存储当前选择的仓库信息
         let itemSelectId    = getItemSelectOptionValueList();                       //存储当前将要添加的分类的上一级分类ID
 
         let itemJSON;                                                               //构建JSON格式数据用来整体提交数据
 
         itemName            = itemName.replace(/(^\s*)|(\s*$)/g, "");
         //itemCount           = itemCount.replace(/(^\s*)|(\s*$)/g, "");              //去除输入内容中首尾的空格
+        console.log(itemSelectId);
+        if(itemSelectId == 0) {
+            warehouseId = getWarehouseRadioValue();
+        }else{
+            parentID = itemSelectId.split('-')[0];
+            for(let i = 0; i < itemJsonObj.length; i++){
+                if(itemJsonObj[i].id == parentID) {
+                    warehouseId = itemJsonObj[i].warehouse_id;
+                }
+            }
+        }
 
         //验证输入数据的有效性
         if(!warehouseId) {
