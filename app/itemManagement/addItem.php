@@ -109,7 +109,7 @@ function initData() {
 
 }
 
-//ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
+//ajax()方法加载分类数据,返回成功调用showSubItem()初始化分类显示
 function loadAjaxGetData() {
 
     $.ajax({
