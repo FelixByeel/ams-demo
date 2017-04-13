@@ -16,7 +16,7 @@ require_once (APP_ROOT.'include/Msqli.class.php');
 if($_SESSION['role_group'] < 2) {
     die('当前用户无法进行此操作！');
 }
-
+/*
     //连接数据库
     $mysql          = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
@@ -40,6 +40,7 @@ if($_SESSION['role_group'] < 2) {
         $warehouseData[] = $row;
     }
     $warehouseData = json_encode($warehouseData,JSON_UNESCAPED_UNICODE);
+    */
 ?>
 <!--添加分类-->
 <html>
@@ -76,10 +77,7 @@ if($_SESSION['role_group'] < 2) {
 <!--script-->
 <script>
 //页面加载初始化，默认显示所有分类信息，实现无限分类菜单
-var itemMenuObj;
-var warehouseJSON;
-var itemJSON;
-//-----
+
 var itemJsonObj;
 var warehouseJsonObj;
 window.onload = function () {
@@ -90,9 +88,6 @@ window.onload = function () {
 //初始化内容
 function initData() {
 
-    itemMenuObj = document.getElementById('itemMenuDiv');      //获取加载li列表的ul对象
-    itemMenuObj.innerHTML = "";
-
     //初始化仓库信息
     $.ajax({
         type: "post",
@@ -100,11 +95,12 @@ function initData() {
         data: { "tableName": "warehouse" },
         dataType: "json",
         cache: false,
-        success: function (warehouseJSON_s) {
-            warehouseJSON = warehouseJSON_s;
-
-            initWarehouseSpan(warehouseJSON)
-            loadAjaxGetData(itemMenuObj);
+        success: function (warehouseJsonObj_s) {
+            let warehouseListObj    = document.getElementById('warehouseList');
+            warehouseListObj.innerHTML = "";
+            warehouseJsonObj = warehouseJsonObj_s;
+            showWarehouseInfo(warehouseJsonObj, warehouseListObj);
+            loadAjaxGetData();
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
@@ -114,7 +110,7 @@ function initData() {
 }
 
 //ajax()方法加载分类数据,返回成功调用showItemInfo()初始化分类显示
-function loadAjaxGetData(itemMenuObj) {
+function loadAjaxGetData() {
 
     $.ajax({
         type: "post",
@@ -122,24 +118,25 @@ function loadAjaxGetData(itemMenuObj) {
         data: { "tableName": "item" },
         dataType: "json",
         cache: false,
-        success: function (itemJSON_s) {
-            itemJSON = itemJSON_s;
-
-            initItemSelect(itemJSON)
-            showItemInfo(itemMenuObj, itemJSON, 0);
-            loadAllEndedItems(itemJSON);
+        success: function (itemJsonObj_s) {
+            let itemListObj         = document.getElementById('itemList');  //获取需要添加select的对象
+            itemListObj.innerHTML = '';
+            let itemSelectId        = 0;                                    //初始分类为0
+            let itemSelectName      = -1;                                   //第一个分类select列表name属性的值
+            itemJsonObj = itemJsonObj_s
+            showSubItem(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
         }
     });
 }
-
+/*
 //-----------------------------------------------------------------------
-        let itemJsonStr         = '<?php echo $itemData; ?>';
+        let itemJsonStr         = '<?php //echo $itemData; ?>';
         var itemJsonObj         = JSON.parse(itemJsonStr);              //获取分类信息，转换为JSON对象。
 
-        let warehouseJsonStr    = '<?php echo $warehouseData; ?>';
+        let warehouseJsonStr    = '<?php //echo $warehouseData; ?>';
         var warehouseJsonObj    = JSON.parse(warehouseJsonStr);         //获取仓库信息，转换为JSON对象
     window.onload = function(){
 
@@ -157,6 +154,7 @@ function loadAjaxGetData(itemMenuObj) {
         showSubItem(itemListObj, itemSelectId, itemSelectName, itemJsonObj);
     }
 //--------------------------------------------------------------------------------------------------
+*/
     //----------------------显示仓库信息--------------------------------------
     function showWarehouseInfo(warehouseJsonObj, warehouseListObj){
 
@@ -380,6 +378,7 @@ function loadAjaxGetData(itemMenuObj) {
             $("#tips").load("addItemService.php", {"itemData" : itemJSON}, function(msg){
                 document.getElementById('itemNameInput').value = '';
                 alert(msg);
+                initData();
             });
         }
     }
