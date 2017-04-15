@@ -72,5 +72,5 @@ if($_SESSION['role_group'] < 2) {
             </div>
     </body>
     <script src = "../../public/js/editItem-edit.js"></script>
-    <script src = "../../public/js/editItem.js"></script>
+    <script src = "../../public/js/searchItem-public.js"></script>
 </html>
