@@ -205,7 +205,7 @@ $("#saveButton").click(function () {
     };
 
     $.post(
-        "editItemService.php",
+        "searchItem-editService.php",
         {
             "itemData": itemData
         },
