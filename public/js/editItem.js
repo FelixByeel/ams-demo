@@ -502,12 +502,15 @@ function getSearchItemResult(searchConditionData) {
             if(searchConditionData['warehouseID'].length){
                 searchByWarehouse(searchItemResultJSON,searchConditionData['warehouseID']);
             }
+            else {
+                loadAllEndedItems(searchItemResultJSON);
+            }
         },
         'json'
     );
 }
 
-//保存按仓库搜索的结果
+//加载按仓库搜索的结果
 function searchByWarehouse(searchItemResultJSON,warehouseArr) {
     let itemResultJSON = [];
     let k = 0;
