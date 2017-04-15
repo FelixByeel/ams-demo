@@ -152,12 +152,12 @@ $(document).ready(function(){
                         else{
 
                             echo "
-                                <li class = 'nav_li' onclick = \"loadCon('addPerson','app/piechart/piechart.php','查询库存');\">查询库存</li>
+                                <li class = 'nav_li' onclick = \"loadCon('searchItem-checkout','app/itemManagement/searchItem-checkout.php','查询库存');\">查询库存</li>
                             ";
 
                             if ($_SESSION['role_group'] >= 2) {
                                 echo "
-                                    <li class = 'nav_li' onclick = \"loadCon('editItem','app/itemManagement/editItem.php','分类管理');\">分类管理</li>
+                                    <li class = 'nav_li' onclick = \"loadCon('searchItem-edit','app/itemManagement/searchItem-edit.php','分类管理');\">分类管理</li>
                                     <li class = 'nav_li' onclick = \"loadCon('addItem','app/itemManagement/addItem.php','添加分类');\">添加分类</li>
                                     <li class = 'nav_li' onclick = \"loadCon('addwarehouse','app/warehouseManagement/addWarehouse.php','仓库管理');\">仓库管理</li>
                                 ";
