@@ -71,6 +71,18 @@ if (array_key_exists('itemParentID', $searchCondition)) {
     die("上级分类ID异常");
 }
 
+//------------------------------------------------------
+if (array_key_exists('itemName', $searchCondition)) {
+    if (!empty($searchCondition['itemName'])) {
+        if (checkInput($searchCondition['itemName'])) {
+            die("分类名称不能包含：" . checkInput($searchCondition['itemName']));
+        }
+    }
+} else {
+    die("分类名称异常");
+}
+
+
 //连接数据库
 $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tabelName      = 'item_t';
@@ -83,17 +95,18 @@ if (!empty($searchCondition['itemID'])) {
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '\'';
-} elseif (!empty($searchCondition['itemParentID'])) {
-    $conditionStr .= 'item_id like \'%-' . $searchCondition['itemParentID'] . '-%\' or ' . 'item_id like \'' . $searchCondition['itemParentID'] . '-%\'';
-}
+} else{
+    if (!empty($searchCondition['itemParentID'])) {
+        $conditionStr .= 'item_id like \'%-' . $searchCondition['itemParentID'] . '-%\' or ' . 'item_id like \'' . $searchCondition['itemParentID'] . '-%\'';
+    }
 
-/*
-if (!empty($searchCondition['warehouseID'])) {
-    foreach ($searchCondition['warehouseID'] as $key => $value) {
-        $conditionStr .= ' and warehouse_id = ' . $value;
+    if(!empty($searchCondition['itemName'])) {
+        if(!empty($conditionStr)){
+            $conditionStr = "(" . $conditionStr . ") and ";
+        }
+        $conditionStr .= ' item_name like \'%' . $searchCondition['itemName'] . '%\'';
     }
 }
-*/
 
 $result = $mysqli->select($tabelName, $columnArray, $conditionStr);
 
