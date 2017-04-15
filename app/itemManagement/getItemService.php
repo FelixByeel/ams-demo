@@ -16,11 +16,6 @@ require_once (APP_ROOT.'include/checkInput.php');
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
-//验证用户权限
-if($_SESSION['role_group'] < 2) {
-    die('当前用户无法进行此操作！');
-}
-
 //检测请求参数是否正确
 if(!isset($_POST['tableName']) || empty($_POST['tableName'])) {
     die("查询失败");
