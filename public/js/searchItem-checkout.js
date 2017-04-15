@@ -106,7 +106,7 @@ function loadAllEndedItems(itemJSONFun) {
     itemDetailDivObj.appendChild(tableObj);
 }
 
-
+//-------------------------------出库 start------------------------
 function checkoutItem(itemID) {
-    alert('checkout');
+    alert(itemID);
 }
