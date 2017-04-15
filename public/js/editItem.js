@@ -499,26 +499,29 @@ function getSearchItemResult(searchConditionData) {
         "searchItemService.php",
         {"searchConditionData": searchConditionData},
         function (searchItemResultJSON) {
-            let warehouseArr = searchConditionData['warehouseID'];
-            if(warehouseArr.length){
-
-                for(let i = 0; i < warehouseArr.length; i++){
-                    for(let j = 0; j < searchItemResultJSON.length; j++){
-                        if(warehouseArr[i] != searchItemResultJSON[j].warehouse_id && (searchItemResultJSON[j].is_ended == 1)){
-                            console.log(searchItemResultJSON[j].item_name);
-                            console.log(searchItemResultJSON[j].warehouse_id);
-                            console.log('W:' + warehouseArr[i]);
-                            searchItemResultJSON.splice(j, 1);
-                            console.log(searchItemResultJSON.length);
-                            j = 0;
-                        }
-                    }
-                }
+            if(searchConditionData['warehouseID'].length){
+                searchByWarehouse(searchItemResultJSON,searchConditionData['warehouseID']);
             }
-
-            console.log(searchItemResultJSON);
-            loadAllEndedItems(searchItemResultJSON);
         },
         'json'
     );
+}
+
+//保存按仓库搜索的结果
+function searchByWarehouse(searchItemResultJSON,warehouseArr) {
+    let itemResultJSON = [];
+    let k = 0;
+
+    for(let i = 0; i < warehouseArr.length; i++){
+        for(let j = 0; j < searchItemResultJSON.length; j++){
+ 
+            if(0 == searchItemResultJSON[j].is_ended) {
+                itemResultJSON[k++] = searchItemResultJSON[j];
+            }
+            else if(warehouseArr[i] == searchItemResultJSON[j].warehouse_id) {
+                itemResultJSON[k++] = searchItemResultJSON[j];
+            }
+        }
+    }
+    loadAllEndedItems(itemResultJSON);
 }
