@@ -13,7 +13,7 @@ require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
 //验证用户权限
-if($_SESSION['role_group'] < 2) {
+if($_SESSION['role_group'] < 1) {
     die('当前用户无法进行此操作！');
 }
 ?>
@@ -52,7 +52,7 @@ if($_SESSION['role_group'] < 2) {
             </div>
         </div>
 
-            <!--弹出层，编辑界面-->
+            <!--弹出层，出库界面-->
             <div id = "editBox" style = "display: none">
                 <div id = "editBoxHead">
                     <label id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
@@ -71,6 +71,6 @@ if($_SESSION['role_group'] < 2) {
                 </div>
             </div>
     </body>
-    <script src = "../../public/js/editItem-edit.js"></script>
+    <script src = "../../public/js/searchItem-checkout.js"></script>
     <script src = "../../public/js/searchItem-public.js"></script>
 </html>
