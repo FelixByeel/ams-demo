@@ -72,7 +72,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             let itemLiObj = document.createElement("li");
 
             itemLiObj.id = "itemLiId_" + itemJSON[i].id;
-            itemLiObj.innerHTML = itemJSON[i].item_name;
+            itemLiObj.innerHTML = "<span>" + itemJSON[i].item_name + "</span>";
 
             itemLiObj.addEventListener("click", function (e) {
 

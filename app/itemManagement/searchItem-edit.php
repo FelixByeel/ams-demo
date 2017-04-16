@@ -21,37 +21,39 @@ if($_SESSION['role_group'] < 2) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="" rel="stylesheet">
+        <link href="../../public/css/searchItem-public.css" rel="stylesheet">
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
     </head>
     <body>
-        <!--搜索模块 start-->
-        <div id = "searchBox">
-            <div id = "searchConditionBox">
-                <label>分类编号：<input id = "searchItemIDInput" type = "text" /></label>
-                <label>分类名称：
-                    <select id = "searchItemNameSelect"></select>
-                    <input id = "searchItemNameInput" type = "text" />
-                </label>
-                <label>所属仓库：
-                    <span id = "searchWarehouseNameSpan">无</span>
-                </label>
-            </div>
-            <button id = "searchButton" type="button">搜索</button>
-        </div>
+        <div id = 'bodyBox'>
+            <!--搜索模块 start-->
+            <div id = "searchBox">
 
-        <!--搜索结果显示区域-->
-        <div id = "resultBox">
-            <div id = "itemMenuBox">
-                <p>分类列表：</p>
-                <div id = "itemMenuDiv"></div>
-            </div>
-            <div id = "itemDetailBox">
-                <p>详细信息：</p>
-                <div id = "itemDetail"></div>
-            </div>
-        </div>
+                    <p id = "warehouseP">所属仓库：
+                        <span id = "searchWarehouseNameSpan">无</span>
+                    </p>
 
+                    <span id = "itemIDSpan">分类编号：<input id = "searchItemIDInput" type = "text" /></span>
+                    <span id = "itemNameSpan">分类名称：
+                        <select id = "searchItemNameSelect"></select>
+                        <input id = "searchItemNameInput" type = "text" />
+                    </span>
+                    <button id = "searchButton" type="button">搜索</button>
+
+            </div>
+
+            <!--搜索结果显示区域-->
+            <div id = "resultBox">
+                <div id = "itemMenuBox">
+                    <p>分类列表：</p>
+                    <div id = "itemMenuDiv"></div>
+                </div>
+                <div id = "itemDetailBox">
+                    <p>详细信息：</p>
+                    <div id = "itemDetail"></div>
+                </div>
+            </div>
+        
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
                 <div id = "editBoxHead">
@@ -70,6 +72,7 @@ if($_SESSION['role_group'] < 2) {
                     <button id = "saveButton">保存</button><button id = "cancelButton">取消</button>
                 </div>
             </div>
+        </div>
     </body>
     <script src = "../../public/js/searchItem-edit.js"></script>
     <script src = "../../public/js/searchItem-public.js"></script>
