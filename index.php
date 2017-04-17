@@ -4,7 +4,8 @@
 <title>登录</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <script type="text/javascript" src="public/js/jquery-1.8.3/jquery.js"></script>
-
+<script src = "public/js/cookie.js"></script>
+<script src = "public/js/index.js"></script>
 <style type = "text/css">
 html,body{
     margin:0;
@@ -88,30 +89,6 @@ a#forget:hover{
     color:#00BBFF;
 }
 </style>
-
-<script>
-//login
-function login_submit(){
-    username = document.getElementById("username");
-    password = document.getElementById("userpwd");
-    errorinfoObj = document.getElementById("errorinfo");
-    if("" == username.value || "" == password.value){
-        errorinfoObj.innerHTML = "用户名或密码不能为空！";
-        return false;
-    }
-    else{
-        $("#errorinfo").load("app/login/loginAction.php",{"username":username.value,"userpwd":password.value});
-    }
-}
-
-//响应Enter按键登录
-document.onkeydown=function(event){
-    var e = event || window.event || arguments.callee.caller.arguments[0];
-    if(e && e.keyCode == 13){
-        login_submit();
-    }
-}
-</script>
 </head>
 <body>
 <div id = "login_box">
