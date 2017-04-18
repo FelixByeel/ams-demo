@@ -22,6 +22,7 @@ if($_SESSION['role_group'] < 2) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/searchItem-public.css" rel="stylesheet">
+        <link href="../../public/css/searchItem-edit.css" rel="stylesheet">
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
     </head>
     <body>
@@ -58,7 +59,7 @@ if($_SESSION['role_group'] < 2) {
 
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
-                <div id = "editBoxHead">
+                <div id = "editBoxHead" style = 'display:none'>
                     <label id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
                     <button id = "delButton">删除</button>
                 </div>
