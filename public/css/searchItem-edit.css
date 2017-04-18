@@ -1,0 +1,10 @@
+/*遮罩层*/
+#shadeBox{
+
+    background-color: #555;
+    opacity: 0.5;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 1;
+}

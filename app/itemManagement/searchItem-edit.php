@@ -25,6 +25,8 @@ if($_SESSION['role_group'] < 2) {
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
     </head>
     <body>
+            <!--遮罩层-->
+        <div id = "shadeBox"></div>
         <div id = 'bodyBox'>
             <!--搜索模块 start-->
             <div id = "searchBox">
@@ -53,7 +55,7 @@ if($_SESSION['role_group'] < 2) {
                     <div id = "itemDetail"></div>
                 </div>
             </div>
-        
+
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
                 <div id = "editBoxHead">
