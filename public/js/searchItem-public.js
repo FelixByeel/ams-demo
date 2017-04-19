@@ -72,7 +72,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             let itemLiObj = document.createElement("li");
 
             itemLiObj.id = "itemLiId_" + itemJSON[i].id;
-            itemLiObj.innerHTML = "<span name = 'itemMenuSpan' id = 'itemSpanId_" + itemJSON[i].id + "'>" + itemJSON[i].item_name + "</span>";
+            itemLiObj.innerHTML = "<span class = 'item-menu-background-color' name = 'itemMenuSpan' id = 'itemSpanId_" + itemJSON[i].id + "'>" + itemJSON[i].item_name + "</span>";
 
             itemLiObj.addEventListener("click", function (e) {
 
@@ -97,17 +97,64 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
 function itemClicked(currentClickLi, itemJSON) {
     let currentSelectedId = currentClickLi.id.split("_")[1];
     let itemMenuObj = document.getElementById("itemLiId_" + currentSelectedId);
-    //let itemMenuDivObj = document.getElementById('itemMenuDiv');
+
     //检测当前点击菜单项的子菜单是否存在
     if (checkSubItem(currentSelectedId)) {
 
         showItemInfo(itemMenuObj, itemJSON, currentSelectedId);
     }
-    //console.log(document.getElementById("itemMenuDiv").getElementsByTagName("span"));
+
+    setAllItemMenuSpanDefaultBackgroundColor();
+    setCurrentSelectedItemMenuSpanBackgroundColor(currentSelectedId);
+    setCurrentSelectedItemSubMenuIndent(currentSelectedId);
+}
+
+//设置分类菜单所有项默认背景色
+function setAllItemMenuSpanDefaultBackgroundColor() {
+
+    let allItemMenuSpans = document.getElementsByName("itemMenuSpan");
+    for(let i = 0; i < allItemMenuSpans.length; i++){
+        allItemMenuSpans[i].className = "item-menu-background-color";
+    }
+}
+
+//设置当前选中分类菜单项背景色
+function setCurrentSelectedItemMenuSpanBackgroundColor(currentSelectedId) {
     let currentSelectedSpanObj = document.getElementById("itemSpanId_" + currentSelectedId);
-    let currentSelectedSubUlObj = document.getElementById("itemUlId_" + currentSelectedId);
-    console.log((currentSelectedSubUlObj.children));
-    //currentSelectedSpanObj.className = "current-selected-menu-background-color";
+    currentSelectedSpanObj.className = "current-selected-menu-background-color";
+}
+
+//设置当前选中分类菜单的子菜单缩进
+function setCurrentSelectedItemSubMenuIndent(currentSelectedId) {
+
+    let allSubItemLi;
+    if(!document.getElementById("itemUlId_" + currentSelectedId)) {
+        return;
+    }
+    allSubItemLi = document.getElementById("itemUlId_" + currentSelectedId).children;
+
+    let allSubItemID = [];
+    for(let i = 0; i < allSubItemLi.length; i++){
+        allSubItemID.push(allSubItemLi[i].id.split("_")[1]);
+    }
+
+    let currentItem_id;
+    let currentItemParentArr;
+    for(let j = 0; j < itemJSON.length; j++){
+        if(allSubItemID[0] == itemJSON[j].id) {
+            currentItem_id = itemJSON[j].item_id;
+            currentItemParentArr = currentItem_id.split("-");
+            break;
+        }
+    }
+
+    for(let i = 0; i < allSubItemID.length; i++){
+
+        let currentSelectedSubSpanObj = document.getElementById("itemSpanId_" + allSubItemID[i]);
+        currentSelectedSubSpanObj.style.padding = "0 0 0 " + currentItemParentArr.length * 20 + "px";
+        //currentSelectedSubSpanObj.className = "current-selected-sub-menu-background-color";
+    }
+
 }
 
 //检测当前点击菜单项的子菜单是否存在,没有返回true,有返回false

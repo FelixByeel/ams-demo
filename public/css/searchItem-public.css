@@ -81,27 +81,41 @@ ul,li{
     overflow: hidden;
 }
 
-li{
-    margin-top: 1px;
+ul{
+    margin-bottom: 5px;
+}
 
+li{
+    margin-top: 5px;
 }
 
 #itemMenuDiv span{
     display: block;
     width: 200px;
     height: 30px;
-
-    background-color: #00BFFF;
+    line-height: 30px;
+    padding-left: 20px;
     color: #FFF;
+    border-bottom: 1px solid #6D8EA0;
 }
 
 #itemMenuDiv span:hover{
-    background-color: #6D8EA0;
+    background-color: #00D9C0;
+    transition: background-color 0.3s;
 }
 
+.item-menu-background-color{
+    background-color: #6D8EA0 ;
+    transition: background-color 0.3s;
+}
 
 .current-selected-menu-background-color{
-        padding-left: 60px;
+    background-color: #FF4365;
+    transition: background-color 0.3s;
+}
+
+.current-selected-sub-menu-background-color{
+    background-color: #777;
 }
 /*-------------item list start-----------*/
 #itemDetailBox {
