@@ -72,7 +72,7 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
             let itemLiObj = document.createElement("li");
 
             itemLiObj.id = "itemLiId_" + itemJSON[i].id;
-            itemLiObj.innerHTML = "<span>" + itemJSON[i].item_name + "</span>";
+            itemLiObj.innerHTML = "<span name = 'itemMenuSpan' id = 'itemSpanId_" + itemJSON[i].id + "'>" + itemJSON[i].item_name + "</span>";
 
             itemLiObj.addEventListener("click", function (e) {
 
@@ -97,12 +97,17 @@ function showItemInfo(itemMenuObj, itemJSON, currentSelectedId) {
 function itemClicked(currentClickLi, itemJSON) {
     let currentSelectedId = currentClickLi.id.split("_")[1];
     let itemMenuObj = document.getElementById("itemLiId_" + currentSelectedId);
-    let itemMenuDivObj = document.getElementById('itemMenuDiv');
+    //let itemMenuDivObj = document.getElementById('itemMenuDiv');
     //检测当前点击菜单项的子菜单是否存在
     if (checkSubItem(currentSelectedId)) {
 
         showItemInfo(itemMenuObj, itemJSON, currentSelectedId);
     }
+    //console.log(document.getElementById("itemMenuDiv").getElementsByTagName("span"));
+    let currentSelectedSpanObj = document.getElementById("itemSpanId_" + currentSelectedId);
+    let currentSelectedSubUlObj = document.getElementById("itemUlId_" + currentSelectedId);
+    console.log((currentSelectedSubUlObj.children));
+    //currentSelectedSpanObj.className = "current-selected-menu-background-color";
 }
 
 //检测当前点击菜单项的子菜单是否存在,没有返回true,有返回false

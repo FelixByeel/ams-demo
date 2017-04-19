@@ -23,7 +23,7 @@ if($_SESSION['role_group'] < 2) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/searchItem-public.css" rel="stylesheet">
         <link href="../../public/css/searchItem-edit.css" rel="stylesheet">
-        <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+
     </head>
     <body>
             <!--遮罩层-->
@@ -76,7 +76,8 @@ if($_SESSION['role_group'] < 2) {
                 </div>
             </div>
         </div>
+        <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+        <script src = "../../public/js/searchItem-edit.js"></script>
+        <script src = "../../public/js/searchItem-public.js"></script>
     </body>
-    <script src = "../../public/js/searchItem-edit.js"></script>
-    <script src = "../../public/js/searchItem-public.js"></script>
 </html>

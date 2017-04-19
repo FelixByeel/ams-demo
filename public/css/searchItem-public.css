@@ -83,14 +83,14 @@ ul,li{
 
 li{
     margin-top: 1px;
-    padding-left: 10px;
+
 }
 
 #itemMenuDiv span{
     display: block;
     width: 200px;
     height: 30px;
-    padding-left: 30px;
+
     background-color: #00BFFF;
     color: #FFF;
 }
@@ -99,8 +99,9 @@ li{
     background-color: #6D8EA0;
 }
 
-.spanIndent{
-    padding-left: 60px;
+
+.current-selected-menu-background-color{
+        padding-left: 60px;
 }
 /*-------------item list start-----------*/
 #itemDetailBox {
