@@ -15,8 +15,15 @@
 }
 
 #bodyBox{
+    /*
     width: 80%;
     margin: 3% auto;
+    */
+    position: absolute;
+    top:20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
 }
 /*-------------search start----------------*/
 #searchBox{
@@ -76,7 +83,7 @@
 
 /*-------------item menu start-----------*/
 #itemMenuBox{
-    width: 300px;
+    width: 200px;
     overflow: hidden;
     padding: 0;
 
@@ -130,8 +137,10 @@ li{
 }
 /*-------------item list start-----------*/
 #itemDetailBox {
-
+    margin-left: 10px;
+    width: 75%;
     float: left;
+    background-color: #DDD;
 }
 
 button{
