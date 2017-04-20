@@ -43,11 +43,9 @@ if($_SESSION['role_group'] < 1) {
             <!--搜索结果显示区域-->
             <div id = "resultBox">
                 <div id = "itemMenuBox">
-                    <p>分类列表：</p>
                     <div id = "itemMenuDiv"></div>
                 </div>
                 <div id = "itemDetailBox">
-                    <p>详细信息：</p>
                     <div id = "itemDetail"></div>
                 </div>
             </div>

@@ -6,7 +6,7 @@
 /*遮罩层*/
 #shadeBox{
 
-    background-color: #555;
+    background-color: #FFF;
     opacity: 0.5;
     position: absolute;
     top:0;

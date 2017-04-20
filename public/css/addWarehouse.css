@@ -13,7 +13,7 @@ html,body {
 /*遮罩层*/
 #shadeBox{
 
-    background-color: #555;
+    background-color: #fff;
     opacity: 0.5;
     position: absolute;
     top:0;
