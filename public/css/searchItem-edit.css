@@ -1,23 +1,75 @@
-/*遮罩层*/
-#shadeBox{
-
-    background-color: #555;
-    opacity: 0.5;
-    position: absolute;
-    top:0;
-    left: 0;
-    z-index: 1;
-}
-
 #editBox{
-    width: 50%;
-    height: 300px;
+    width: 60%;
+    height: 400px;
     position: absolute;
-    top:20%;
-    left: 25%;
+    top:15%;
+    left: 20%;
     z-index: 10;
     background-color: #FFF;
-    text-align: center;
+
     box-shadow: 1px 1px 10px 1px #000;
     border-radius: 5px;
+}
+
+#editBoxContent{
+    position: absolute;
+    top:10%;
+    left: 20%;
+
+}
+
+.labelStyle{
+    display: block;
+    width: 500px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+#itemNameInput, #itemCountInput{
+    margin-left: 20px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    padding:0 5px;
+}
+
+#classSelect, #warehouseSelect{
+    margin-left: 20px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #444;
+    border-radius: 3px;
+}
+
+#currentCountSpan{
+    margin-left: 30px;
+}
+
+#tips{
+    margin-left: 30px;
+    color: orangered;
+}
+
+#saveButton{
+    position: relative;
+    top: 30px;
+    left: 300px;
+}
+
+#closeSpan{
+    float: right;
+    width: 30px;
+    height: 25px;
+    margin-top: 2px;
+    margin-right: 2px;
+    line-height: 25px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#closeSpan:hover{
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
 }

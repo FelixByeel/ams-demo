@@ -110,7 +110,8 @@ function loadAllEndedItems(itemJSONFun) {
 function editItem(currentSelectedId) {
 
     let itemIndex;
-
+    $("#shadeBox").width("100%");
+    $("#shadeBox").height("100%");
     $("#editBox").show();
     $("#classSelect").empty();
     $("#warehouseSelect").empty();
@@ -216,6 +217,8 @@ $("#saveButton").click(function () {
             }
         });
     $("#editBox").hide();
+    $("#shadeBox").width("0");
+    $("#shadeBox").height("0");
 });
 
 //取消
@@ -223,6 +226,12 @@ $("#cancelButton").click(function () {
 
     $("#editBox").hide();
 });
+
+function closePopLayer(){
+    $("#editBox").hide();
+    $("#shadeBox").width("0");
+    $("#shadeBox").height("0");
+}
 
 //删除(此为保留功能，暂不实现)
 $("#delButton").click(function () {

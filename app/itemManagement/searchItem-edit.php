@@ -48,31 +48,30 @@ if($_SESSION['role_group'] < 2) {
             <!--搜索结果显示区域-->
             <div id = "resultBox">
                 <div id = "itemMenuBox">
-                    <p>分类列表：</p>
                     <div id = "itemMenuDiv"></div>
                 </div>
                 <div id = "itemDetailBox">
-                    <p>详细信息：</p>
                     <div id = "itemDetail"></div>
                 </div>
             </div>
 
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
+                <span id = "closeSpan" onclick="closePopLayer()">&times;</span>
                 <div id = "editBoxHead" style = 'display:none'>
-                    <label id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
+                    <label class = "labelStyle" id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
                     <button id = "delButton">删除</button>
                 </div>
                 <div id = "editBoxContent">
-                    <label id = "nameLabel">名称：<input id = "itemNameInput" type = "text" value = ""/></label>
-                    <label id = "classLabel">上级分类：<select id = "classSelect"></select></label>
-                    <label id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
-                    <label id = "currentCountLabel">当前数量：<span id = "currentCountSpan"></span></label>
-                    <label id = "countLabel">变更数量：
+                    <label class = "labelStyle" id = "nameLabel">物品名称：<input id = "itemNameInput" type = "text" value = ""/></label>
+                    <label class = "labelStyle" id = "classLabel">上级分类：<select id = "classSelect"></select></label>
+                    <label class = "labelStyle" id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
+                    <label class = "labelStyle" id = "currentCountLabel">当前数量：<span id = "currentCountSpan"></span></label>
+                    <label class = "labelStyle" id = "countLabel">变更数量：
                         <input id = "itemCountInput" type = "text" value = ""/>
-                        <span id = "">负数表示从当前数量减去。</span>
+                        <span id = "tips">负数表示从当前数量减去。</span>
                     </label>
-                    <button id = "saveButton">保存</button><button id = "cancelButton">取消</button>
+                    <button id = "saveButton">保存</button>
                 </div>
             </div>
         </div>
