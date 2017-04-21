@@ -229,7 +229,7 @@ $("#saveButton").click(function () {
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
-    document.documentElement.style.overflow = "scroll";
+    document.documentElement.style.overflowY = "scroll";
 });
 
 /*
@@ -245,7 +245,7 @@ function closePopLayer(){
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
-    document.documentElement.style.overflow = "scroll";
+    document.documentElement.style.overflowY = "scroll";
 }
 
 //删除(此为保留功能，暂不实现)
