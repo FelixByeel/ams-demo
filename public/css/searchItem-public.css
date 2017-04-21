@@ -3,6 +3,9 @@
      padding: 0;
  }
 
+*{
+    font: 14px/20px Arial,"Microsoft YaHei",sans-serif;
+}
 /*遮罩层*/
 #shadeBox{
 
@@ -88,12 +91,13 @@
 }
 
 /*-------------item menu start-----------*/
-#itemMenuBox{
+#item-menu-wrap{
+    margin-top: 17px;
+    padding: 0;
+    float: left;
     width: 200px;
     overflow: hidden;
-    padding: 0;
 
-    float: left;
 }
 
 ul,li{
@@ -150,23 +154,52 @@ li{
 }
 
 /*-----------------table-------------------*/
-#itemDetail table{
+.show-detail-table{
     width: 100%;
     border-collapse: collapse;
+}
+
+.td-title{
+    border-bottom: 2px solid #6D8EA0;
+}
+
+.code-column, .warehouse-column, .count-column, .action-column{
     text-align: center;
 }
 
+.name-column{
+    padding-left: 100px;
 
-
-#itemDetail table tr:hover{
-    background-color:#EEE;
+    text-align: left;
 }
 
-#itemDetail table td{
-    border-bottom: 1px solid #6D8EA0;
-    padding-top: 2px;
+.code-column{
+    width: 150px;
 }
 
+.action-column{
+    width: 100px;
+}
+
+.td-content{
+    border-bottom: 1px dotted #6D8EA0;
+}
+
+tr.odd-row:hover{
+    background-color: #FEF8CE;
+}
+
+tr.even-row:hover{
+    background-color: #FEF8CE;
+}
+
+.odd-row{
+    background-color: #F6F9E7;
+}
+
+.even-row{
+    background-color: #EEF3D0;
+}
 /*-----------------table-------------------*/
 
 button{

@@ -31,10 +31,10 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
             let trObj = tableObj.insertRow();
             let trStr = "";
             if (j % 2) {
-                trObj.className = "row_odd";
+                trObj.className = "odd-row";
             }
             else {
-                trObj.className = "row_even";
+                trObj.className = "even-row";
             }
             //trObj.insertCell(0).innerHTML = itemJSON[i].item_id;
             //trObj.insertCell(1).innerHTML = itemJSON[i].item_name;
