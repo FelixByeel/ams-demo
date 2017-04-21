@@ -163,18 +163,22 @@ li{
     border-bottom: 2px solid #6D8EA0;
 }
 
-.code-column, .warehouse-column, .count-column, .action-column{
+.warehouse-column, .count-column, .action-column{
     text-align: center;
-}
-
-.name-column{
-    padding-left: 100px;
-
-    text-align: left;
 }
 
 .code-column{
     width: 150px;
+    text-align: right;
+}
+
+.name-column{
+    padding-left: 200px;
+    text-align: left;
+}
+
+.warehouse-column, .count-column {
+    padding-right: 100px;
 }
 
 .action-column{
