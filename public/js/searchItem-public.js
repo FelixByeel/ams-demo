@@ -48,7 +48,7 @@ function loadAjaxGetData(itemMenuObj) {
 
             initItemSelect(itemJSON);
             showItemInfo(itemMenuObj, itemJSON, 0);
-            loadAllEndedItems(itemJSON);
+            showCurrentSelectedDetail(itemJSON);
         },
         error: function (msg, e) {
             alert("请求的数据发生异常：" + e);
@@ -324,7 +324,7 @@ function getSearchItemResult(searchConditionData) {
                 searchByWarehouse(searchItemResultJSON,searchConditionData['warehouseID']);
             }
             else {
-                loadAllEndedItems(searchItemResultJSON);
+                showCurrentSelectedDetail(searchItemResultJSON);
             }
         },
         'json'
@@ -338,7 +338,7 @@ function searchByWarehouse(searchItemResultJSON,warehouseArr) {
 
     for(let i = 0; i < warehouseArr.length; i++){
         for(let j = 0; j < searchItemResultJSON.length; j++){
- 
+
             if(0 == searchItemResultJSON[j].is_ended) {
                 itemResultJSON[k++] = searchItemResultJSON[j];
             }
@@ -347,5 +347,5 @@ function searchByWarehouse(searchItemResultJSON,warehouseArr) {
             }
         }
     }
-    loadAllEndedItems(itemResultJSON);
+    showCurrentSelectedDetail(itemResultJSON);
 }

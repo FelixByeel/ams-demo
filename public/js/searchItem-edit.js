@@ -1,11 +1,11 @@
 //显示当前分类下的详细信息
-function showCurrentSelectedDetail(itemJSON, currentSelectedId) {
+function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
 
     let itemDetailDivObj = document.getElementById("itemDetail");
     let tableObj = document.createElement("table");
     let trObj = tableObj.insertRow();
 
-    tableObj.id = "showDetailTable_" + currentSelectedId;
+    tableObj.id = "showDetailTable";
     trObj.id = "trHead";
     trObj.insertCell(0).innerHTML = "分类编号";
     trObj.insertCell(1).innerHTML = "分类名称";
@@ -14,7 +14,11 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId) {
     trObj.insertCell(4).innerHTML = "操作";
 
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
-        if ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
+
+        //let flag = currentSelectedId ? ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) : (1 == itemJSON[i].is_ended);
+        //if ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) {
+        //根据currentSelectedId 显示，为0表示默认显示所有物品条目，否则显示当前所选择的currentSelectedId的下的所有最终物品条目
+        if(currentSelectedId ? ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) : (1 == itemJSON[i].is_ended)){
             let trObj = tableObj.insertRow();
             if (j % 2) {
                 trObj.className = "row_odd";
@@ -49,6 +53,7 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId) {
     itemDetailDivObj.appendChild(tableObj);
 }
 
+/*
 //页面加载时显示详细信息
 function loadAllEndedItems(itemJSONFun) {
     //console.log('f_' + itemJSONFun);
@@ -105,7 +110,7 @@ function loadAllEndedItems(itemJSONFun) {
     itemDetailDivObj.innerHTML = "";
     itemDetailDivObj.appendChild(tableObj);
 }
-
+*/
 //---------------编辑操作 start--------------------
 function editItem(currentSelectedId) {
 
