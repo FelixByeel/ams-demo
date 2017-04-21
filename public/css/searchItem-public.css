@@ -28,19 +28,25 @@
 /*-------------search start----------------*/
 #searchBox{
     width: 100%;
-    height: 80px;
     padding-bottom: 5px;
     border-bottom: 1px solid #6D8EA0;
+    background-color: #DDD;
 }
 
 #warehouseP{
+    margin: 0;
+    padding: 0;
     height: 30px;
+}
+
+#searchWarehouseNameSpan{
+    margin-left: 10px;
 }
 
 #searchItemIDInput{
     margin-left: 20px;
     width: 80px;
-    height: 30px;
+    height: 25px;
     border: 1px solid #444;
     border-radius: 3px;
     padding:0 5px;
@@ -53,7 +59,7 @@
 #searchItemNameSelect{
     margin-left: 20px;
     width: 150px;
-    height: 30px;
+    height: 25px;
     border: 1px solid #444;
     border-radius: 3px;
 }
@@ -61,7 +67,7 @@
 #searchItemNameInput{
     margin-left: 20px;
     width: 150px;
-    height: 30px;
+    height: 25px;
     border: 1px solid #444;
     border-radius: 3px;
     padding:0 5px;
@@ -75,7 +81,7 @@
 
 #resultBox{
     position: relative;
-    top: 0px;
+    top: 10px;
     width: 100%;
     height: 70%;
 
@@ -137,15 +143,35 @@ li{
 }
 /*-------------item list start-----------*/
 #itemDetailBox {
-    margin-left: 10px;
-    width: 75%;
+    position: absolute;
+    left: 220px;
+    right: 0;
     float: left;
-    background-color: #DDD;
 }
+
+/*-----------------table-------------------*/
+#itemDetail table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+
+
+#itemDetail table tr:hover{
+    background-color:#EEE;
+}
+
+#itemDetail table td{
+    border-bottom: 1px solid #6D8EA0;
+    padding-top: 2px;
+}
+
+/*-----------------table-------------------*/
 
 button{
     width:100px;
-    height: 30px;
+    height: 25px;
     border: none;
     background-color: #00BFFF;
     color: #FFF;
