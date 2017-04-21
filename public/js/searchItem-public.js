@@ -331,21 +331,28 @@ function getSearchItemResult(searchConditionData) {
     );
 }
 
-//加载按仓库搜索的结果
+//加载按仓库搜索的结果,选择所有仓库时，则返回全部。
 function searchByWarehouse(searchItemResultJSON,warehouseArr) {
-    let itemResultJSON = [];
-    let k = 0;
 
-    for(let i = 0; i < warehouseArr.length; i++){
-        for(let j = 0; j < searchItemResultJSON.length; j++){
+    let allWarehouseObj = document.getElementsByName("warehouseName");
 
-            if(0 == searchItemResultJSON[j].is_ended) {
-                itemResultJSON[k++] = searchItemResultJSON[j];
-            }
-            else if(warehouseArr[i] == searchItemResultJSON[j].warehouse_id) {
-                itemResultJSON[k++] = searchItemResultJSON[j];
+    if(allWarehouseObj.length == warehouseArr.length){
+        showCurrentSelectedDetail(searchItemResultJSON);
+    }else{
+        let itemResultJSON = [];
+        let k = 0;
+
+        for(let i = 0; i < warehouseArr.length; i++){
+            for(let j = 0; j < searchItemResultJSON.length; j++){
+
+                if(0 == searchItemResultJSON[j].is_ended) {
+                    itemResultJSON[k++] = searchItemResultJSON[j];
+                }
+                else if(warehouseArr[i] == searchItemResultJSON[j].warehouse_id) {
+                    itemResultJSON[k++] = searchItemResultJSON[j];
+                }
             }
         }
+        showCurrentSelectedDetail(itemResultJSON);
     }
-    showCurrentSelectedDetail(itemResultJSON);
 }
