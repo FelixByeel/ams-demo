@@ -109,9 +109,17 @@ function loadAllEndedItems(itemJSONFun) {
 //---------------编辑操作 start--------------------
 function editItem(currentSelectedId) {
 
+    //保存当前要编辑的条目在item JSON中的位置。
     let itemIndex;
+
+    //显示遮罩层
     $("#shadeBox").width("100%");
     $("#shadeBox").height("100%");
+
+    //弹出窗口时，阻止页面滚动。
+    document.documentElement.style.overflow = "hidden";
+
+    //弹出编辑窗口，先清空原来的内容。然后显示当前要编辑的内容。
     $("#editBox").show();
     $("#classSelect").empty();
     $("#warehouseSelect").empty();
@@ -216,25 +224,34 @@ $("#saveButton").click(function () {
                 initData();
             }
         });
+
+    //关闭编辑窗口，关闭遮罩层，允许页面滚动
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
+    document.documentElement.style.overflow = "scroll";
 });
 
+/*
 //取消
 $("#cancelButton").click(function () {
 
     $("#editBox").hide();
 });
+*/
 
+//点击弹出窗口右上角X
 function closePopLayer(){
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
+    document.documentElement.style.overflow = "scroll";
 }
 
 //删除(此为保留功能，暂不实现)
+/*
 $("#delButton").click(function () {
 
 });
+*/
 //---------------编辑操作 end--------------------
