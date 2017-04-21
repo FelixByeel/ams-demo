@@ -47,7 +47,7 @@ if($_SESSION['role_group'] < 1) {
 
             <!--搜索结果显示区域-->
             <div id = "resultBox">
-                <div id = "itemMenuBox">
+                <div id = "item-menu-wrap">
                     <div id = "itemMenuDiv"></div>
                 </div>
                 <div id = "itemDetailBox">
