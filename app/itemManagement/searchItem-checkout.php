@@ -22,12 +22,16 @@ if($_SESSION['role_group'] < 1) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/searchItem-public.css" rel="stylesheet">
-        <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+        <link href="../../public/css/searchItem-edit.css" rel="stylesheet">
+
     </head>
     <body>
+            <!--遮罩层-->
+        <div id = "shadeBox"></div>
         <div id = 'bodyBox'>
             <!--搜索模块 start-->
             <div id = "searchBox">
+
                     <p id = "warehouseP">所属仓库：
                         <span id = "searchWarehouseNameSpan">无</span>
                     </p>
@@ -38,6 +42,7 @@ if($_SESSION['role_group'] < 1) {
                         <input id = "searchItemNameInput" type = "text" />
                     </span>
                     <button id = "searchButton" type="button">搜索</button>
+
             </div>
 
             <!--搜索结果显示区域-->
@@ -51,24 +56,13 @@ if($_SESSION['role_group'] < 1) {
             </div>
 
             <!--弹出层，出库界面-->
-            <div id = "editBox" style = "display: none">
-                <div id = "editBoxHead">
-                    <label id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
-                    <button id = "delButton">删除</button>
-                </div>
-                <div id = "editBoxContent">
-                    <label id = "nameLabel">名称：<input id = "itemNameInput" type = "text" value = ""/></label>
-                    <label id = "classLabel">上级分类：<select id = "classSelect"></select></label>
-                    <label id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
-                    <label id = "currentCountLabel">当前数量：<span id = "currentCountSpan"></span></label>
-                    <label id = "countLabel">变更数量：
-                        <input id = "itemCountInput" type = "text" value = ""/>
-                        <span id = "">负数表示从当前数量减去。</span>
-                    </label>
-                    <button id = "saveButton">保存</button><button id = "cancelButton">取消</button>
-                </div>
+            <div id = "checkOutPopLayer" style = "display: none">
+                <span id = "closeSpan" onclick="closePopLayer()">&times;</span>
+
             </div>
+        </div>
+        <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+        <script src = "../../public/js/searchItem-checkout.js"></script>
+        <script src = "../../public/js/searchItem-public.js"></script>
     </body>
-    <script src = "../../public/js/searchItem-checkout.js"></script>
-    <script src = "../../public/js/searchItem-public.js"></script>
 </html>
