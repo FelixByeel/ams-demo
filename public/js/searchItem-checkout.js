@@ -56,7 +56,18 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
 }
 
 //-------------------------------出库 start------------------------
-function checkoutItem(itemID) {
+function checkoutItem(currentSelectedId) {
     $("#checkOutPopLayer").show();
 
+    //找到当前选择项在JSON中的位置，并保存下来
+    for (var i = 0; i < itemJSON.length; i++) {
+        if (itemJSON[i].id == currentSelectedId) {
+            break;
+        }
+    }
+
+    console.log(itemJSON[i]);
+    //
+    $("#IDSpan").text(currentSelectedId);
+    $("#itemNameSpan").text(itemJSON[i].item_name);
 }

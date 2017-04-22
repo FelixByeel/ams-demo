@@ -35,7 +35,7 @@ if($_SESSION['role_group'] < 1) {
                     </p>
 
                     <span id = "itemIDSpan">分类编号：<input id = "searchItemIDInput" type = "text" /></span>
-                    <span id = "itemNameSpan">分类名称：
+                    <span class = "item-name-span">分类名称：
                         <select id = "searchItemNameSelect"></select>
                         <input id = "searchItemNameInput" type = "text" />
                     </span>
@@ -59,7 +59,7 @@ if($_SESSION['role_group'] < 1) {
                 <!--IDSpan用来标识当前操作项的ID-->
                 <span id = "IDSpan" style = "display: none"></span>
 
-                    <label class = "labelStyle">物品名称：<span id = "itemName" class = "item-name-span"></span></label>
+                    <label class = "labelStyle">物品名称：<span id = "itemNameSpan" class = "item-name-span"></span></label>
                     <label class = "labelStyle">物品序列号：
                         <input id = "itemSNInput" class = "item-sn-input" type = "text" value = ""/>
                     </label>

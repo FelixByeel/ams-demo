@@ -37,7 +37,7 @@ if($_SESSION['role_group'] < 2) {
                     </p>
 
                     <span id = "itemIDSpan">分类编号：<input id = "searchItemIDInput" type = "text" /></span>
-                    <span id = "itemNameSpan">分类名称：
+                    <span class = "item-name-span">分类名称：
                         <select id = "searchItemNameSelect"></select>
                         <input id = "searchItemNameInput" type = "text" />
                     </span>
