@@ -40,7 +40,7 @@ create table record_t(
     consumer_code int(10) unsigned not null default 0 comment '物品使用人工号',
     computer_barcode varchar(15) not null default '' comment '电脑资产条码',
     item_sn_code varchar(15) not null default '' comment '物品序列号编码',
-    uid varchar(40) not null default '' comment '对应用户信息表uid字段',
+    username varchar(20) not null default '' comment '当前操作人，对应用户信息表username字段',
     primary key(id)
 )engine=innodb default charset=utf8 comment='出入库记录表';
 
