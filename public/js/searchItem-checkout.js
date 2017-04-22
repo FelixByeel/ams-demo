@@ -57,5 +57,6 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
 
 //-------------------------------出库 start------------------------
 function checkoutItem(itemID) {
-    alert(itemID);
+    $("#checkOutPopLayer").show();
+
 }
