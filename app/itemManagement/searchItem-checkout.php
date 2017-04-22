@@ -56,9 +56,21 @@ if($_SESSION['role_group'] < 1) {
             </div>
 
             <!--弹出层，出库界面-->
-            <div id = "checkOutPopLayer" style = "display: none">
-                <span id = "closeSpan" onclick="closePopLayer()">&times;</span>
-
+            <div id = "checkOutPopLayer" class = "poplayer" style = "display: none">
+                <span class = "close-poplayer" onclick="closePopLayer()">&times;</span>
+                <!--IDSpan用来标识当前操作项的ID-->
+                <span id = "IDSpan" style = "display: none"></span>
+                <div id = "editBoxContent">
+                    <label class = "labelStyle" id = "nameLabel">物品名称：<input id = "itemNameInput" type = "text" value = ""/></label>
+                    <label class = "labelStyle" id = "classLabel">上级分类：<select id = "classSelect"></select></label>
+                    <label class = "labelStyle" id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
+                    <label class = "labelStyle" id = "currentCountLabel">当前数量：<span id = "currentCountSpan"></span></label>
+                    <label class = "labelStyle" id = "countLabel">变更数量：
+                        <input id = "itemCountInput" type = "text" value = ""/>
+                        <span id = "tips">负数表示从当前数量减去。</span>
+                    </label>
+                    <button id = "saveButton">保存</button>
+                </div>
             </div>
         </div>
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
