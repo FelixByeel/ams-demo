@@ -61,13 +61,18 @@ if($_SESSION['role_group'] < 1) {
                 <!--IDSpan用来标识当前操作项的ID-->
                 <span id = "IDSpan" style = "display: none"></span>
 
-                    <label class = "labelStyle">物品名称：<input id = "itemNameInput" type = "text" value = ""/></label>
-                    <label class = "labelStyle">上级分类：<select id = "classSelect"></select></label>
-                    <label class = "labelStyle">所属仓库：<select id = "warehouseSelect"></select></label>
-                    <label class = "labelStyle">当前数量：<span id = "currentCountSpan"></span></label>
+                    <label class = "labelStyle">物品名称：<span id = "itemName" class = "item-name-span"></span></label>
+                    <label class = "labelStyle">物品序列号：
+                        <input id = "itemSNInput" class = "item-sn-input" type = "text" value = ""/>
+                    </label>
                     <label class = "labelStyle">变更数量：
-                        <input id = "itemCountInput" type = "text" value = ""/>
-                        <span id = "tips">负数表示从当前数量减去。</span>
+                        <input id = "itemCountInput" class = "item-count-input" type = "text" value = ""/>
+                    </label>
+                    <label class = "labelStyle">用户工号：
+                        <input id = "consumerCode" class = "consumer-code-input" type = "text" value = ""/>
+                    </label>
+                    <label class = "labelStyle">资产条码：
+                        <input id = "computerBarcode" class = "computer-barcode-input" type = "text" value = ""/>
                     </label>
                     <button id = "saveButton">保存</button>
             </div>
