@@ -105,12 +105,12 @@ li{
     color: #FFF;
     font-size: 1em;
     line-height:40px;
-    margin: 10 auto;
+    margin: 10px auto;
+    border-bottom: 2px solid #4F5D75;
 }
 
 .nav_li:hover{
-    border-left: 2px solid #7E08B7;
-    border-right: 2px solid #333;
+    border-bottom: 2px solid #7E08B7;
     background-color: #333;
     transition:background-color 0.3s;
 }
