@@ -33,11 +33,11 @@ create table warehouse_t(
 
 create table record_t(
 	id int(10) unsigned not null auto_increment comment '自增主键',
-    item_id varchar(20) not null default '' comment '对应库存信息表item_id字段',
+    item_id int(10) unsigned not null default 0 comment '对应库存信息表id字段',
     record_status varchar(20) not null default '' comment '操作状态：in入库，out出库，lend借出，change校正',
     record_time int(11) unsigned not null default 0 comment '记录本次操作时间',
     update_count int(10)  not null default 0 comment '本次变更数量',
-    consumer_code int(10) unsigned not null default 0 comment '物品使用人工号',
+    consumer_code varchar(15) not null default '' comment '物品使用人工号',
     computer_barcode varchar(15) not null default '' comment '电脑资产条码',
     item_sn_code varchar(15) not null default '' comment '物品序列号编码',
     username varchar(20) not null default '' comment '当前操作人，对应用户信息表username字段',
