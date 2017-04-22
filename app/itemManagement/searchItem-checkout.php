@@ -22,8 +22,6 @@ if($_SESSION['role_group'] < 1) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/searchItem-public.css" rel="stylesheet">
-        <link href="../../public/css/searchItem-edit.css" rel="stylesheet">
-
     </head>
     <body>
             <!--遮罩层-->
@@ -65,7 +63,7 @@ if($_SESSION['role_group'] < 1) {
                     <label class = "labelStyle">物品序列号：
                         <input id = "itemSNInput" class = "item-sn-input" type = "text" value = ""/>
                     </label>
-                    <label class = "labelStyle">变更数量：
+                    <label class = "labelStyle">使用数量：
                         <input id = "itemCountInput" class = "item-count-input" type = "text" value = ""/>
                     </label>
                     <label class = "labelStyle">用户工号：
