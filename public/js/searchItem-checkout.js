@@ -66,8 +66,8 @@ function checkoutItem(currentSelectedId) {
         }
     }
 
-    console.log(itemJSON[i]);
-    //
     $("#IDSpan").text(currentSelectedId);
     $("#itemNameSpan").text(itemJSON[i].item_name);
+    $("#itemCountInput").val(1);
+    
 }
