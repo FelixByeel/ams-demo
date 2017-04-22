@@ -78,16 +78,5 @@ if($_SESSION['role_group'] < 1) {
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
         <script src = "../../public/js/searchItem-checkout.js"></script>
         <script src = "../../public/js/searchItem-public.js"></script>
-
-
-        <?php 
-            //验证用户权限
-            if($_SESSION['role_group'] < 1) {
-                die('当前用户无法进行此操作！');
-                echo "<script>
-                    $('#checkoutButton').style.disable = 'true';
-                </script>";
-            }
-        ?>
     </body>
 </html>

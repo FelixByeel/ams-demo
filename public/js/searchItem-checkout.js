@@ -46,7 +46,7 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
             }
 
             trStr += "<td class = 'count-column td-content'>" + itemJSON[i].item_count + "</td>";
-            trStr += "<td class = 'action-column td-content'><button id = 'checkoutButton' onclick = 'checkoutItem(" + itemJSON[i].id + ")'>出库</button></td>";
+            trStr += "<td class = 'action-column td-content'><button class = 'checkout-button' onclick = 'checkoutItem(" + itemJSON[i].id + ")'>出库</button></td>";
             trObj.innerHTML = trStr;
             j++;
         }
