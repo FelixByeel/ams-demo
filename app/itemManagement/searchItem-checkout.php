@@ -61,16 +61,16 @@ if($_SESSION['role_group'] < 1) {
 
                     <label class = "labelStyle">物品名称：<span id = "itemNameSpan" class = "item-name-span"></span></label>
                     <label class = "labelStyle">使用数量：
-                        <input id = "itemCountInput" class = "item-count-input" type = "text" value = ""/>
+                        <input id = "itemCountInput" class = "item-count-input" type = "number" value = "1"/>
                     </label>
                     <label class = "labelStyle">物品序列号：
                         <input id = "itemSNInput" class = "item-sn-input" type = "text" value = ""/>
                     </label>
                     <label class = "labelStyle">用户工号：
-                        <input id = "consumerCode" class = "consumer-code-input" type = "text" value = ""/>
+                        <input id = "consumerCode" class = "consumer-code-input" type = "number" value = ""/>
                     </label>
                     <label class = "labelStyle">资产条码：
-                        <input id = "computerBarcode" class = "computer-barcode-input" type = "text" value = ""/>
+                        <input id = "computerBarcode" class = "computer-barcode-input" type = "number" value = ""/>
                     </label>
                     <button id = "saveButton">保存</button>
             </div>
