@@ -195,10 +195,10 @@ function checkInput(content, flag) {
                 if (content[i] == specialCharacter[j]) {
                     is_existC = 1;
                     if ((' ' == specialCharacter[j]) || ('　' == specialCharacter[j])) {
-                        alert("分类名称中不能含有空格！");
+                        alert("输入内容不能含有空格！");
                     }
                     else {
-                        alert("分类名称中不能含有字符：" + specialCharacter[j]);
+                        alert("输入内容不能含有字符：" + specialCharacter[j]);
                     }
 
                     return false;
