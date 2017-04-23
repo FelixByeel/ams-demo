@@ -69,5 +69,47 @@ function checkoutItem(currentSelectedId) {
     $("#IDSpan").text(currentSelectedId);
     $("#itemNameSpan").text(itemJSON[i].item_name);
     $("#itemCountInput").val(1);
-    
+}
+
+//格式化输入内容为每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
+$("#computerBarcodeInput").keyup(function (){
+
+        let computerBarcode = $(this).val();
+        let num  = 3;
+
+        //去除所有空格
+        computerBarcode = computerBarcode.replace(/\s/g, "");
+
+        //输入非数字时过滤掉。
+        if(!checkInput(computerBarcode, 1)) {
+            computerBarcode = computerBarcode.substring(0, computerBarcode.length - 1);
+            $(this).val(DivideThreeDigit(computerBarcode, num));
+            return;
+        }
+        else {
+            $(this).val(DivideThreeDigit(computerBarcode, num));
+        }
+
+        if(computerBarcode.length > num){
+            $("#computerBarcodeInput").val(DivideThreeDigit(computerBarcode, num));
+        }
+});
+
+//格式化字符串为 每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
+function DivideThreeDigit(str, num) {
+
+    let strTemp = '';
+    let i = 0;
+    while(i < str.length) {
+
+        if(i && (i % num === 0)) {
+            strTemp += ' ';
+            strTemp += str[i];
+            }
+        else {
+            strTemp += str[i]
+        }
+        i++;
+    }
+    return strTemp;
 }
