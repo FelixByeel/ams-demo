@@ -83,16 +83,8 @@ $("#computerBarcodeInput").keyup(function (){
         //输入非数字时过滤掉。
         if(!checkInput(computerBarcode, 1)) {
             computerBarcode = computerBarcode.substring(0, computerBarcode.length - 1);
-            $(this).val(DivideThreeDigit(computerBarcode, num));
-            return;
         }
-        else {
-            $(this).val(DivideThreeDigit(computerBarcode, num));
-        }
-
-        if(computerBarcode.length > num){
-            $("#computerBarcodeInput").val(DivideThreeDigit(computerBarcode, num));
-        }
+        $("#computerBarcodeInput").val(DivideThreeDigit(computerBarcode, num));
 });
 
 //格式化字符串为 每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
