@@ -1,10 +1,9 @@
 /*弹出层位置*/
 .poplayer{
-    width: 60%;
+    width: 700;
     height: 400px;
-    position: absolute;
-    top:15%;
-    left: 20%;
+    position: relative;
+    margin: -30% auto;
     z-index: 10;
     background-color: #FFF;
     box-shadow: 1px 1px 10px 1px #000;
@@ -18,7 +17,7 @@
     padding-left: 5px;
     border-radius: 5px 5px 0 0;
     border-bottom:1px solid #444;
-    background-color: #748CAB;
+    background-color: #48A9A6;
     font-size: 1.2em;
     color: #FFF;
 }
