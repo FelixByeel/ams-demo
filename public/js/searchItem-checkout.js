@@ -119,7 +119,7 @@ $("#confirmCheckoutButton").click(function () {
     let itemSN = $("#itemSNInput").val();
     let consumerCode = $("#consumerCodeInput").val();
     let computerBarcode = $("#computerBarcodeInput").val();
-    computerBarcode = computerBarcode.replace(/\s/g, "");
+    computerBarcode = computerBarcode.replace(/\s/g, ""); //去掉空格分隔。
 
     if (0 == itemCount.length){
         alert("物品数量不能为空！");
@@ -145,7 +145,7 @@ $("#confirmCheckoutButton").click(function () {
         return;
     }
 
-    if(!checkInput(computerBarcode, 1)){
+    if(computerBarcode.length != 0 && !checkInput(computerBarcode, 1)){
         $("#computerBarcodeInput").focus();
         return;
     }
@@ -157,8 +157,6 @@ $("#confirmCheckoutButton").click(function () {
         "consumerCode": consumerCode,
         "computerBarcode": computerBarcode
     };
-
-    console.log(checkOutRecord);
 
     $.post(
         "searchItem-checkoutService.php",
