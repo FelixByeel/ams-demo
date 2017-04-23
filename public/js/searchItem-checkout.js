@@ -119,9 +119,13 @@ $("#confirmCheckoutButton").click(function () {
     let itemSN = $("#itemSNInput").val();
     let consumerCode = $("#consumerCodeInput").val();
     let computerBarcode = $("#computerBarcodeInput").val();
+    computerBarcode = computerBarcode.replace(/\s/g, "");
 
-
-    if (0 == itemCount.length || !checkInput(itemCount, 1)) {
+    if (0 == itemCount.length){
+        alert("物品数量不能为空！");
+        $("#itemCountInput").focus();
+        return;
+    }else if(!checkInput(itemCount, 1)) {
         alert("请输入正确的数字!");
         $("#itemCountInput").focus();
         return;
@@ -132,8 +136,17 @@ $("#confirmCheckoutButton").click(function () {
         return;
     }
 
-    if (!checkInput(consumerCode, 0)) {
+    if (0 == consumerCode.length) {
+        alert("用户工号不能为空！");
         $("#consumerCodeInput").focus();
+        return;
+    }else if(!checkInput(consumerCode, 0)) {
+        $("#consumerCodeInput").focus();
+        return;
+    }
+
+    if(!checkInput(computerBarcode, 1)){
+        $("#computerBarcodeInput").focus();
         return;
     }
 
@@ -147,4 +160,11 @@ $("#confirmCheckoutButton").click(function () {
 
     console.log(checkOutRecord);
 
+    $.post(
+        "searchItem-checkoutService.php",
+        {"checkOutRecord":checkOutRecord},
+        function (msg) {
+            alert(msg);
+        }
+    );
 });
