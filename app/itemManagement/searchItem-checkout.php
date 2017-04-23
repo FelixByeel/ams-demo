@@ -59,7 +59,7 @@ if($_SESSION['role_group'] < 1) {
                 <span class = "close-poplayer" onclick="closePopLayer()">&times;</span>
                 <!--IDSpan用来标识当前操作项的ID-->
                 <span id = "IDSpan" style = "display: none"></span>
-
+                <div class = "content-wrapper">
                     <label class = "labelStyle">物品名称：<span id = "itemNameSpan" class = "item-name-span"></span></label>
                     <label class = "labelStyle">使用数量：
                         <input id = "itemCountInput" class = "item-count-input" type = "text" value = "1"/>
@@ -74,6 +74,7 @@ if($_SESSION['role_group'] < 1) {
                         <input id = "computerBarcodeInput" class = "computer-barcode-input"  maxlength = "11" type = "text" value = ""/>
                     </label>
                     <button id = "confirmCheckoutButton">确认</button>
+                </div>
             </div>
         </div>
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
