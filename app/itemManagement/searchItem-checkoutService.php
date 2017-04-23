@@ -115,7 +115,9 @@ $itemCount = $row['item_count'];
 
 //库存数量不足时终止出库操作
 if($itemCount < $checkOutRecord['updateCount']){
-    die("库存数量不足，请修改物品出库数量!");
+    $returnStatus['status_id'] = 0;
+    $returnStatus['info'] = '库存数量不足，请修改物品出库数量!';
+    die($returnStatus);
 }
 
 $colToValue['item_count'] = (int)$itemCount - (int)$checkOutRecord['updateCount'];
