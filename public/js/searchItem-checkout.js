@@ -166,7 +166,7 @@ $("#confirmCheckoutButton").click(function () {
         "searchItem-checkoutService.php",
         {"checkOutRecord":checkOutRecord},
         function (msg) {
-            if(msg['status_id']) {
+            if(msg['status_id']) {//操作成功，关闭弹出层
                 alert(msg['info']);
                 hideCheckOutPopLayer();
             }else {
@@ -180,6 +180,13 @@ $("#confirmCheckoutButton").click(function () {
 //隐藏出库表单
 function hideCheckOutPopLayer(){
     $("#checkOutPopLayer").hide();
+    $("#shadeBox").width("0");
+    $("#shadeBox").height("0");
+
+    //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+        document.documentElement.style.overflowY = "scroll";
+    }
 }
 
 //点击弹出窗口右上角X
