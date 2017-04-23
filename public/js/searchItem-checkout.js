@@ -146,6 +146,7 @@ $("#confirmCheckoutButton").click(function () {
     }
 
     if(computerBarcode.length != 0 && !checkInput(computerBarcode, 1)){
+        alert("资产条码只能是数字！");
         $("#computerBarcodeInput").focus();
         return;
     }
