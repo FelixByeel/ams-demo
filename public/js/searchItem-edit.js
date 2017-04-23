@@ -177,7 +177,11 @@ $("#saveButton").click(function () {
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
-    document.documentElement.style.overflowY = "scroll";
+
+    //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+        document.documentElement.style.overflowY = "scroll";
+    }
 });
 
 //点击弹出窗口右上角X
@@ -185,7 +189,11 @@ function closePopLayer(){
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
-    document.documentElement.style.overflowY = "scroll";
+
+    //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+        document.documentElement.style.overflowY = "scroll";
+    }
 }
 
 //删除(此为保留功能，暂不实现)
