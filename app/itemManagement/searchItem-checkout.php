@@ -22,6 +22,7 @@ if($_SESSION['role_group'] < 1) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/searchItem-public.css" rel="stylesheet">
+        <link href="../../public/css/searchItem-checkout.css" rel="stylesheet">
     </head>
     <body>
             <!--遮罩层-->
