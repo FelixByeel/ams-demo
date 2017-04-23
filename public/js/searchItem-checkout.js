@@ -72,19 +72,19 @@ function checkoutItem(currentSelectedId) {
 }
 
 //格式化输入内容为每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
-$("#computerBarcodeInput").keyup(function (){
+$("#computerBarcodeInput").keyup(function () {
 
-        let computerBarcode = $(this).val();
-        let num  = 3;
+    let computerBarcode = $(this).val();
+    let num = 3;
 
-        //去除所有空格
-        computerBarcode = computerBarcode.replace(/\s/g, "");
+    //去除所有空格
+    computerBarcode = computerBarcode.replace(/\s/g, "");
 
-        //输入非数字时过滤掉。
-        if(!checkInput(computerBarcode, 1)) {
-            computerBarcode = computerBarcode.substring(0, computerBarcode.length - 1);
-        }
-        $("#computerBarcodeInput").val(DivideThreeDigit(computerBarcode, num));
+    //输入非数字时过滤掉。
+    if (!checkInput(computerBarcode, 1)) {
+        computerBarcode = computerBarcode.substring(0, computerBarcode.length - 1);
+    }
+    $("#computerBarcodeInput").val(DivideThreeDigit(computerBarcode, num));
 });
 
 //格式化字符串为 每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
@@ -92,12 +92,12 @@ function DivideThreeDigit(str, num) {
 
     let strTemp = '';
     let i = 0;
-    while(i < str.length) {
+    while (i < str.length) {
 
-        if(i && (i % num === 0)) {
+        if (i && (i % num === 0)) {
             strTemp += ' ';
             strTemp += str[i];
-            }
+        }
         else {
             strTemp += str[i]
         }
@@ -106,22 +106,45 @@ function DivideThreeDigit(str, num) {
     return strTemp;
 }
 
-$("#confirmCheckoutButton").click(function(){
+//将输入字母转为大写
+$("#itemSNInput").keyup(function () {
+    let itemSNStr = $("#itemSNInput").val().toUpperCase();
+    $("#itemSNInput").val(itemSNStr);
+});
+
+//点击确认按钮
+$("#confirmCheckoutButton").click(function () {
     let currentItemID = $("#IDSpan").text();
     let itemCount = $("#itemCountInput").val();
     let itemSN = $("#itemSNInput").val();
     let consumerCode = $("#consumerCodeInput").val();
     let computerBarcode = $("#computerBarcodeInput").val();
 
-    if(!checkInput(itemCount, 1)){
-         alert("请输入正确的数字!");
-         return;
+
+    if (0 == itemCount.length || !checkInput(itemCount, 1)) {
+        alert("请输入正确的数字!");
+        $("#itemCountInput").focus();
+        return;
     }
 
+    if (!checkInput(itemSN, 0)) {
+        $("#itemSNInput").focus();
+        return;
+    }
 
-    console.log("  id:" + currentItemID);
-    console.log("  count:" + itemCount);
-    console.log("  SN:" + itemSN);
-    console.log("  NO.:" + consumerCode);
-    console.log("  Barcode:" + computerBarcode);
+    if (!checkInput(consumerCode, 0)) {
+        $("#consumerCodeInput").focus();
+        return;
+    }
+
+    let checkOutRecord = {
+        "itemID": currentItemID,
+        "updateCount": itemCount,
+        "itemSN": itemSN,
+        "consumerCode": consumerCode,
+        "computerBarcode": computerBarcode
+    };
+
+    console.log(checkOutRecord);
+
 });
