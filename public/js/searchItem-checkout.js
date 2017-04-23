@@ -124,11 +124,11 @@ $("#confirmCheckoutButton").click(function () {
     let computerBarcode = $("#computerBarcodeInput").val();
     computerBarcode = computerBarcode.replace(/\s/g, ""); //去掉空格分隔。
 
-    if (0 == itemCount.length){
+    if (0 == itemCount.length) {
         alert("物品数量不能为空！");
         $("#itemCountInput").focus();
         return;
-    }else if(!checkInput(itemCount, 1)) {
+    } else if (!checkInput(itemCount, 1)) {
         alert("请输入正确的数字!");
         $("#itemCountInput").focus();
         return;
@@ -143,12 +143,12 @@ $("#confirmCheckoutButton").click(function () {
         alert("用户工号不能为空！");
         $("#consumerCodeInput").focus();
         return;
-    }else if(!checkInput(consumerCode, 0)) {
+    } else if (!checkInput(consumerCode, 0)) {
         $("#consumerCodeInput").focus();
         return;
     }
 
-    if(computerBarcode.length != 0 && !checkInput(computerBarcode, 1)){
+    if (computerBarcode.length != 0 && !checkInput(computerBarcode, 1)) {
         alert("资产条码只能是数字！");
         $("#computerBarcodeInput").focus();
         return;
@@ -164,12 +164,12 @@ $("#confirmCheckoutButton").click(function () {
 
     $.post(
         "searchItem-checkoutService.php",
-        {"checkOutRecord":checkOutRecord},
+        { "checkOutRecord": checkOutRecord },
         function (msg) {
-            if(msg['status_id']) {//操作成功，关闭弹出层
+            if (msg['status_id']) {//操作成功，关闭弹出层
                 alert(msg['info']);
                 hideCheckOutPopLayer();
-            }else {
+            } else {
                 alert(msg['info']);
             }
         },
@@ -178,25 +178,25 @@ $("#confirmCheckoutButton").click(function () {
 });
 
 //隐藏出库表单
-function hideCheckOutPopLayer(){
+function hideCheckOutPopLayer() {
     $("#checkOutPopLayer").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
-    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+    if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
     }
 }
 
 //点击弹出窗口右上角X
-function closePopLayer(){
+function closePopLayer() {
     $("#checkOutPopLayer").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
-    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+    if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
     }
 }
