@@ -127,7 +127,7 @@ li{
 }
 
 #itemMenuDiv span:hover{
-    background-color: #00D9C0;
+    background-color: #00BFFF;
     transition: background-color 0.3s;
 }
 
@@ -137,12 +137,12 @@ li{
 }
 
 .current-selected-menu-background-color{
-    background-color: #FF4365;
+    background-color: #00BFFF;
     transition: background-color 0.3s;
 }
 
 .current-selected-sub-menu-background-color{
-    background-color: #777;
+    background-color: #FFA0A1;
 }
 /*-------------item list start-----------*/
 #itemDetailBox {
@@ -188,20 +188,20 @@ li{
     border-bottom: 1px dotted #6D8EA0;
 }
 
-tr.odd-row:hover{
-    background-color: #FEF8CE;
-}
-
-tr.even-row:hover{
-    background-color: #FEF8CE;
-}
-
 .odd-row{
-    background-color: #F6F9E7;
+    background-color: #eee;
 }
 
 .even-row{
-    background-color: #EEF3D0;
+    background-color: #ddd;
+}
+
+.odd-row:hover{
+    background-color: #9CBDE1;
+}
+
+.even-row:hover{
+    background-color: #9CBDE1;
 }
 /*-----------------table-------------------*/
 
