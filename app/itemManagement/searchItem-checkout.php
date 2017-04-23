@@ -67,10 +67,10 @@ if($_SESSION['role_group'] < 1) {
                         <input id = "itemSNInput" class = "item-sn-input" type = "text" value = ""/>
                     </label>
                     <label class = "labelStyle">用户工号：
-                        <input id = "consumerCode" class = "consumer-code-input" type = "number" value = ""/>
+                        <input id = "consumerCodeInput" class = "consumer-code-input" type = "number" value = ""/>
                     </label>
                     <label class = "labelStyle">资产条码：
-                        <input id = "computerBarcode" class = "computer-barcode-input" type = "number" value = ""/>
+                        <input id = "computerBarcodeInput" class = "computer-barcode-input" type = "number" value = ""/>
                     </label>
                     <button id = "saveButton">保存</button>
             </div>
