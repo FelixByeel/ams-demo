@@ -28,22 +28,77 @@ if (!isset($_POST['checkOutRecord']) || empty($_POST['checkOutRecord'])) {
 
 $checkOutRecord = $_POST['checkOutRecord'];
 
-//验证数据是否异常
+//验证数据是否异常-----------------------------
 $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 
 foreach ($checkOutRecord as $key => $value) {
-    if(($key == 'computerBarcode')){
-        if(!empty($value) && !preg_match($isNumberReg, $value)){
-            die("资产条码只能为数字！");
-        }
+    if (checkInput($value)) {
+        die('输入的内容不能包含字符 ：' . checkInput($value));
+    }
+}
+//-----------itemID
+if(isset($checkOutRecord['itemID']) || array_key_exists('itemID', $checkOutRecord)){
+    if(empty($checkOutRecord['itemID']) || !preg_match($isNumberReg, $checkOutRecord['itemID'])){
+        die('提交的数据有误！');
+    }
+}
+else {
+    die('提交的数据有误！');
+}
 
+//-----------updateCount
+if(isset($checkOutRecord['updateCount']) || array_key_exists('updateCount', $checkOutRecord)){
+    if(empty($checkOutRecord['updateCount']) || !preg_match($isNumberReg, $checkOutRecord['updateCount'])){
+        die('提交的数据有误！');
     }
-    else {
-        if (checkInput($value)) {
-            die('输入的内容不能包含字符 ：' . checkInput($value));
-        }
+}
+else {
+    die('提交的数据有误！');
+}
+
+//-----------itemSN
+if(isset($checkOutRecord['itemSN']) || array_key_exists('itemSN', $checkOutRecord)){
+    if(empty($checkOutRecord['itemSN'])){
+        $checkOutRecord['itemSN'] = '';
     }
+}
+else {
+    die('提交的数据有误！');
+}
+
+//-----------consumerCode
+if(isset($checkOutRecord['consumerCode']) || array_key_exists('consumerCode', $checkOutRecord)){
+    if(empty($checkOutRecord['consumerCode'])){
+        die('提交的数据有误！');
+    }
+}
+else {
+    die('提交的数据有误！');
+}
+
+//-----------computerBarcode
+if(isset($checkOutRecord['computerBarcode']) || array_key_exists('computerBarcode', $checkOutRecord)){
+    if(!empty($checkOutRecord['computerBarcode']) && !preg_match($isNumberReg, $checkOutRecord['computerBarcode'])){
+        die('提交的数据有误！');
+    }
+    else if(empty($checkOutRecord['computerBarcode'])){
+        $checkOutRecord['computerBarcode'] = 0;
+    }
+}
+else {
+    die('提交的数据有误！');
 }
 
 var_dump($checkOutRecord);
+
+//处理提交的数据，使之符合数据库写入格式。
+$recordData['item_id'] = $checkOutRecord['itemID'];
+$recordData['record_status'] = 'out';
+$recordData['update_count'] = $checkOutRecord['updateCount'];
+$recordData['consumer_code'] = $checkOutRecord['consumerCode'];
+$recordData['computer_barcode'] = $checkOutRecord['computerBarcode'];
+$recordData['item_sn'] = $checkOutRecord['itemSN'];
+$recordData['username'] = $_SESSION['username'];
+$recordData['record_time'] = strtotime('now');
+
 
