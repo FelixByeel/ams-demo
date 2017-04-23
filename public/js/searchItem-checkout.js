@@ -69,6 +69,9 @@ function checkoutItem(currentSelectedId) {
     $("#IDSpan").text(currentSelectedId);
     $("#itemNameSpan").text(itemJSON[i].item_name);
     $("#itemCountInput").val(1);
+    $("#itemSNInput").val("");
+    $("#consumerCodeInput").val("");
+    $("#computerBarcodeInput").val("");
 }
 
 //格式化输入内容为每隔num位加一个空格。例：num = 3, 格式化为：aaa bbb ccc.
@@ -163,7 +166,29 @@ $("#confirmCheckoutButton").click(function () {
         "searchItem-checkoutService.php",
         {"checkOutRecord":checkOutRecord},
         function (msg) {
-            alert(msg);
-        }
+            if(msg['status_id']) {
+                alert(msg['info']);
+                hideCheckOutPopLayer();
+            }else {
+                alert(msg['info']);
+            }
+        },
+        'json'
     );
 });
+
+//隐藏出库表单
+function hideCheckOutPopLayer(){
+    $("#checkOutPopLayer").hide();
+}
+
+//点击弹出窗口右上角X
+function closePopLayer(){
+    $("#checkOutPopLayer").hide();
+    $("#shadeBox").width("0");
+    $("#shadeBox").height("0");
+
+    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+        document.documentElement.style.overflowY = "scroll";
+    }
+}
