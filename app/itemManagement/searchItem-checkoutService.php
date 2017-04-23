@@ -101,4 +101,29 @@ $recordData['item_sn'] = $checkOutRecord['itemSN'];
 $recordData['username'] = $_SESSION['username'];
 $recordData['record_time'] = strtotime('now');
 
+//----------------数据库操作处理--------------------
+$mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+
+//同步更新item_t表中的item_count字段。先取出当前id的item_count值，判断是否大于或等于要出库的数量$checkOutRecord['updateCount'];
+$tableName = 'item_t';
+$condition = 'id = ' . $checkOutRecord['itemID'];
+
+$result = $mysqli->select($tableName, array('item_count'), $condition);
+$row = mysqli_fetch_assoc($result);
+
+$itemCount = $row['item_count'];
+
+//库存数量不足时终止出库操作
+if($itemCount < $checkOutRecord['updateCount']){
+    die("库存数量不足，请修改物品出库数量!");
+}
+
+$colToValue['item_count'] = (int)$itemCount - (int)$checkOutRecord['updateCount'];
+//更新item_t表中的item_count值
+$mysqli->update($tableName, $colToValue, $condition);
+
+//写入一条出库记录到record_t,
+$tableName = 'record_t';
+
+$result = $mysqli->insert($tableName, $recordData);
 
