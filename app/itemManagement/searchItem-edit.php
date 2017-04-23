@@ -57,7 +57,7 @@ if($_SESSION['role_group'] < 2) {
 
             <!--弹出层，编辑界面-->
             <div id = "editBox" style = "display: none">
-                <span id = "closeSpan" onclick="closePopLayer()">&times;</span>
+                <span class = 'popLayerTitle'>编辑<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></span>
                 <div id = "editBoxHead" style = 'display:none'>
                     <label class = "labelStyle" id = "IDLabel" style = 'display:none'>编号：<span id = "IDSpan"></span></label>
                     <button id = "delButton">删除</button>
