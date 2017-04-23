@@ -89,7 +89,7 @@ else {
     die('提交的数据有误！');
 }
 
-var_dump($checkOutRecord);
+//var_dump($checkOutRecord);
 
 //处理提交的数据，使之符合数据库写入格式。
 $recordData['item_id'] = $checkOutRecord['itemID'];
