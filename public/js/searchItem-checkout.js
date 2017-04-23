@@ -188,6 +188,7 @@ function closePopLayer(){
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
 
+    //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
     if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
     }
