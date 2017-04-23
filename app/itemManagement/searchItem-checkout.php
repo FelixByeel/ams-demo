@@ -56,8 +56,7 @@ if($_SESSION['role_group'] < 1) {
 
             <!--弹出层，出库界面-->
             <div id = "checkOutPopLayer" class = "poplayer" style = "display: none">
-                <span class = 'popLayerTitle'>出库</span>
-                <span class = "close-poplayer" onclick="closePopLayer()">&times;</span>
+                <span class = 'popLayerTitle'>出库<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></span>
                 <!--IDSpan用来标识当前操作项的ID-->
                 <span id = "IDSpan" style = "display: none"></span>
                 <div class = "content-wrapper">
