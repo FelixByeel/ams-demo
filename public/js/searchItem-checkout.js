@@ -57,6 +57,15 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
 
 //-------------------------------出库 start------------------------
 function checkoutItem(currentSelectedId) {
+
+    //显示遮罩层
+    $("#shadeBox").width("100%");
+    $("#shadeBox").height("100%");
+
+    //弹出窗口时，阻止页面滚动。
+    document.documentElement.style.overflow = "hidden";
+
+    //弹出编辑窗口
     $("#checkOutPopLayer").show();
 
     //找到当前选择项在JSON中的位置，并保存下来
@@ -66,6 +75,7 @@ function checkoutItem(currentSelectedId) {
         }
     }
 
+    //显示当前要操作的条目，清空部分文本输入框的内容。
     $("#IDSpan").text(currentSelectedId);
     $("#itemNameSpan").text(itemJSON[i].item_name);
     $("#itemCountInput").val(1);
