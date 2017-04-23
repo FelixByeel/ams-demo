@@ -155,7 +155,10 @@ if($mysqli->getAffectedRows() < 0){
     die('更新失败');
 }
 else {
-    $flag++;
+    if($mysqli->getAffectedRows() > 0){
+        $flag++;
+    }
+
     //处理item_id是否需要更新，如果parent_id改变，则相应的item_id也需要改变。
     //当前记录的item_id由上级分类item_id加上当前记录的id构成
     $itemParentID['parent_id'] = $itemData['parentID'];
