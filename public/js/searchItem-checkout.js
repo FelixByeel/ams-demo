@@ -105,3 +105,23 @@ function DivideThreeDigit(str, num) {
     }
     return strTemp;
 }
+
+$("#confirmCheckoutButton").click(function(){
+    let currentItemID = $("#IDSpan").text();
+    let itemCount = $("#itemCountInput").val();
+    let itemSN = $("#itemSNInput").val();
+    let consumerCode = $("#consumerCodeInput").val();
+    let computerBarcode = $("#computerBarcodeInput").val();
+
+    if(!checkInput(itemCount, 1)){
+         alert("请输入正确的数字!");
+         return;
+    }
+
+
+    console.log("  id:" + currentItemID);
+    console.log("  count:" + itemCount);
+    console.log("  SN:" + itemSN);
+    console.log("  NO.:" + consumerCode);
+    console.log("  Barcode:" + computerBarcode);
+});
