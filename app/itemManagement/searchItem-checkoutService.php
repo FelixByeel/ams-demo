@@ -33,7 +33,7 @@ $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 
 foreach ($checkOutRecord as $key => $value) {
     if(($key == 'computerBarcode')){
-        if(!preg_match($isNumberReg, $value)){
+        if(!empty($value) && !preg_match($isNumberReg, $value)){
             die("资产条码只能为数字！");
         }
 
@@ -45,5 +45,5 @@ foreach ($checkOutRecord as $key => $value) {
     }
 }
 
-
+var_dump($checkOutRecord);
 
