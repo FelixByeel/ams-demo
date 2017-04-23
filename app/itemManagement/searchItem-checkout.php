@@ -72,7 +72,7 @@ if($_SESSION['role_group'] < 1) {
                     <label class = "labelStyle">资产条码：
                         <input id = "computerBarcodeInput" class = "computer-barcode-input" type = "text" value = ""/>
                     </label>
-                    <button id = "saveButton">保存</button>
+                    <button id = "confirmCheckoutButton">确认</button>
             </div>
         </div>
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
