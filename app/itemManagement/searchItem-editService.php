@@ -138,15 +138,25 @@ $itemColumnToValue['item_name'] = $itemData['itemName'];
 
 $itemColumnToValue['warehouse_id'] = $itemData['warehouseID'];
 
-$itemColumnToValue['item_count'] = (int)$itemData['currentCount'] + (int)$itemData['itemCount'];
+//--------------数据库操作处理--------------
+$mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
+//更新item_t表中的item_count字段。先取出当前id的item_count值，和当前需要变更的数量相加，总数量不能为负。
+$result = $mysqli->select($tableName, array('item_count'), $condition);
+$row = mysqli_fetch_assoc($result);
+
+$itemColumnToValue['item_count'] = (int)$row['item_count'] + (int)$itemData['itemCount'];
+
+//处理物品数量的是否正确。
 if($itemColumnToValue['item_count'] < 0) {
     die("物品数量不能为负数");
 }
 
-//--------------数据库操作处理--------------
-$mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+//判断数量是否有变更，如有变更，同步更新在record_t中插入一条“in”记录
 
+
+
+//更新数据库
 $flag = 0;
 
 $result = $mysqli->update($tableName, $itemColumnToValue, $condition);
