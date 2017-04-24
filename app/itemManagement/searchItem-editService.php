@@ -152,14 +152,19 @@ if($itemColumnToValue['item_count'] < 0) {
     die("物品数量不能为负数");
 }
 
-//判断数量是否有变更，如有变更，同步更新在record_t中插入一条“in”记录
-
-
-
-//更新数据库
+//更新item_count
 $flag = 0;
-
 $result = $mysqli->update($tableName, $itemColumnToValue, $condition);
+
+//同步写入record_t
+$recordData['item_id'] = $itemData['itemID'];
+$recordData['record_status'] = 'in';
+$recordData['update_count'] = $itemData['itemCount'];
+$recordData['username'] = $_SESSION['username'];
+$recordData['record_time'] = strtotime('now');
+
+$result = $mysqli->insert('record_t', $recordData);
+
 //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
 if($mysqli->getAffectedRows() < 0){
     die('更新失败');
