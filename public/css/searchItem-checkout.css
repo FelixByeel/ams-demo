@@ -1,6 +1,6 @@
 /*弹出层位置*/
 .poplayer{
-    width: 700;
+    width: 700px;
     height: 400px;
     position: relative;
     margin: -30% auto;

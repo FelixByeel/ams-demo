@@ -9,11 +9,14 @@ html,body {
     font-family: Arial,"Microsoft YaHei",sans-serif;
 }
 
+*{
+    font: 14px/20px Arial,"Microsoft YaHei",sans-serif;
+}
 
 /*遮罩层*/
 #shadeBox{
 
-    background-color: #fff;
+    background-color: #444;
     opacity: 0.5;
     position: absolute;
     top:0;
@@ -25,7 +28,6 @@ html,body {
     height: 100%;
     width: 60%;
     margin: 5% auto;
-
 }
 /*---添加BOX样式----*/
 #addBox{
@@ -81,8 +83,6 @@ html,body {
     background-color: #FFF;
 }
 
-
-
 /*----table 样式----*/
 #warehouseTable {
     width: 400px;
@@ -127,42 +127,54 @@ button:active {
 }
 
 /*---弹出层样式---*/
-#editWarehousePopLayer{
-    width: 50%;
+.poplayer{
+    width: 700px;
     height: 300px;
+    margin-left: 10%;
     position: absolute;
     z-index: 10;
     background-color: #FFF;
-    text-align: center;
     box-shadow: 1px 1px 10px 1px #000;
     border-radius: 5px;
 }
 
-#closeSpan{
-    float: right;
-    width: 30px;
-    margin-top: 2px;
-    margin-right: 2px;
-    line-height: 20px;
-    font-size: 1.5em;
-    background-color: #FFF;
+/*标题*/
+.popLayerTitle{
+    display: block;
+    padding-top: 5px;
+    padding-left: 5px;
+    border-radius: 5px 5px 0 0;
+    border-bottom:1px solid #444;
+    background-color: #59B5C1;
+    font-size: 1.1em;
 }
 
-#closeSpan:hover{
-    background-color: red;
-    color: #FFF;
+/*右上角关闭*/
+.close-poplayer{
+    display: block;
+    float: right;
+    padding-bottom: 5px;
+    width: 30px;
+    font-size: 1.5em;
+    text-align: center;
+    color: #000;
+}
+
+.close-poplayer:hover{
+    font-weight: bold;
+    color: red;
     cursor: pointer;
 }
 
-
+/*弹出层内容区域*/
 #actionEditBox{
     width: 100%;
     margin-top: 100px;
+    text-align: center;
 }
 
 #warehouseCodeP{
     width: 200px;
-
 }
 
 #editWarehouseInput{
