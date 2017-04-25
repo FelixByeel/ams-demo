@@ -142,9 +142,10 @@ $itemColumnToValue['warehouse_id'] = $itemData['warehouseID'];
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
 //更新item_t表中的item_count字段。先取出当前id的item_count值，和当前需要变更的数量相加，总数量不能为负。
-$result = $mysqli->select($tableName, array('item_count'), $condition);
+$result = $mysqli->select($tableName, array('item_id', 'warehouse_id', 'item_count'), $condition);
 $row = mysqli_fetch_assoc($result);
 
+//当前更新的数量累计数据库中已记录的数量。作为新的数量覆盖原值。
 $itemColumnToValue['item_count'] = (int)$row['item_count'] + (int)$itemData['itemCount'];
 
 //处理物品数量的是否正确。
@@ -155,6 +156,11 @@ if($itemColumnToValue['item_count'] < 0) {
 //更新当前记录
 $flag = 0;
 $mysqli->update($tableName, $itemColumnToValue, $condition);
+
+//当前分类仓库信息变动，则同步更新祖先分类的仓库信息
+if($itemData['warehouseID'] != $row['warehouse_id']) {
+    changeWarehouseID($mysqli, $row['item_id'], $itemData['warehouseID']);
+}
 
 //判断item_count是否有变动，有则同步写入record_t
 if($itemData['itemCount']) {
@@ -217,4 +223,19 @@ else {
     echo '当前无更新';
 }
 
+//更新分类的仓库信息，$itemID -> item_id
+function changeWarehouseID($mysqli, $itemID, $warehouseID){
+    $itemParentIDArr = explode('-', $itemID);
+    $columnWarehouse['warehouse_id'] = $warehouseID;
 
+    if(empty($itemParentIDArr)) {
+        $condition = "id = " . $itemID;
+        $mysqli->update('item_t', $columnWarehouse, $condition);
+    }
+    else{
+        for($i = 0; $i < count($itemParentIDArr) - 1; $i++){
+            $condition = "id = " . $itemParentIDArr[$i];
+            $mysqli->update('item_t', $columnWarehouse, $condition);
+        }
+    }
+}
