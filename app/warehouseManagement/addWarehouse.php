@@ -36,7 +36,7 @@
 
             <!--弹出层-->
             <div id = "editWarehousePopLayer" class = "poplayer" style="display:none">
-                <span class = 'popLayerTitle'>添加仓库<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></span>
+                <span class = 'popLayerTitle'>编辑<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></span>
                 <div id = "actionEditBox">
                     <label id = "warehouseCodeP" style="display:none">仓库编号：<span id = "warehouseCodeSpan"></span></label>
                     <label id = "warehouseCodeP">仓库名称：
