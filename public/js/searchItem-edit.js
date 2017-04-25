@@ -28,7 +28,7 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
             else {
                 trObj.className = "even-row";
             }
-            trStr += "<td class = 'code-column td-content'>"+ itemJSON[i].item_id +"</td>";
+            trStr += "<td class = 'code-column td-content'>"+ itemJSON[i].id +"</td>";
             trStr += "<td class = 'name-column td-content'>"+ itemJSON[i].item_name +"</td>";
 
             let k = 0;
