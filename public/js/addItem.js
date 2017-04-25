@@ -172,9 +172,7 @@ function loadAjaxGetData() {
             let inputRadioID;
             for(let i = 0; i < itemJsonObj.length; i++){
                 if(itemJsonObj[i].id == currentSelectedItemID) {
-                    console.log(itemJsonObj[i].warehouse_id);
                     if(itemJsonObj[i].warehouse_id == 0) {
-                        console.log(1);
                         return 0; //当前选择项的仓库ID为0.则终止同步仓库操作。
                     }
                     inputRadioID = 'warehouseInput_' +  itemJsonObj[i].warehouse_id;
@@ -182,17 +180,18 @@ function loadAjaxGetData() {
                 }
             }
             document.getElementById(inputRadioID).checked = 'checked';
-        //}else{
-            let warehouseArr = document.getElementsByName('warehouse');
+        }
 
+        let warehouseArr = document.getElementsByName('warehouse');
+
+        //先判断是否存在仓库信息。
+        if(typeof(warehouseArr) != "undefined"){
             if(choose.id == 'itemSelectId_0' && choose.options[choose.selectedIndex].value == 'itemOption_0') {
-
+                //仓库可选
                 for(let i = 0; i < warehouseArr.length; i++){
                     warehouseArr[i].disabled = false;
                 }
-
-            }else{
-
+            }else{//仓库不可选
                 for(let i = 0; i < warehouseArr.length; i++){
                     warehouseArr[i].disabled = true;
                 }
