@@ -168,11 +168,11 @@ li{
 
 .code-column{
     width: 150px;
-    text-align: right;
+    text-align: center;
 }
 
 .name-column{
-    padding-left: 200px;
+
     text-align: left;
 }
 
