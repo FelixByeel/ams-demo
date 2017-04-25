@@ -172,27 +172,24 @@ function loadAjaxGetData() {
             let inputRadioID;
             for(let i = 0; i < itemJsonObj.length; i++){
                 if(itemJsonObj[i].id == currentSelectedItemID) {
-
+                    console.log(itemJsonObj[i].warehouse_id);
+                    if(itemJsonObj[i].warehouse_id == 0) {
+                        console.log(1);
+                        return 0; //当前选择项的仓库ID为0.则终止同步仓库操作。
+                    }
                     inputRadioID = 'warehouseInput_' +  itemJsonObj[i].warehouse_id;
+                    break;
                 }
             }
+            document.getElementById(inputRadioID).checked = 'checked';
+        //}else{
+            let warehouseArr = document.getElementsByName('warehouse');
 
-            if(itemJsonObj[i].warehouse_id){
-                document.getElementById(inputRadioID).checked = 'checked';
-            }
-
-
-        }
-
-        let warehouseArr = document.getElementsByName('warehouse');
-
-        if(typeof(warehouseArr) != "undefined"){
             if(choose.id == 'itemSelectId_0' && choose.options[choose.selectedIndex].value == 'itemOption_0') {
 
-                    //let warehouseArr = document.getElementsByName('warehouse');
-                    for(let i = 0; i < warehouseArr.length; i++){
-                        warehouseArr[i].disabled = false;
-                    }
+                for(let i = 0; i < warehouseArr.length; i++){
+                    warehouseArr[i].disabled = false;
+                }
 
             }else{
 
