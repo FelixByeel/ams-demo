@@ -5,10 +5,6 @@ html,body {
     padding: 0;
 }
 
-* {
-    font-family: Arial,"Microsoft YaHei",sans-serif;
-}
-
 *{
     font: 14px/20px Arial,"Microsoft YaHei",sans-serif;
 }
@@ -44,7 +40,6 @@ html,body {
     float: left;
     width: 150px;
     line-height: 30px;
-
 }
 
 #warehouseInput{
@@ -97,7 +92,6 @@ html,body {
 #warehouseTable td{
     text-align: center;
     width:100px;
-
 }
 
 #addBox{
@@ -130,7 +124,7 @@ button:active {
 .poplayer{
     width: 700px;
     height: 300px;
-    margin-left: 10%;
+
     position: absolute;
     z-index: 10;
     background-color: #FFF;
