@@ -152,7 +152,8 @@ $(document).ready(function(){
                         else{
 
                             echo "
-                                <li class = 'nav_li' onclick = \"loadCon('searchItem-checkout','app/itemManagement/searchItem-checkout.php','查询库存');\">查询库存</li>
+                                <li class = 'nav_li' onclick = \"loadCon('searchRecord','app/recordManagement/searchRecord.html','记录查询');\">记录查询</li>
+                                <li class = 'nav_li' onclick = \"loadCon('searchItem-checkout','app/itemManagement/searchItem-checkout.php','库存查询');\">库存查询</li>
                             ";
 
                             if ($_SESSION['role_group'] >= 2) {
