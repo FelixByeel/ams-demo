@@ -4,16 +4,35 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="" rel="stylesheet">
     </head>
     <body>
         <div id = "bodyWrapper">
+            <!--搜索块-->
             <div id = "searchWrapper">
-                <label for = "dealDate">开始日期：</label>
-                <input id = "dealDate" type = "text" />
-                <label for = "dealDate">结束日期：</label>
-                <input id = "dealDate" type = "text" />
+                <label for = "startDate" class = "labelStyle">开始日期：</label>
+                <input id = "startDate" type = "text" />
+                <label for = "endDate" class = "labelStyle">结束日期：</label>
+                <input id = "endDate" type = "text" />
+                <label for = "dealType" class = "labelStyle">处理类型：</label>
+                <select id = "dealType">
+                    <option id = "allType">全部</option>
+                    <option id = "checkoutType">出库</option>
+                    <option id = "checkinType">入库</option>
+                    <option id = "otherType">其他</option>
+                </select>
+                <label for = "consumerCode" class = "labelStyle">用户工号：</label>
+                <input id = "consumerCode" type = "text" />
+                <label for = "computerBarcode" class = "labelStyle">资产条码：</label>
+                <input id = "computerBarcode" type = "text" />
+                <label for = "itemSN" class = "labelStyle">物品序列号：</label>
+                <input id = "itemSN" type = "text" />
+                <label for = "username" class = "labelStyle">处理人：</label>
+                <input id = "username" type = "text" />
+                <button id = "searchButton" onclick="searchRecord()">搜索</button>
             </div>
+
+            <!--搜索结果显示-->
             <div id = "contentWrapper"></div>
         </div>
     </body>
