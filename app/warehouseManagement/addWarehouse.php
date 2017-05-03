@@ -21,19 +21,19 @@
     <body>
         <!--遮罩层-->
         <div id = "shadeBox"></div>
+        <div id = "bodyBox">
+            <div id = "contentBox">
+                <div id = "addBox">
+                    <p>添加仓库：</p>
+                    <input id = "warehouseInput" type = "text"/>
+                    <button id = "addWarehouseButton" onclick="addWarehouse()">添加仓库</button>
+                </div>
 
-        <div id = "contentBox">
-            <div id = "addBox">
-                <p>添加仓库：</p>
-                <input id = "warehouseInput" type = "text"/>
-                <button id = "addWarehouseButton" onclick="addWarehouse()">添加仓库</button>
+                <div id = "listBox">
+                    <p>仓库列表：</p>
+                    <div id = "warehouseListBox"></div>
+                </div>
             </div>
-
-            <div id = "listBox">
-                <p>仓库列表：</p>
-                <div id = "warehouseListBox"></div>
-            </div>
-
             <!--弹出层-->
             <div id = "editWarehousePopLayer" class = "poplayer" style="display:none">
                 <span class = 'popLayerTitle'>编辑<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></span>
