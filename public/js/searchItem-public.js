@@ -113,7 +113,7 @@ function itemClicked(currentClickLi, itemJSON) {
 function setAllItemMenuSpanDefaultBackgroundColor() {
 
     let allItemMenuSpans = document.getElementsByName("itemMenuSpan");
-    for(let i = 0; i < allItemMenuSpans.length; i++){
+    for (let i = 0; i < allItemMenuSpans.length; i++) {
         allItemMenuSpans[i].className = "item-menu-background-color";
     }
 }
@@ -128,27 +128,27 @@ function setCurrentSelectedItemMenuSpanBackgroundColor(currentSelectedId) {
 function setCurrentSelectedItemSubMenuIndent(currentSelectedId) {
 
     let allSubItemLi;
-    if(!document.getElementById("itemUlId_" + currentSelectedId)) {
+    if (!document.getElementById("itemUlId_" + currentSelectedId)) {
         return;
     }
     allSubItemLi = document.getElementById("itemUlId_" + currentSelectedId).children;
 
     let allSubItemID = [];
-    for(let i = 0; i < allSubItemLi.length; i++){
+    for (let i = 0; i < allSubItemLi.length; i++) {
         allSubItemID.push(allSubItemLi[i].id.split("_")[1]);
     }
 
     let currentItem_id;
     let currentItemParentArr;
-    for(let j = 0; j < itemJSON.length; j++){
-        if(allSubItemID[0] == itemJSON[j].id) {
+    for (let j = 0; j < itemJSON.length; j++) {
+        if (allSubItemID[0] == itemJSON[j].id) {
             currentItem_id = itemJSON[j].item_id;
             currentItemParentArr = currentItem_id.split("-");
             break;
         }
     }
 
-    for(let i = 0; i < allSubItemID.length; i++){
+    for (let i = 0; i < allSubItemID.length; i++) {
 
         let currentSelectedSubSpanObj = document.getElementById("itemSpanId_" + allSubItemID[i]);
         currentSelectedSubSpanObj.style.padding = "0 0 0 " + currentItemParentArr.length * 20 + "px";
@@ -226,8 +226,8 @@ function initItemSelect(itemJSON) {
 
     itemSelectObj.appendChild(optionObj);
 
-    for(let i = 0; i < itemJSON.length; i++){
-        if(0 == itemJSON[i].is_ended){
+    for (let i = 0; i < itemJSON.length; i++) {
+        if (0 == itemJSON[i].is_ended) {
             let optionObj = document.createElement('option');
             optionObj.value = itemJSON[i].id;
             optionObj.text = itemJSON[i].item_name;
@@ -243,11 +243,11 @@ function initWarehouseSpan(warehouseJSON) {
 
     let str = '';
 
-    for(let i = 0; i < warehouseJSON.length; i++){
-        str += "<label><input id = 'warehouse_" + i + "' name = 'warehouseName' type = 'checkbox' value = '" + warehouseJSON[i].warehouse_id +"' />"+ warehouseJSON[i].warehouse_name + "</label>";
+    for (let i = 0; i < warehouseJSON.length; i++) {
+        str += "<label><input id = 'warehouse_" + i + "' name = 'warehouseName' type = 'checkbox' value = '" + warehouseJSON[i].warehouse_id + "' />" + warehouseJSON[i].warehouse_name + "</label>";
     }
 
-    if(!str.length){
+    if (!str.length) {
         str = '未查询到仓库信息，请先添加仓库信息！';
     }
     warehouseSpanObj.innerHTML = '';
@@ -257,7 +257,7 @@ function initWarehouseSpan(warehouseJSON) {
 //--------------------------搜索----------------------------------------
 
 //点击搜索按钮
-$("#searchButton").click(function(){
+$("#searchButton").click(function () {
     getSearchItemResult(getSearchItemCondition());
 });
 
@@ -277,26 +277,26 @@ function getSearchItemCondition() {
     //获取仓库信息
     let warehouseCheckInputObj = document.getElementsByName("warehouseName");
     let warehouseCheckInputValueArray = new Array();
-    for(let i = 0; i < warehouseCheckInputObj.length; i++) {
-        if(warehouseCheckInputObj[i].checked) {
+    for (let i = 0; i < warehouseCheckInputObj.length; i++) {
+        if (warehouseCheckInputObj[i].checked) {
             warehouseCheckInputValueArray.push(warehouseCheckInputObj[i].value);
         }
     }
 
     //验证用户输入的数据
-    if(0 != itemID.length){
-        if(!checkInput(itemID, 1)){
+    if (0 != itemID.length) {
+        if (!checkInput(itemID, 1)) {
             alert("分类编号只能为数字或空！");
             $("#searchItemIDInput").val('');
             $("#searchItemIDInput").focus();
             return false;
         }
     }
-    else{
-        itemID = 0 ;
+    else {
+        itemID = 0;
     }
 
-    if(!checkInput(itemName, 0)){
+    if (!checkInput(itemName, 0)) {
         $("#searchItemNameInput").val('');
         $("#searchItemNameInput").focus();
         return false;
@@ -305,9 +305,9 @@ function getSearchItemCondition() {
     //整合用户输入的搜索条件数据。
     let searchConditionData = {
         "itemID": itemID,
-        "itemName":itemName,
-        "itemParentID":itemParentID,
-        "warehouseID":warehouseCheckInputValueArray
+        "itemName": itemName,
+        "itemParentID": itemParentID,
+        "warehouseID": warehouseCheckInputValueArray
     };
 
     return searchConditionData;
@@ -318,10 +318,10 @@ function getSearchItemResult(searchConditionData) {
 
     $.post(
         "searchItemService.php",
-        {"searchConditionData": searchConditionData},
+        { "searchConditionData": searchConditionData },
         function (searchItemResultJSON) {
-            if(searchConditionData['warehouseID'].length){
-                searchByWarehouse(searchItemResultJSON,searchConditionData['warehouseID']);
+            if (searchConditionData['warehouseID'].length) {
+                searchByWarehouse(searchItemResultJSON, searchConditionData['warehouseID']);
             }
             else {
                 showCurrentSelectedDetail(searchItemResultJSON);
@@ -332,23 +332,23 @@ function getSearchItemResult(searchConditionData) {
 }
 
 //加载按仓库搜索的结果,选择所有仓库时，则返回全部。
-function searchByWarehouse(searchItemResultJSON,warehouseArr) {
+function searchByWarehouse(searchItemResultJSON, warehouseArr) {
 
     let allWarehouseObj = document.getElementsByName("warehouseName");
 
-    if(allWarehouseObj.length == warehouseArr.length){
+    if (allWarehouseObj.length == warehouseArr.length) {
         showCurrentSelectedDetail(searchItemResultJSON);
-    }else{
+    } else {
         let itemResultJSON = [];
         let k = 0;
 
-        for(let i = 0; i < warehouseArr.length; i++){
-            for(let j = 0; j < searchItemResultJSON.length; j++){
+        for (let i = 0; i < warehouseArr.length; i++) {
+            for (let j = 0; j < searchItemResultJSON.length; j++) {
 
-                if(0 == searchItemResultJSON[j].is_ended) {
+                if (0 == searchItemResultJSON[j].is_ended) {
                     itemResultJSON[k++] = searchItemResultJSON[j];
                 }
-                else if(warehouseArr[i] == searchItemResultJSON[j].warehouse_id) {
+                else if (warehouseArr[i] == searchItemResultJSON[j].warehouse_id) {
                     itemResultJSON[k++] = searchItemResultJSON[j];
                 }
             }

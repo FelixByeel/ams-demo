@@ -19,11 +19,11 @@ function getCookieValue(name) {
 
     var namePosition = allCookies.indexOf(name);
 
-    if(namePosition != -1){
-        var start = namePosition + name.length; 
+    if (namePosition != -1) {
+        var start = namePosition + name.length;
         var end = allCookies.indexOf(";", start);
 
-        if(end == -1) {
+        if (end == -1) {
             end = allCookies.length;
         }
 

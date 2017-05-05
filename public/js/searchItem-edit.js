@@ -19,7 +19,7 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
     for (let i = 0, j = 0; i < itemJSON.length; i++) {
 
         //根据currentSelectedId 显示，为0表示默认显示所有物品条目，否则显示当前所选择的currentSelectedId的下的所有最终物品条目
-        if(currentSelectedId ? ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) : (1 == itemJSON[i].is_ended)){
+        if (currentSelectedId ? ((currentSelectedId == itemJSON[i].parent_id) && (1 == itemJSON[i].is_ended)) : (1 == itemJSON[i].is_ended)) {
             let trObj = tableObj.insertRow();
             let trStr = "";
             if (j % 2) {
@@ -28,8 +28,8 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
             else {
                 trObj.className = "even-row";
             }
-            trStr += "<td class = 'code-column td-content'>"+ itemJSON[i].id +"</td>";
-            trStr += "<td class = 'name-column td-content'>"+ itemJSON[i].item_name +"</td>";
+            trStr += "<td class = 'code-column td-content'>" + itemJSON[i].id + "</td>";
+            trStr += "<td class = 'name-column td-content'>" + itemJSON[i].item_name + "</td>";
 
             let k = 0;
             for (; k < warehouseJSON.length; k++) {
@@ -42,9 +42,9 @@ function showCurrentSelectedDetail(itemJSON, currentSelectedId = 0) {
                 trStr += "<td class = 'warehouse-column td-content'>无</td>";
             }
             else {
-                trStr += "<td class = 'warehouse-column td-content'>"+ warehouseJSON[k].warehouse_name +"</td>";
+                trStr += "<td class = 'warehouse-column td-content'>" + warehouseJSON[k].warehouse_name + "</td>";
             }
-            trStr += "<td class = 'count-column td-content'>"+ itemJSON[i].item_count +"</td>";
+            trStr += "<td class = 'count-column td-content'>" + itemJSON[i].item_count + "</td>";
             trStr += "<td class = 'action-column td-content'><button class = 'edit-button' onclick = 'editItem(" + itemJSON[i].id + ")'>编辑</button></td>";
             trObj.innerHTML = trStr;
             j++;
@@ -145,7 +145,7 @@ $("#saveButton").click(function () {
         }
     }
 
-    if (!checkInput(itemName, 0)){
+    if (!checkInput(itemName, 0)) {
         alert("名称输入错误！");
         return false;
     }
@@ -179,19 +179,19 @@ $("#saveButton").click(function () {
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
-    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+    if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
     }
 });
 
 //点击弹出窗口右上角X
-function closePopLayer(){
+function closePopLayer() {
     $("#editBox").hide();
     $("#shadeBox").width("0");
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
-    if(document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
+    if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
     }
 }

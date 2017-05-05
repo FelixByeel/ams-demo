@@ -8,7 +8,7 @@ window.onload = function () {
     initData();
 }
 
-function initData(){
+function initData() {
 
     warehouseListBoxObj = document.getElementById('warehouseListBox');      //获取加载li列表的ul对象
     warehouseListBoxObj.innerHTML = "";
@@ -38,12 +38,12 @@ function loadAjaxGetData(warehouseListBoxObj) {
 
 //加载仓库信息到页面
 function loadWarehouseInfo(warehouseListBoxObj) {
-    
+
     let tableObj = document.createElement('table');
 
     tableObj.id = "warehouseTable";
 
-    for(let i = 0; i < warehouseJSON.length; i++){
+    for (let i = 0; i < warehouseJSON.length; i++) {
         let trObj = tableObj.insertRow();
 
         trObj.insertCell(0).innerHTML = warehouseJSON[i].warehouse_name;
@@ -58,9 +58,9 @@ function loadWarehouseInfo(warehouseListBoxObj) {
 function editWarehouseName(warehouseID) {
     let warehouseName = '';
 
-    for(let i = 0; i < warehouseJSON.length; i++){
-        if(warehouseID == warehouseJSON[i].warehouse_id) {
-            warehouseName  = warehouseJSON[i].warehouse_name;
+    for (let i = 0; i < warehouseJSON.length; i++) {
+        if (warehouseID == warehouseJSON[i].warehouse_id) {
+            warehouseName = warehouseJSON[i].warehouse_name;
             break;
         }
     }
@@ -73,7 +73,7 @@ function editWarehouseName(warehouseID) {
     document.getElementById('shadeBox').style.height = '100%';
 
     document.getElementById('editWarehousePopLayer').style.display = 'block'; //弹出编辑界面
-    
+
 }
 
 //-----删除--------
@@ -82,10 +82,10 @@ function delWarehouseName(warehouseID) {
     //warehouseID = warehouseID.replace(/(^\s*)|(\s*$)/g, "");
     let conf = confirm("确认删除？");
 
-    if(!isNumberReg.test(warehouseID)){
+    if (!isNumberReg.test(warehouseID)) {
         alert("操作异常！");
     }
-    else if(conf){
+    else if (conf) {
         $.post(
             "delWarehouseService.php",
             { "warehouseID": warehouseID },
@@ -98,18 +98,18 @@ function delWarehouseName(warehouseID) {
 }
 
 //添加仓库
-function addWarehouse(){
+function addWarehouse() {
     let inputObj = document.getElementById('warehouseInput');
-    let warehouseName  = inputObj.value.replace(/(^\s*)|(\s*$)/g, "");
+    let warehouseName = inputObj.value.replace(/(^\s*)|(\s*$)/g, "");
 
     let str = checkInput(warehouseName);
 
-    if(warehouseName.length == 0) {
+    if (warehouseName.length == 0) {
         alert("仓库名称不能为空！");
         return false;
     }
 
-    if(str){
+    if (str) {
         alert("输入名称不能包含字符：" + str);
         inputObj.focus();
         return false;
@@ -130,49 +130,49 @@ function addWarehouse(){
 //判断字符串是否合法，合法返回true，不合法返回false------------
 function checkInput(str) {
 
-        //不接受下列字符的输入
-        let specialCharacter = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
-            '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
-            '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
-            '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？', ' ', '　');
+    //不接受下列字符的输入
+    let specialCharacter = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
+        '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
+        '~', '·', '！', '＠', '＃', '￥', '％', '………', '＆', '＊', '（', '）', '——', '＋', '＝',
+        '【', '】', '｛', '｝', '、', '｜', '；', '：', '’', '“', '，', '《', '。', '》', '？', ' ', '　');
 
-        let flag = false;
-        let i = 0;
+    let flag = false;
+    let i = 0;
 
-        for (; i < specialCharacter.length; i++) {
-            if(-1 != str.indexOf(specialCharacter[i])) {
-                flag =  true;
-                break;
-            }
+    for (; i < specialCharacter.length; i++) {
+        if (-1 != str.indexOf(specialCharacter[i])) {
+            flag = true;
+            break;
         }
-    
-    if(flag){
+    }
+
+    if (flag) {
         return specialCharacter[i];
     }
     else return flag;
 }
 
 //弹出层更新动作
-function updateWarehouse(){
+function updateWarehouse() {
     let warehouseID = document.getElementById('warehouseCodeSpan').innerHTML;
-    let warehouseName =  document.getElementById('editWarehouseInput').value;
+    let warehouseName = document.getElementById('editWarehouseInput').value;
 
     let isNumberReg = /^[1-9]+[0-9]*]*$/;
-    warehouseName  = warehouseName.replace(/(^\s*)|(\s*$)/g, "");
+    warehouseName = warehouseName.replace(/(^\s*)|(\s*$)/g, "");
 
     let str = checkInput(warehouseName);
 
-    if(!isNumberReg.test(warehouseID)){
+    if (!isNumberReg.test(warehouseID)) {
         alert("操作异常！");
         return false;
     }
 
-    if(warehouseName.length == 0) {
+    if (warehouseName.length == 0) {
         alert("仓库名称不能为空！");
         return false;
     }
 
-    if(str){
+    if (str) {
         alert("输入名称不能包含字符：" + str);
         document.getElementById('editWarehouseInput').focus();
         return false;
@@ -180,9 +180,9 @@ function updateWarehouse(){
 
     $.post(
         "updateWarehouseService.php",
-        { 
+        {
             "warehouseID": warehouseID,
-            "warehouseName": warehouseName 
+            "warehouseName": warehouseName
         },
         function (msg) {
             alert(msg);
@@ -197,7 +197,7 @@ function updateWarehouse(){
 }
 
 //关闭弹出层，关闭遮罩层
-function closePopLayer(){
+function closePopLayer() {
     document.getElementById('shadeBox').style.width = '0';
     document.getElementById('shadeBox').style.height = '0';
     document.getElementById('editWarehousePopLayer').style.display = 'none';
