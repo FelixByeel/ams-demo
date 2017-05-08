@@ -21,9 +21,9 @@ var checkInputStr = {
         for(var i = 0; i < specialCharacter.length; i++) {
             if(str.indexOf(specialCharacter[i]) != -1) {
                 return specialCharacter[i];
-            }else {
-                return false;
             }
         }
+        return false;
     }
 }
+
