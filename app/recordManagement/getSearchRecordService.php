@@ -23,4 +23,25 @@ if(isset($_POST['searchConditions'])) {
     $searchConditions = '';
 }
 
+//连接数据库
+$mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+$tableName = 'record_t';
+$columnArray    = array('*');   //查询所有列
+$resultData      = [];           //保存查询结果
+$conditionStr   = '';
 
+//根据提交数据组合查询条件
+if(!empty($searchConditions)) {
+
+    if(!empty($searchConditions['startTime'])) {
+        $conditionStr += ' record_time > ' . $searchConditions['startTime'] . ' and';
+    }
+
+    if(!empty($searchConditions['endTime'])) {
+        $conditionStr += ' record_time < ' . $searchConditions['endTime'] . ' and';
+    }
+
+    if(!empty($searchConditions['dealType'])) {
+        $conditionStr += ' record_status = ' . $searchConditions['dealType'] . ' and';
+    }
+}
