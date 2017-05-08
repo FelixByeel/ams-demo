@@ -2,8 +2,7 @@
 
 //页面加载
 window.onload = function (){
-    var recordCount = getRecordCount();
-    console.log(recordCount);
+    $("#contentWrapper").load("getSearchRecordService.php");
 }
 
 //点击搜索按钮
@@ -85,20 +84,3 @@ function stringParseToTimestamp(timeStr) {
     return isNaN(timestamp) ? 0 : timestamp;
 }
 
-//获取总记录条数
-function getRecordCount(){
-    var recordCount;
-    $.ajax({
-        type: "get",
-        url: "getRecordCountService.php",
-        async : false,
-        cache: false,
-        success: function (data) {
-            recordCount = data;
-        },
-        error: function (msg, e) {
-            alert("请求的数据发生异常：" + e);
-        }
-    });
-    return recordCount;
-}
