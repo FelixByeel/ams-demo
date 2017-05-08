@@ -7,7 +7,16 @@ function searchRecord() {
     var startTime = stringParseToTimestamp(startTimeStr);
     var endTime = stringParseToTimestamp(endTimeStr);
 
-    //console.log("start:" + startTime + " end:" + endTime);
+    //获取处理类型
+    var dealType = $("#dealType option:selected").val();
+    //用户工号
+    var consumerCode = $("#consumerCode").val();
+    //资产条码
+    var computerBarcode = $("#computerBarcode").val();
+    //物品序列号
+    var itemSN = $("#itemSN").val();
+    //处理人
+    var username = $("#username").val();
 
 }
 
