@@ -42,6 +42,36 @@ if(!empty($searchConditions)) {
     }
 
     if(!empty($searchConditions['dealType'])) {
-        $conditionStr += ' record_status = ' . $searchConditions['dealType'] . ' and';
+        if($searchConditions['dealType'] == 'other') {
+            $conditionStr += ' record_status <> \'out\' and record_status <> \'in\' and';
+        }
+
+        if($searchConditions['dealType'] == 'out') {
+            $conditionStr += ' record_status = \'out\' and';
+        }
+
+        if($searchConditions['dealType'] == 'in') {
+            $conditionStr += ' record_status = \'in\' and';
+        }
     }
+
+    if(!empty($searchConditions['consumerCode'])) {
+        $conditionStr += ' consumer_code = ' . $searchConditions['consumerCode'] . ' and';
+    }
+
+    if(!empty($searchConditions['computerBarcode'])) {
+        $conditionStr += ' computer_barcode = ' . $searchConditions['computerBarcode'] . ' and';
+    }
+
+    if(!empty($searchConditions['itemSN'])) {
+        $conditionStr += ' item_sn = ' . $searchConditions['itemSN'] . ' and';
+    }
+
+    if(!empty($searchConditions['username'])) {
+        $conditionStr += ' username = ' . $searchConditions['username'];
+    }
+}else {
+    echo "页面首次载入";
 }
+
+echo $conditionStr;
