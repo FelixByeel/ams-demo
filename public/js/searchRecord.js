@@ -3,13 +3,14 @@
 //页面加载
 window.onload = function (){
     var recordCount = getRecordCount();
+    console.log(recordCount);
 }
 
 //点击搜索按钮
 function searchRecord() {
 
     var searchConditions = getInputConditions();
-    console.log(searchConditions);
+    //console.log(searchConditions);
 }
 
 //获取输入的查询条件
