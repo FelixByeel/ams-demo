@@ -11,6 +11,11 @@ function searchRecord() {
     var dealType = $("#dealType option:selected").val();
     //用户工号
     var consumerCode = $("#consumerCode").val();
+        if(str = checkInputStr.isExistSpecialChar(consumerCode)) {
+        alert("输入内容中不能含有：" + str);
+        $("#consumerCode").focus();
+        return false;
+    }
     //资产条码
     var computerBarcode = $("#computerBarcode").val();
     //物品序列号
