@@ -33,41 +33,41 @@ $conditionStr   = '';
 if(!empty($searchConditions)) {
 
     if(!empty($searchConditions['startTime'])) {
-        $conditionStr += ' record_time > ' . $searchConditions['startTime'] . ' and';
+        $conditionStr .= ' record_time > ' . $searchConditions['startTime'] . ' and';
     }
 
     if(!empty($searchConditions['endTime'])) {
-        $conditionStr += ' record_time < ' . $searchConditions['endTime'] . ' and';
+        $conditionStr .= ' record_time < ' . $searchConditions['endTime'] . ' and';
     }
 
     if(!empty($searchConditions['dealType'])) {
         if($searchConditions['dealType'] == 'other') {
-            $conditionStr += ' record_status <> \'出库\' and record_status <> \'入库\' and';
+            $conditionStr .= ' record_status <> \'出库\' and record_status <> \'入库\' and';
         }
 
         if($searchConditions['dealType'] == 'out') {
-            $conditionStr += ' record_status = \'出库\' and';
+            $conditionStr .= ' record_status = \'出库\' and';
         }
 
         if($searchConditions['dealType'] == 'in') {
-            $conditionStr += ' record_status = \'入库\' and';
+            $conditionStr .= ' record_status = \'入库\' and';
         }
     }
 
     if(!empty($searchConditions['consumerCode'])) {
-        $conditionStr += ' consumer_code = ' . $searchConditions['consumerCode'] . ' and';
+        $conditionStr .= ' consumer_code = ' . $searchConditions['consumerCode'] . ' and';
     }
 
     if(!empty($searchConditions['computerBarcode'])) {
-        $conditionStr += ' computer_barcode = ' . $searchConditions['computerBarcode'] . ' and';
+        $conditionStr .= ' computer_barcode = ' . $searchConditions['computerBarcode'] . ' and';
     }
 
     if(!empty($searchConditions['itemSN'])) {
-        $conditionStr += ' item_sn = ' . $searchConditions['itemSN'] . ' and';
+        $conditionStr .= ' item_sn = ' . $searchConditions['itemSN'] . ' and';
     }
 
     if(!empty($searchConditions['username'])) {
-        $conditionStr += ' username = ' . $searchConditions['username'];
+        $conditionStr .= ' username = ' . $searchConditions['username'];
     }
 }
 
@@ -81,6 +81,10 @@ $columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.updat
 
 //record_t 和item_t联合查询
 $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
+
+echo $conditionStr;
+var_dump($searchConditions);
+echo '<br/>';
 
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr);
 
