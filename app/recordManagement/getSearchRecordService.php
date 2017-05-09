@@ -33,15 +33,15 @@ $conditionStr   = '';
 if(!empty($searchConditions)) {
 
     if(!empty($searchConditions['startTime'])) {
-        $conditionStr .= ' record_time > ' . $searchConditions['startTime'] . ' and';
+        $conditionStr .= ' record_time >= ' . $searchConditions['startTime'] . ' and';
     }
 
     if(!empty($searchConditions['endTime'])) {
-        $conditionStr .= ' record_time < ' . $searchConditions['endTime'] . ' and';
+        $conditionStr .= ' record_time <= ' . $searchConditions['endTime'] . ' and';
     }
 
     if(!empty($searchConditions['itemName'])) {
-        $conditionStr .= 'it.item_name = \'' . $searchConditions['itemName'] . '\' and';
+        $conditionStr .= 'it.item_name like \'%' . $searchConditions['itemName'] . '%\' and';
     }
 
     if(!empty($searchConditions['dealType'])) {
@@ -59,19 +59,19 @@ if(!empty($searchConditions)) {
     }
 
     if(!empty($searchConditions['consumerCode'])) {
-        $conditionStr .= ' consumer_code = \'' . $searchConditions['consumerCode'] . '\' and';
+        $conditionStr .= ' consumer_code like \'%' . $searchConditions['consumerCode'] . '%\' and';
     }
 
     if(!empty($searchConditions['computerBarcode'])) {
-        $conditionStr .= ' computer_barcode = \'' . $searchConditions['computerBarcode'] . '\' and';
+        $conditionStr .= ' computer_barcode like \'%' . $searchConditions['computerBarcode'] . '%\' and';
     }
 
     if(!empty($searchConditions['itemSN'])) {
-        $conditionStr .= ' item_sn = \'' . $searchConditions['itemSN'] . '\' and';
+        $conditionStr .= ' item_sn like \'%' . $searchConditions['itemSN'] . '%\' and';
     }
 
     if(!empty($searchConditions['username'])) {
-        $conditionStr .= ' username = \'' . $searchConditions['username'] . '\'';
+        $conditionStr .= ' username like \'%' . $searchConditions['username'] . '%\'';
     }
 }
 
@@ -102,16 +102,19 @@ echo '<tr>
     </tr>';
 
 while($row = mysqli_fetch_assoc($result)) {
-    echo "<tr>
+    $htmlStr =  "<tr>
             <td>{$row['id']}</td>
             <td>{$row['item_name']}</td>
             <td>{$row['item_sn']}</td>
             <td>{$row['update_count']}</td>
             <td>{$row['computer_barcode']}</td>
             <td>{$row['consumer_code']}</td>
-            <td>{$row['record_status']}</td>
-            <td>{$row['record_time']}</td>
-            <td>{$row['username']}</td>
+            <td>{$row['record_status']}</td>";
+
+    $recordTime = date('Y-m-d', $row['record_time']);
+    $htmlStr .= "<td>$recordTime</td>";
+    $htmlStr .= "<td>{$row['username']}</td>
         </tr>";
+    echo $htmlStr;
 }
 
