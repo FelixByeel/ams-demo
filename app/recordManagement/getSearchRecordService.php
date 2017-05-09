@@ -40,6 +40,10 @@ if(!empty($searchConditions)) {
         $conditionStr .= ' record_time < ' . $searchConditions['endTime'] . ' and';
     }
 
+    if(!empty($searchConditions['itemName'])) {
+        $conditionStr .= 'it.item_name = \'' . $searchConditions['itemName'] . '\' and';
+    }
+
     if(!empty($searchConditions['dealType'])) {
         if($searchConditions['dealType'] == '其他') {
             $conditionStr .= ' record_status <> \'出库\' and record_status <> \'入库\' and';

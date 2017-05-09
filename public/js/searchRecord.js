@@ -1,7 +1,7 @@
 //searchRecord
 
 //页面加载
-window.onload = function (){
+window.onload = function () {
     $("#contentWrapper").load("getSearchRecordService.php");
 }
 
@@ -9,8 +9,8 @@ window.onload = function (){
 function searchRecord() {
 
     var searchConditions = getInputConditions();
-    if(searchConditions) {
-        $("#contentWrapper").load("getSearchRecordService.php", {"searchConditions":searchConditions});
+    if (searchConditions) {
+        $("#contentWrapper").load("getSearchRecordService.php", { "searchConditions": searchConditions });
     }
 }
 
@@ -25,9 +25,9 @@ function getInputConditions() {
     //获取物品名称
     var itemName = $("#itemName").val();
     itemName = checkInputStr.trimSpace(itemName);
-    if(!itemName.length) {
+    if (!itemName.length) {
         itemName = '';
-    }else if(str = checkInputStr.isExistSpecialChar(itemName)) {
+    } else if (str = checkInputStr.isExistSpecialChar(itemName)) {
         alert("物品名称不能含有：" + str);
         $("#itemName").focus();
         return false;
@@ -83,6 +83,7 @@ function getInputConditions() {
     var searchConditionsData = {
         "startTime": startTime,
         "endTime": endTime,
+        "itemName": itemName,
         "dealType": dealType,
         "consumerCode": consumerCode,
         "computerBarcode": computerBarcode,
