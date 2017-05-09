@@ -123,7 +123,7 @@ else {
 
 //处理提交的数据，使之符合数据库写入格式。
 $recordData['item_id'] = $checkOutRecord['itemID'];
-$recordData['record_status'] = 'out';
+$recordData['record_status'] = '出库';
 $recordData['update_count'] = $checkOutRecord['updateCount'];
 $recordData['consumer_code'] = $checkOutRecord['consumerCode'];
 $recordData['computer_barcode'] = $checkOutRecord['computerBarcode'];
