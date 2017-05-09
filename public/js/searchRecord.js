@@ -9,6 +9,7 @@ window.onload = function (){
 function searchRecord() {
 
     var searchConditions = getInputConditions();
+    $("#contentWrapper").load("getSearchRecordService.php", {"searchConditions":searchConditions});
     //console.log(searchConditions);
 }
 
