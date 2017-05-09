@@ -123,4 +123,29 @@ class Msqli{
         $sql = "delete from $tablename where $condition";
         return $this->query($sql);
     }
+
+    //join select
+    public function joinSelect($tablename, $column, $joinCondition, $condition = '') {
+
+        $sql = "select ";
+
+        foreach ($column as $key => $value) {
+            $sql .= $value.',';
+        }
+
+        $sql = rtrim($sql, ',');
+
+
+        if(!empty($joinCondition)) {
+            $sql .= ' from ' . $joinCondition;
+        }else {
+            $sql .= " from $tablename";
+        }
+
+        if (!empty($condition)) {
+           $sql .= " where $condition";
+        }
+
+        return $this->query($sql);
+    }
 }
