@@ -21,6 +21,16 @@ function getInputConditions() {
     var startTime = stringParseToTimestamp(startTimeStr);
     var endTime = stringParseToTimestamp(endTimeStr);
 
+    //获取物品名称
+    var itemName = $("#itemName").val();
+    if(!itemName.length) {
+        itemName = '';
+    }else if(str = checkInputStr.isExistSpecialChar(itemName)) {
+        alert("物品名称不能含有：" + str);
+        $("#itemName").focus();
+        return false;
+    }
+
     //获取处理类型
     var dealType = $("#dealType option:selected").val();
     //用户工号
