@@ -9,8 +9,9 @@ window.onload = function (){
 function searchRecord() {
 
     var searchConditions = getInputConditions();
-    $("#contentWrapper").load("getSearchRecordService.php", {"searchConditions":searchConditions});
-    //console.log(searchConditions);
+    if(searchConditions) {
+        $("#contentWrapper").load("getSearchRecordService.php", {"searchConditions":searchConditions});
+    }
 }
 
 //获取输入的查询条件
@@ -23,6 +24,7 @@ function getInputConditions() {
 
     //获取物品名称
     var itemName = $("#itemName").val();
+    itemName = checkInputStr.trimSpace(itemName);
     if(!itemName.length) {
         itemName = '';
     }else if(str = checkInputStr.isExistSpecialChar(itemName)) {
@@ -35,6 +37,7 @@ function getInputConditions() {
     var dealType = $("#dealType option:selected").val();
     //用户工号
     var consumerCode = $("#consumerCode").val();
+    consumerCode = checkInputStr.trimSpace(consumerCode);
     if (!consumerCode.length) {
         consumerCode = '';
     }
@@ -45,6 +48,7 @@ function getInputConditions() {
     }
     //资产条码
     var computerBarcode = $("#computerBarcode").val();
+    computerBarcode = checkInputStr.trimSpace(computerBarcode);
     if (!computerBarcode.length) {
         computerBarcode = '';
     }
@@ -55,6 +59,7 @@ function getInputConditions() {
     }
     //物品序列号
     var itemSN = $("#itemSN").val();
+    itemSN = checkInputStr.trimSpace(itemSN);
     if (!itemSN.length) {
         itemSN = '';
     }
@@ -65,6 +70,7 @@ function getInputConditions() {
     }
     //处理人工号
     var username = $("#username").val();
+    username = checkInputStr.trimSpace(username);
     if (!username.length) {
         username = '';
     }
