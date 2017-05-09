@@ -166,7 +166,7 @@ if($itemData['warehouseID'] != $row['warehouse_id']) {
 if($itemData['itemCount']) {
 
     $recordData['item_id'] = $itemData['itemID'];
-    $recordData['record_status'] = 'in';
+    $recordData['record_status'] = '入库';
     $recordData['update_count'] = $itemData['itemCount'];
     $recordData['username'] = $_SESSION['username'];
     $recordData['record_time'] = strtotime('now');
