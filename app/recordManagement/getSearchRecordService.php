@@ -26,8 +26,7 @@ if(isset($_POST['searchConditions'])) {
 //连接数据库
 $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 $tableName = 'record_t';
-$columnArray    = array('*');   //查询所有列
-$resultData      = [];           //保存查询结果
+
 $conditionStr   = '';
 
 //根据提交数据组合查询条件
@@ -70,8 +69,44 @@ if(!empty($searchConditions)) {
     if(!empty($searchConditions['username'])) {
         $conditionStr += ' username = ' . $searchConditions['username'];
     }
-}else {
-    echo "页面首次载入";
 }
 
-echo $conditionStr;
+//去掉最后一个 and
+if(!empty($conditionStr)) {
+    $conditionStr = rtrim($conditionStr, 'and');
+}
+
+//需要查询的字段
+$columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.update_count', 'rt.consumer_code', 'rt.computer_barcode', 'rt.item_sn', 'rt.username', 'it.item_name');
+
+//record_t 和item_t联合查询
+$joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
+
+$result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr);
+
+//输出查询结果
+echo '<tr>
+        <th>记录编号</th>
+        <th>名称</th>
+        <th>序列号</th>
+        <th>数量</th>
+        <th>资产条码</th>
+        <th>用户工号</th>
+        <th>状态</th>
+        <th>处理时间</th>
+        <th>处理人</th>
+    </tr>';
+while($row = mysqli_fetch_assoc($result)) {
+    $htmlStr = "<tr>
+            <td>{$row['id']}</td>
+            <td>{$row['item_name']}</td>
+            <td>{$row['item_sn']}</td>
+            <td>{$row['update_count']}</td>
+            <td>{$row['computer_barcode']}</td>
+            <td>{$row['consumer_code']}</td>
+            <td>{$row['record_status']}</td>
+            <td>{$row['record_time']}</td>
+            <td>{$row['username']}</td>
+        </tr>";
+    echo $htmlStr;
+}
