@@ -20,8 +20,8 @@ function getInputConditions() {
     var startTimeStr = $("#startDate").val();
     var endTimeStr = $("#endDate").val();
 
-    var startTime = stringParseToTimestamp(startTimeStr + "T00:00:00"); //加“T”表示格式化为GMT标准时间，不加则格式化为本地时区时间，会相对GMT时间加上时区偏移量。如GMT+8。
-    var endTime = stringParseToTimestamp(endTimeStr + "T00:00:00");
+    var startTime = stringParseToTimestamp(startTimeStr + "T00:00:00"); //加“T”表示格式化为GMT标准时间，不加则格式化为本地时区时间，会相对GMT时间加上时区偏移量。如北京时间所在时区为GMT+8。
+    var endTime = stringParseToTimestamp(endTimeStr + "T00:00:00"); //FUCK THE TIMEZONE
 
     //查询结果包含当前选择的日期，例：开始日期和结束日期为 2017-05-09,格式化为Unix时间戳为1494259200，表示“2017-05-09 00:00:00”，减1，则表示为"2017-05-08 23:59:59",加86400,则表示为"2017-05-10 00:00:00"
     if(startTime) {
