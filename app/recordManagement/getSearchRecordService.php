@@ -55,19 +55,19 @@ if(!empty($searchConditions)) {
     }
 
     if(!empty($searchConditions['consumerCode'])) {
-        $conditionStr .= ' consumer_code = ' . $searchConditions['consumerCode'] . ' and';
+        $conditionStr .= ' consumer_code = \'' . $searchConditions['consumerCode'] . '\' and';
     }
 
     if(!empty($searchConditions['computerBarcode'])) {
-        $conditionStr .= ' computer_barcode = ' . $searchConditions['computerBarcode'] . ' and';
+        $conditionStr .= ' computer_barcode = \'' . $searchConditions['computerBarcode'] . '\' and';
     }
 
     if(!empty($searchConditions['itemSN'])) {
-        $conditionStr .= ' item_sn = ' . $searchConditions['itemSN'] . ' and';
+        $conditionStr .= ' item_sn = \'' . $searchConditions['itemSN'] . '\' and';
     }
 
     if(!empty($searchConditions['username'])) {
-        $conditionStr .= ' username = ' . $searchConditions['username'];
+        $conditionStr .= ' username = \'' . $searchConditions['username'] . '\'';
     }
 }
 
@@ -81,10 +81,6 @@ $columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.updat
 
 //record_t 和item_t联合查询
 $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
-
-echo $conditionStr;
-var_dump($searchConditions);
-echo '<br/>';
 
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr);
 
@@ -100,8 +96,9 @@ echo '<tr>
         <th>处理时间</th>
         <th>处理人</th>
     </tr>';
+
 while($row = mysqli_fetch_assoc($result)) {
-    $htmlStr = "<tr>
+    echo "<tr>
             <td>{$row['id']}</td>
             <td>{$row['item_name']}</td>
             <td>{$row['item_sn']}</td>
@@ -112,5 +109,5 @@ while($row = mysqli_fetch_assoc($result)) {
             <td>{$row['record_time']}</td>
             <td>{$row['username']}</td>
         </tr>";
-    echo $htmlStr;
 }
+
