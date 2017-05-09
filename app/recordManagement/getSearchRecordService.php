@@ -31,9 +31,9 @@ $conditionStr   = '';
 
 //排序条件
 if(1) {
-    $orderByDate = ' order by desc';
+    $orderByDate = ' order by record_time desc';
 }else {
-    $orderByDate = ' order by asc';
+    $orderByDate = ' order by record_time asc';
 }
 //根据提交数据组合查询条件
 if(!empty($searchConditions)) {
