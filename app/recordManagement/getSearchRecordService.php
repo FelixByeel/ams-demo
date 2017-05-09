@@ -92,7 +92,7 @@ $columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.updat
 //record_t 和item_t联合查询
 $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
 
-$result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr);
+$result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate);
 
 //输出查询结果
 echo '<tr>
