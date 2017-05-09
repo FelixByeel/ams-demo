@@ -19,8 +19,18 @@ function getInputConditions() {
     //获取输入的日期并转为时间戳
     var startTimeStr = $("#startDate").val();
     var endTimeStr = $("#endDate").val();
-    var startTime = stringParseToTimestamp(startTimeStr);
-    var endTime = stringParseToTimestamp(endTimeStr);
+
+    var startTime = stringParseToTimestamp(startTimeStr + "T00:00:00"); //加“T”表示格式化为GMT标准时间，不加则格式化为本地时区时间，会相对GMT时间加上时区偏移量。如GMT+8。
+    var endTime = stringParseToTimestamp(endTimeStr + "T00:00:00");
+
+    //查询结果包含当前选择的日期，例：开始日期和结束日期为 2017-05-09,格式化为Unix时间戳为1494259200，表示“2017-05-09 00:00:00”，减1，则表示为"2017-05-08 23:59:59",加86400,则表示为"2017-05-10 00:00:00"
+    if(startTime) {
+        startTime -= 1;
+    }
+
+    if(endTime) {
+        endTime += 86400;
+    }
 
     //获取物品名称
     var itemName = $("#itemName").val();
@@ -94,11 +104,11 @@ function getInputConditions() {
     return searchConditionsData;
 }
 
-//将日期格式字符串转为时间戳，如“2017-5-2 12:00:00”转为:1493697600,源字符串为空或格式不正确，返回0;
+//将日期格式字符串转为时间戳，如“2017-05-02T00:00:00”转为:1493654400,源字符串为空或格式不正确，返回0;
 function stringParseToTimestamp(timeStr) {
 
-    var timestamp = Date.parse(new Date(timeStr));
-    timestamp = timestamp / 1000;                       //将上一步获取的毫秒格式时间戳转为以秒记的时间戳。
+    var timestamp = Date.parse(new Date(timeStr));  //返回以毫秒记的Unix时间戳
+    timestamp = timestamp / 1000;
     return isNaN(timestamp) ? 0 : timestamp;
 }
 
