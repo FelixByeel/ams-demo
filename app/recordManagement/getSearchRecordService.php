@@ -29,6 +29,12 @@ $tableName = 'record_t';
 
 $conditionStr   = '';
 
+//排序条件
+if(1) {
+    $orderByDate = ' order by desc';
+}else {
+    $orderByDate = ' order by asc';
+}
 //根据提交数据组合查询条件
 if(!empty($searchConditions)) {
 
