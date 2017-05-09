@@ -41,15 +41,15 @@ if(!empty($searchConditions)) {
     }
 
     if(!empty($searchConditions['dealType'])) {
-        if($searchConditions['dealType'] == 'other') {
+        if($searchConditions['dealType'] == '其他') {
             $conditionStr .= ' record_status <> \'出库\' and record_status <> \'入库\' and';
         }
 
-        if($searchConditions['dealType'] == 'out') {
+        if($searchConditions['dealType'] == '出库') {
             $conditionStr .= ' record_status = \'出库\' and';
         }
 
-        if($searchConditions['dealType'] == 'in') {
+        if($searchConditions['dealType'] == '入库') {
             $conditionStr .= ' record_status = \'入库\' and';
         }
     }
