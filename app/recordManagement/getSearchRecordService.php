@@ -100,16 +100,17 @@ if (empty($conditionStr)) {
 $countResult = $mysqli->query($sql);
 $count = mysqli_fetch_assoc($countResult)['count(1)'];
 
-//每页显示记录数
-$size = 1;
-
+//获取起始页码
 if (isset($_POST['page']) && is_numeric($_POST['page'])) {
     $currentPage = $_POST['page'] > 0 ? $_POST['page'] : 1;
 } else {
     $currentPage = 1;
 }
 
+//每页显示记录数,根据size查询分页
+$size = 10;
 $limit = ' limit ' . (($currentPage - 1) * $size) . ', ' . $size;
+
 //根据条件查询相应结果数据
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate, $limit);
 
@@ -169,8 +170,7 @@ echo '</table>';
 
 //输出分页
 if ($count > $size) {
-    echo $currentPage;
-    showPage($count, $size, $currentPage, 2);
+    showPage($count, $size, $currentPage, 3);
 }
 
 //输出闭合标签
@@ -187,13 +187,11 @@ echo '</div>';
 *       $showStyle      //显示页码数，页数为 2*$showStyle+1
 *                         如$show_pages=2,显示为 [上一页][1][2][3][4][5]...[下一页]
 */
-function showPage($count, $size, $currentPage, $showStyle = 2)
+function showPage($count, $size, $currentPage, $showStyle)
 {
     $pages = ceil($count / $size);    //获取总页数
     $startPage = $currentPage - $showStyle;//根据当前页获取起始显示页码和结束显示页码
     $endPage = $currentPage + $showStyle;
-
-    echo 'page:'.$pages.'-s:'.$startPage.'-e:'.$endPage;
 
     //取得的起始显示页小于1，设置第一页为起始页。
     if ($startPage < 1) {
@@ -207,7 +205,7 @@ function showPage($count, $size, $currentPage, $showStyle = 2)
         $endPage = $pages;
     }
 
-    $str = '<div class = \'pageBox\'';
+    $str = '<div class = \'pageBox\'>';
 
     //previous page
     if ($currentPage > 1) {
