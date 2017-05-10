@@ -23,6 +23,7 @@
     width: 25px;
     padding: 2px 4px;
     color: #888;
+    border: 1px solid #FFF;
 }
 
 .first-page, .subpage, .final-page {
@@ -40,4 +41,9 @@
 .ellipsis {
     width: 25px;
     padding: 2px 4px;
+}
+
+.page-tips {
+    padding: 2px 4px;
+    border: 1px solid #FFF;
 }
