@@ -12,14 +12,14 @@ require_once (APP_ROOT.'include/checkInput.php');
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
-if(isset($_POST['searchConditions'])) {
+if (isset($_POST['searchConditions'])) {
     $searchConditions = $_POST['searchConditions'];
-    foreach($searchConditions as $key => $value) {
+    foreach ($searchConditions as $key => $value) {
         if ($checkChar = checkInput($value)) {
             die ('输入的内容不能包含：' + $checkChar);
         }
     }
-}else {
+} else {
     $searchConditions = '';
 }
 
@@ -30,59 +30,58 @@ $tableName = 'record_t';
 $conditionStr   = '';
 
 //排序条件
-if(1) {
+if (1) {
     $orderByDate = ' order by record_time desc';
-}else {
+} else {
     $orderByDate = ' order by record_time asc';
 }
 //根据提交数据组合查询条件
-if(!empty($searchConditions)) {
-
-    if(!empty($searchConditions['startTime'])) {
+if (!empty($searchConditions)) {
+    if (!empty($searchConditions['startTime'])) {
         $conditionStr .= ' record_time >= ' . $searchConditions['startTime'] . ' and';
     }
 
-    if(!empty($searchConditions['endTime'])) {
+    if (!empty($searchConditions['endTime'])) {
         $conditionStr .= ' record_time <= ' . $searchConditions['endTime'] . ' and';
     }
 
-    if(!empty($searchConditions['itemName'])) {
+    if (!empty($searchConditions['itemName'])) {
         $conditionStr .= 'it.item_name like \'%' . $searchConditions['itemName'] . '%\' and';
     }
 
-    if(!empty($searchConditions['dealType'])) {
-        if($searchConditions['dealType'] == '其他') {
+    if (!empty($searchConditions['dealType'])) {
+        if ($searchConditions['dealType'] == '其他') {
             $conditionStr .= ' record_status <> \'出库\' and record_status <> \'入库\' and';
         }
 
-        if($searchConditions['dealType'] == '出库') {
+        if ($searchConditions['dealType'] == '出库') {
             $conditionStr .= ' record_status = \'出库\' and';
         }
 
-        if($searchConditions['dealType'] == '入库') {
+        if ($searchConditions['dealType'] == '入库') {
             $conditionStr .= ' record_status = \'入库\' and';
         }
     }
 
-    if(!empty($searchConditions['consumerCode'])) {
+    if (!empty($searchConditions['consumerCode'])) {
         $conditionStr .= ' consumer_code like \'%' . $searchConditions['consumerCode'] . '%\' and';
     }
 
-    if(!empty($searchConditions['computerBarcode'])) {
+    if (!empty($searchConditions['computerBarcode'])) {
         $conditionStr .= ' computer_barcode like \'%' . $searchConditions['computerBarcode'] . '%\' and';
     }
 
-    if(!empty($searchConditions['itemSN'])) {
+    if (!empty($searchConditions['itemSN'])) {
         $conditionStr .= ' item_sn like \'%' . $searchConditions['itemSN'] . '%\' and';
     }
 
-    if(!empty($searchConditions['username'])) {
+    if (!empty($searchConditions['username'])) {
         $conditionStr .= ' username like \'%' . $searchConditions['username'] . '%\'';
     }
 }
 
 //去掉最后一个 and
-if(!empty($conditionStr)) {
+if (!empty($conditionStr)) {
     $conditionStr = rtrim($conditionStr, 'and');
 }
 
@@ -95,32 +94,52 @@ $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate);
 
 //输出查询结果
-echo '<tr>
-        <th>记录编号</th>
+echo '<tr class = \'tableHead\'>
         <th>名称</th>
         <th>序列号</th>
         <th>数量</th>
+        <th>处理类型</th>
         <th>资产条码</th>
         <th>用户工号</th>
-        <th>状态</th>
         <th>处理时间</th>
         <th>处理人</th>
     </tr>';
 
-while($row = mysqli_fetch_assoc($result)) {
-    $htmlStr =  "<tr>
-            <td>{$row['id']}</td>
-            <td>{$row['item_name']}</td>
-            <td>{$row['item_sn']}</td>
-            <td>{$row['update_count']}</td>
-            <td>{$row['computer_barcode']}</td>
-            <td>{$row['consumer_code']}</td>
-            <td>{$row['record_status']}</td>";
+$i = 0;
+while ($row = mysqli_fetch_assoc($result)) {
+    if ($i % 2) {
+        $htmlStr = '<tr class = \'odd-row\'>';
+    } else {
+        $htmlStr = '<tr class = \'even-row\'>';
+    }
+
+    $htmlStr .= "<td>{$row['item_name']}</td>";
+
+    if ($row['item_sn']) {
+        $htmlStr .= "<td>{$row['item_sn']}</td>";
+    } else {
+        $htmlStr .= '<td>-</td>';
+    }
+
+    $htmlStr .= "<td>{$row['update_count']}</td>";
+    $htmlStr .= "<td>{$row['record_status']}</td>";
+
+    if ($row['computer_barcode']) {
+        $htmlStr .= "<td>{$row['computer_barcode']}</td>";
+    } else {
+        $htmlStr .= '<td>-</td>';
+    }
+
+    if ($row['consumer_code']) {
+        $htmlStr .= "<td>{$row['consumer_code']}</td>";
+    } else {
+        $htmlStr .= '<td>-</td>';
+    }
 
     $recordTime = date('Y-m-d', $row['record_time']);
     $htmlStr .= "<td>$recordTime</td>";
     $htmlStr .= "<td>{$row['username']}</td>
         </tr>";
     echo $htmlStr;
+    $i++;
 }
-
