@@ -2,15 +2,16 @@
 
 //页面加载
 window.onload = function () {
-    $("#contentWrapper").load("getSearchRecordService.php");
+    //$("#contentWrapper").load("getSearchRecordService.php");
+    searchRecord();
 }
 
 //点击搜索按钮
-function searchRecord() {
+function searchRecord(page = 0) {
 
     var searchConditions = getInputConditions();
     if (searchConditions) {
-        $("#contentWrapper").load("getSearchRecordService.php", { "searchConditions": searchConditions });
+        $("#contentWrapper").load("getSearchRecordService.php", { "searchConditions": searchConditions, "page":page });
     }
 }
 

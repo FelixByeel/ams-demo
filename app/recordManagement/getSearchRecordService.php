@@ -93,7 +93,8 @@ $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate);
 
 //输出查询结果
-echo '<tr class = \'tableHead\'>
+echo '<div class = \'searchResult\'>';
+echo '<table><tr class = \'tableHead\'>
         <th>名称</th>
         <th>序列号</th>
         <th>数量</th>
@@ -141,4 +142,22 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </tr>";
     echo $htmlStr;
     $i++;
+}
+
+//输出表格闭合标签
+echo '</table>';
+
+//页码跳转
+echo '<div class = \'page\'>';
+echo $_POST['page'];
+
+
+
+//输出闭合标签
+echo '</div>';
+echo '</div>';
+
+//底部页面跳转功能
+function showPage($count, $countPages, $rowCount, $currentPage){
+
 }
