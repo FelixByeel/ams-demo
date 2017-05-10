@@ -25,8 +25,7 @@ if (isset($_POST['searchConditions'])) {
 
 //连接数据库
 $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-$tableName = 'record_t';
-
+$tableName      = 'record_t';
 $conditionStr   = '';
 
 //排序条件
@@ -113,33 +112,33 @@ while ($row = mysqli_fetch_assoc($result)) {
         $htmlStr = '<tr class = \'even-row\'>';
     }
 
-    $htmlStr .= "<td>{$row['item_name']}</td>";
+    $htmlStr .= "<td class = 'name-column td-content'>{$row['item_name']}</td>";
 
     if ($row['item_sn']) {
-        $htmlStr .= "<td>{$row['item_sn']}</td>";
+        $htmlStr .= "<td class = 'sn-column td-content'>{$row['item_sn']}</td>";
     } else {
-        $htmlStr .= '<td>-</td>';
+        $htmlStr .= '<td class = \'sn-column td-content\'>-</td>';
     }
 
-    $htmlStr .= "<td>{$row['update_count']}</td>";
-    $htmlStr .= "<td>{$row['record_status']}</td>";
+    $htmlStr .= "<td class = 'count-column td-content'>{$row['update_count']}</td>";
+    $htmlStr .= "<td class = 'type-column td-content'>{$row['record_status']}</td>";
 
     if ($row['computer_barcode']) {
-        $htmlStr .= "<td>{$row['computer_barcode']}</td>";
+        $htmlStr .= "<td class = 'computer-barcode-column td-content'>{$row['computer_barcode']}</td>";
     } else {
-        $htmlStr .= '<td>-</td>';
+        $htmlStr .= '<td class = \'computer-barcode-column td-content\'>-</td>';
     }
 
     if ($row['consumer_code']) {
-        $htmlStr .= "<td>{$row['consumer_code']}</td>";
+        $htmlStr .= "<td class = 'consumer-code-column td-content'>{$row['consumer_code']}</td>";
     } else {
-        $htmlStr .= '<td>-</td>';
+        $htmlStr .= '<td class = \'consumer-code-column td-content\'>-</td>';
     }
 
     $recordTime = date('Y-m-d', $row['record_time']);
-    $htmlStr .= "<td>$recordTime</td>";
-    $htmlStr .= "<td>{$row['username']}</td>
-        </tr>";
+    $htmlStr .= "<td class = 'time-column td-content'>$recordTime</td>";
+    $htmlStr .= "<td class = 'username-column td-content'>{$row['username']}</td>
+                </tr>";
     echo $htmlStr;
     $i++;
 }
