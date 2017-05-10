@@ -90,7 +90,28 @@ $columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.updat
 //record_t 和item_t联合查询
 $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
 
-$result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate);
+//获取总记录数
+if (empty($conditionStr)) {
+    $sql = 'select count(1) from ' . $tableName;
+} else {
+    $sql = 'select count(1) from ' . $tableName . ' where ' . $conditionStr;
+}
+
+$countResult = $mysqli->query($sql);
+$count = mysqli_fetch_assoc($countResult)['count(1)'];
+
+//每页显示记录数
+$size = 1;
+
+if (isset($_POST['page']) && is_numeric($_POST['page'])) {
+    $currentPage = $_POST['page'] > 0 ? $_POST['page'] : 1;
+} else {
+    $currentPage = 1;
+}
+
+$limit = ' limit ' . (($currentPage - 1) * $size) . ', ' . $size;
+//根据条件查询相应结果数据
+$result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate, $limit);
 
 //输出查询结果
 echo '<div class = \'searchResult\'>';
@@ -143,21 +164,91 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo $htmlStr;
     $i++;
 }
-
 //输出表格闭合标签
 echo '</table>';
 
-//页码跳转
-echo '<div class = \'page\'>';
-echo $_POST['page'];
-
-
+//输出分页
+if ($count > $size) {
+    echo $currentPage;
+    showPage($count, $size, $currentPage, 2);
+}
 
 //输出闭合标签
 echo '</div>';
-echo '</div>';
 
-//底部页面跳转功能
-function showPage($count, $countPages, $rowCount, $currentPage){
 
+/**
+*功能:底部页面跳转
+*demo:  上一页 [1] [2] [3] 4 ...[10] [下一页]
+*@param
+*       $count          //总记录数
+*       $size           //每页显示记录数
+*       $currentPage    //当前页
+*       $showStyle      //显示页码数，页数为 2*$showStyle+1
+*                         如$show_pages=2,显示为 [上一页][1][2][3][4][5]...[下一页]
+*/
+function showPage($count, $size, $currentPage, $showStyle = 2)
+{
+    $pages = ceil($count / $size);    //获取总页数
+    $startPage = $currentPage - $showStyle;//根据当前页获取起始显示页码和结束显示页码
+    $endPage = $currentPage + $showStyle;
+
+    echo 'page:'.$pages.'-s:'.$startPage.'-e:'.$endPage;
+
+    //取得的起始显示页小于1，设置第一页为起始页。
+    if ($startPage < 1) {
+        //$endPage = $endPage + (1 - $startPage);
+        $startPage = 1;
+    }
+
+    //取得的结束显示页大于总页数，设置最大页为结束页码。
+    if ($endPage > $pages) {
+        //$startPage = $startPage - ($endPage - $pages);
+        $endPage = $pages;
+    }
+
+    $str = '<div class = \'pageBox\'';
+
+    //previous page
+    if ($currentPage > 1) {
+        $str .= '<span class = \'previous-page\' onclick = \'searchRecord(' . ($currentPage - 1) . ')\'>上一页</span>';
+    }
+
+    //first page
+    if ($currentPage != 1) {
+        $str .= '<span class = \'first-page\' onclick = \'searchRecord(1)\'>1</span>';
+    } else {
+        $str .= '<span class = \'current-page\'>1</span>';
+    }
+
+    if ($startPage >1) {
+        $str .= '<span class = \'ellipsis\'>...</span>';
+    }
+
+    for ($i = $startPage + 1; $i < $endPage; $i++) {
+        if ($i == $currentPage) {
+            $str .= '<span class = \'current-page\'>' . $i . '</span>';
+        } else {
+            $str .= '<span class = \'subpage\' onclick = \'searchRecord('. $i . ')\'>' . $i . '</span>';
+        }
+    }
+
+    if ($endPage < $pages) {
+        $str .= '<span class = \'ellipsis\'>...</span>';
+    }
+
+    //final page
+    if ($currentPage != $pages) {
+        $str .= '<span class = \'final-page\' onclick = \'searchRecord('. $pages . ')\'>' . $pages . '</span>';
+    } else {
+        $str .= '<span class = \'current-page\'>' . $pages . '</span>';
+    }
+
+    //next page
+    if ($currentPage < $pages) {
+        $str .= '<span class = \'next-page\' onclick = \'searchRecord(' . ($currentPage + 1) . ')\'>下一页</span>';
+    }
+
+    $str .= '</div>';
+    echo $str;
 }

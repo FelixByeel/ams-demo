@@ -125,7 +125,7 @@ class Msqli{
     }
 
     //join select
-    public function joinSelect($tablename, $column, $joinCondition, $condition = '', $orderByDate) {
+    public function joinSelect($tablename, $column, $joinCondition, $condition = '', $orderByDate, $limit) {
 
         $sql = "select ";
 
@@ -147,6 +147,7 @@ class Msqli{
         }
 
         $sql .= $orderByDate;
+        $sql .= $limit;
         return $this->query($sql);
     }
 }
