@@ -250,8 +250,8 @@ function showPage($count, $size, $currentPage, $showStyle)
         $str .= '<span class = \'next-page\' onclick = \'searchRecord(' . ($currentPage + 1) . ')\'>下一页</span>';
     }
 
-    $str .= '<span class = \'page-tips\'>共 ' . $pages . ' 页，' . '当前第 ' . $currentPage . ' 页。 </span>';
-
+    //$str .= '<span class = \'page-tips\'>共 ' . $pages . ' 页，' . '当前第 ' . $currentPage . ' 页。 </span>';
+    $str .= '<span class = \'page-tips\'>' . '当前第 ' . $currentPage . '/' . $pages . ' 页，共 ' . $count . ' 条记录。';
     $str .= '</div>';
     echo $str;
 }
