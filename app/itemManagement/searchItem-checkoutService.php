@@ -17,7 +17,7 @@ require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
 //验证用户权限
-if($_SESSION['role_group'] < 1) {
+if ($_SESSION['role_group'] < 1) {
     die('当前用户无法进行此操作！');
 }
 
@@ -40,15 +40,14 @@ foreach ($checkOutRecord as $key => $value) {
     }
 }
 //-----------itemID
-if(isset($checkOutRecord['itemID']) || array_key_exists('itemID', $checkOutRecord)){
-    if(empty($checkOutRecord['itemID']) || !preg_match($isNumberReg, $checkOutRecord['itemID'])){
+if (isset($checkOutRecord['itemID']) || array_key_exists('itemID', $checkOutRecord)) {
+    if (empty($checkOutRecord['itemID']) || !preg_match($isNumberReg, $checkOutRecord['itemID'])) {
         $returnStatus['status_id'] = 0;
         $returnStatus['info'] = '提交的数据有误！';
         echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
         die();
     }
-}
-else {
+} else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交的数据有误！';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -56,15 +55,14 @@ else {
 }
 
 //-----------updateCount
-if(isset($checkOutRecord['updateCount']) || array_key_exists('updateCount', $checkOutRecord)){
-    if(empty($checkOutRecord['updateCount']) || !preg_match($isNumberReg, $checkOutRecord['updateCount'])){
+if (isset($checkOutRecord['updateCount']) || array_key_exists('updateCount', $checkOutRecord)) {
+    if (empty($checkOutRecord['updateCount']) || !preg_match($isNumberReg, $checkOutRecord['updateCount'])) {
         $returnStatus['status_id'] = 0;
         $returnStatus['info'] = '提交的数据有误！';
         echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
         die();
     }
-}
-else {
+} else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交的数据有误！';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -72,12 +70,11 @@ else {
 }
 
 //-----------itemSN
-if(isset($checkOutRecord['itemSN']) || array_key_exists('itemSN', $checkOutRecord)){
-    if(empty($checkOutRecord['itemSN'])){
+if (isset($checkOutRecord['itemSN']) || array_key_exists('itemSN', $checkOutRecord)) {
+    if (empty($checkOutRecord['itemSN'])) {
         $checkOutRecord['itemSN'] = '';
     }
-}
-else {
+} else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交的数据有误！';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -85,15 +82,14 @@ else {
 }
 
 //-----------consumerCode
-if(isset($checkOutRecord['consumerCode']) || array_key_exists('consumerCode', $checkOutRecord)){
-    if(empty($checkOutRecord['consumerCode'])){
+if (isset($checkOutRecord['consumerCode']) || array_key_exists('consumerCode', $checkOutRecord)) {
+    if (empty($checkOutRecord['consumerCode'])) {
         $returnStatus['status_id'] = 0;
         $returnStatus['info'] = '提交的数据有误！';
         echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
         die();
     }
-}
-else {
+} else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交的数据有误！';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -101,18 +97,16 @@ else {
 }
 
 //-----------computerBarcode
-if(isset($checkOutRecord['computerBarcode']) || array_key_exists('computerBarcode', $checkOutRecord)){
-    if(!empty($checkOutRecord['computerBarcode']) && !preg_match($isNumberReg, $checkOutRecord['computerBarcode'])){
+if (isset($checkOutRecord['computerBarcode']) || array_key_exists('computerBarcode', $checkOutRecord)) {
+    if (!empty($checkOutRecord['computerBarcode']) && !preg_match($isNumberReg, $checkOutRecord['computerBarcode'])) {
         $returnStatus['status_id'] = 0;
         $returnStatus['info'] = '提交的数据有误！';
         echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
         die();
-    }
-    else if(empty($checkOutRecord['computerBarcode'])){
+    } elseif (empty($checkOutRecord['computerBarcode'])) {
         $checkOutRecord['computerBarcode'] = 0;
     }
-}
-else {
+} else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交的数据有误！';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -144,7 +138,7 @@ $row = mysqli_fetch_assoc($result);
 $itemCount = $row['item_count'];
 
 //库存数量不足时终止出库操作
-if($itemCount < $checkOutRecord['updateCount']){
+if ($itemCount < $checkOutRecord['updateCount']) {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '库存数量不足，请修改物品出库数量!';
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
@@ -155,18 +149,19 @@ $colToValue['item_count'] = (int)$itemCount - (int)$checkOutRecord['updateCount'
 //更新item_t表中的item_count值
 $mysqli->update($tableName, $colToValue, $condition);
 
-//写入一条出库记录到record_t,
-$tableName = 'record_t';
+if ($mysqli->getAffectedRows() > 0) {
+    //写入一条出库记录到record_t,
+    $tableName = 'record_t';
 
-$result = $mysqli->insert($tableName, $recordData);
+    $result = $mysqli->insert($tableName, $recordData);
 
-if($mysqli->getAffectedRows() > 0) {
-    $returnStatus['status_id'] = 1;
-    $returnStatus['info'] = '操作成功！';
-    echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
-}
-else {
-    $returnStatus['status_id'] = 0;
-    $returnStatus['info'] = '操作失败！';
-    echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
+    if ($mysqli->getAffectedRows() > 0) {
+        $returnStatus['status_id'] = 1;
+        $returnStatus['info'] = '操作成功！';
+        echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
+    } else {
+        $returnStatus['status_id'] = 0;
+        $returnStatus['info'] = '操作失败！';
+        echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
+    }
 }
