@@ -116,7 +116,7 @@ $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditi
 
 //输出查询结果
 echo '<div class = \'searchResult\'>';
-echo '<table><tr class = \'tableHead\'>
+echo '<table class = \'result-table\'><tr class = \'table-head\'>
         <th>名称</th>
         <th>序列号</th>
         <th>数量</th>
