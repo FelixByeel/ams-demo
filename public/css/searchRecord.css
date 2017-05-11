@@ -42,27 +42,25 @@ th {
 
 .pageBox span {
     float: left;
+    padding:1px 4px;
     margin: 0 3px;
     line-height: 25px;
     text-align: center;
 }
 
 .previous-page, .next-page {
-    padding: 2px 4px;
     width: 50px;
     border: 1px solid #000;
 }
 
 .current-page {
     width: 25px;
-    padding: 2px 4px;
     color: #888;
     border: 1px solid #FFF;
 }
 
 .first-page, .subpage, .final-page {
     width: 25px;
-    padding: 2px 4px;
     border: 1px solid #000;
 }
 
@@ -74,10 +72,8 @@ th {
 
 .ellipsis {
     width: 25px;
-    padding: 2px 4px;
 }
 
 .page-tips {
-    padding: 2px 4px;
     border: 1px solid #FFF;
 }
