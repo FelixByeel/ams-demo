@@ -1,4 +1,36 @@
 
+*{
+    font: 14px/20px Arial,"Microsoft YaHei",sans-serif;
+}
+
+/*-----table------*/
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.name-column {
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+.table-head th{
+    border-bottom: 2px solid #6D8EA0;
+}
+
+.td-content{
+    border-bottom: 1px dotted #6D8EA0;
+    padding: 3px 0;
+}
+
+.odd-row:hover, .even-row:hover {
+    background-color: #DDD;
+}
+
 /*---------底部分页页码样式-----------*/
 .pageBox {
     height: 50px;
