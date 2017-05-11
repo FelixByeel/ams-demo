@@ -33,9 +33,11 @@ th {
 
 /*---------底部分页页码样式-----------*/
 .pageBox {
-    height: 50px;
-    padding: 10px 0;
-    text-align: center;
+    float: right;
+    margin-top: 50px;
+    margin-right: 50px;
+    height: 25px;
+
 }
 
 .pageBox span {
