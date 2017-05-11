@@ -147,7 +147,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
 
     $htmlStr .= "<td class = 'count-column td-content'>{$row['update_count']}</td>";
-    $htmlStr .= "<td class = 'type-column td-content'>{$row['record_status']}</td>";
+
+
+    if ('出库' == $row['record_status']) {
+        $htmlStr .= "<td class = 'type-column td-content out'>{$row['record_status']}</td>";
+    } elseif ('入库' == $row['record_status']) {
+        $htmlStr .= "<td class = 'type-column td-content in'>{$row['record_status']}</td>";
+    } else {
+        $htmlStr .= "<td class = 'type-column td-content other'>{$row['record_status']}</td>";
+    }
+
 
     if ($row['computer_barcode']) {
         $htmlStr .= "<td class = 'computer-barcode-column td-content'>{$row['computer_barcode']}</td>";
