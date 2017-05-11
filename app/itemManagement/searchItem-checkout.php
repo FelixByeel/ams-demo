@@ -71,7 +71,7 @@ if($_SESSION['role_group'] < 1) {
                         <input id = "consumerCodeInput" class = "consumer-code-input" type = "text" value = ""/>
                     </label>
                     <label class = "labelStyle">资产条码：
-                        <input id = "computerBarcodeInput" class = "computer-barcode-input"  maxlength = "15" type = "text" value = ""/>
+                        <input id = "computerBarcodeInput" class = "computer-barcode-input"  maxlength = "11" type = "text" value = ""/>
                     </label>
                     <button id = "confirmCheckoutButton">确认</button>
                 </div>
