@@ -111,8 +111,6 @@ $parentItemIDArr = explode('-', $itemData['parent_id']);
 
 $itemData['parent_id'] = $parentItemIDArr[count($parentItemIDArr) - 1];
 
-var_dump($itemData);
-
 //将新记录写入数据库
 $result = $mysqli->insert($tableName, $itemData);
 
