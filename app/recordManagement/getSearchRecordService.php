@@ -90,15 +90,16 @@ $columnArray    = array('rt.id', 'rt.record_status', 'rt.record_time', 'rt.updat
 //record_t 和item_t联合查询
 $joinCondition = 'record_t as rt inner join item_t as it on rt.item_id = it.id';
 
-//获取总记录数
+//获取查询总记录数
 if (empty($conditionStr)) {
     $sql = 'select count(1) from ' . $tableName;
 } else {
-    $sql = 'select count(1) from ' . $tableName . ' where ' . $conditionStr;
+    $sql = 'select count(1) from ' . $joinCondition . ' where ' . $conditionStr;
 }
 
 $countResult = $mysqli->query($sql);
 $count = mysqli_fetch_assoc($countResult)['count(1)'];
+
 
 //获取起始页码
 if (isset($_POST['page']) && is_numeric($_POST['page'])) {
@@ -112,7 +113,9 @@ $size = 10;
 $limit = ' limit ' . (($currentPage - 1) * $size) . ', ' . $size;
 
 //根据条件查询相应结果数据
+
 $result = $mysqli->joinSelect($tableName, $columnArray, $joinCondition, $conditionStr, $orderByDate, $limit);
+
 
 //输出查询结果
 echo '<div class = \'searchResult\'>';
