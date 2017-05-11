@@ -150,11 +150,11 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
     if ('出库' == $row['record_status']) {
-        $htmlStr .= "<td class = 'type-column td-content out'>{$row['record_status']}</td>";
+        $htmlStr .= "<td class = 'type-column td-content'><span class = 'out'>{$row['record_status']}</span></td>";
     } elseif ('入库' == $row['record_status']) {
-        $htmlStr .= "<td class = 'type-column td-content in'>{$row['record_status']}</td>";
+        $htmlStr .= "<td class = 'type-column td-content'><span class = 'in'>{$row['record_status']}</span></td>";
     } else {
-        $htmlStr .= "<td class = 'type-column td-content other'>{$row['record_status']}</td>";
+        $htmlStr .= "<td class = 'type-column td-content'><span class = 'other'>{$row['record_status']}</span></td>";
     }
 
 
