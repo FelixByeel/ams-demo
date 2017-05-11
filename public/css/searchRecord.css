@@ -10,14 +10,6 @@
     text-align: center;
 }
 
-.name-column {
-    text-align: left;
-}
-
-th {
-    font-weight: bold;
-}
-
 .table-head th{
     border-bottom: 2px solid #B2CBD6;
 }
@@ -25,6 +17,11 @@ th {
 .td-content{
     border-bottom: 1px solid #B2CBD6;
     padding: 5px 0;
+}
+
+.name-column {
+    text-align: left;
+    padding-left: 10px;
 }
 
 .odd-row:hover, .even-row:hover {
@@ -72,6 +69,7 @@ th {
 
 .ellipsis {
     width: 25px;
+    border: 1px solid #FFF;
 }
 
 .page-tips {
