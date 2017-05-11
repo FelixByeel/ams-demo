@@ -42,11 +42,7 @@ $condition = $warehouseName['warehouse_id'];
 
 $mysqli->delete($tableName, "warehouse_id = $condition");
 
-//更新分类列表中对应的仓库信息
-$warehouse['warehouse_id'] = 0;
-$mysqli->update('item_t', $warehouse, "warehouse_id = $condition");
-
-//判断写入是否成功
+//判断是否删除成功
 if ($mysqli->getAffectedRows() > 0) {
     echo "删除成功！";
 }
@@ -54,3 +50,9 @@ if ($mysqli->getAffectedRows() > 0) {
 if ($mysqli->getAffectedRows() < 1) {
     die("删除失败！");
 }
+
+//更新分类列表中对应的仓库信息
+$warehouse['warehouse_id'] = 0;
+$mysqli->update('item_t', $warehouse, "warehouse_id = $condition");
+
+
