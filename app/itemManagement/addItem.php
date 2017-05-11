@@ -44,7 +44,7 @@ if($_SESSION['role_group'] < 2) {
                 -->
             </div>
             <button id = "addItem" onclick = "addItem()">保存</button>
-            <div id = "tips" ></div>
+            <div id = "tips" style = "display:none"></div>
         </div>
 </body>
 <!--script-->
