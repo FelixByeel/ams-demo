@@ -38,7 +38,7 @@ create table record_t(
     record_time int(11) unsigned not null default 0 comment '记录本次操作时间',
     update_count int(10)  not null default 0 comment '本次变更数量',
     consumer_code varchar(15) not null default '' comment '物品使用人工号',
-    computer_barcode int(11) unsigned not null default 0 comment '电脑资产条码',
+    computer_barcode varchar(15) not null default '' comment '电脑资产条码',
     item_sn varchar(15) not null default '' comment '物品序列号编码',
     computer_sn varchar(15) not null default '' comment '电脑序列号',
     username varchar(20) not null default '' comment '当前操作人，对应用户信息表username字段',
