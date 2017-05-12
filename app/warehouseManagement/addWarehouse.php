@@ -25,7 +25,7 @@
             <div id = "contentBox">
                 <div id = "addBox">
                     <p>添加仓库：</p>
-                    <input id = "warehouseInput" type = "text"/>
+                    <input id = "warehouseInput" type = "text"  maxlength = "20"/>
                     <button id = "addWarehouseButton" onclick="addWarehouse()">添加仓库</button>
                 </div>
 
@@ -40,7 +40,7 @@
                 <div id = "actionEditBox">
                     <label id = "warehouseCodeP" style="display:none">仓库编号：<span id = "warehouseCodeSpan"></span></label>
                     <label id = "warehouseCodeP">仓库名称：
-                        <input id = "editWarehouseInput" type = "text"/>
+                        <input id = "editWarehouseInput" type = "text" maxlength = "20"/>
                     </label>
                     <button id = "saveWarehouseButton" onclick = "updateWarehouse()">保存修改</button>
                 </div>
