@@ -37,7 +37,7 @@ if($_SESSION['role_group'] < 2) {
 
             <div id = "inputBox" class = "itemDiv">
                 <p>请输入分类（物品）名称：</p>
-                <input id = "itemNameInput" type = "text"/>
+                <input id = "itemNameInput" type = "text" maxlength = "20"/>
                 <!--
                 <p>请输入物品数量：</p>
                 <input id = "itemCountInput" type = "text"/>
