@@ -36,10 +36,10 @@ if($_SESSION['role_group'] < 2) {
                         <span id = "searchWarehouseNameSpan">无</span>
                     </p>
 
-                    <span id = "itemIDSpan">分类编号：<input id = "searchItemIDInput" type = "text" /></span>
+                    <span id = "itemIDSpan">分类编号：<input id = "searchItemIDInput" type = "text" maxlength = "5"/></span>
                     <span class = "item-name-span">分类名称：
                         <select id = "searchItemNameSelect"></select>
-                        <input id = "searchItemNameInput" type = "text" />
+                        <input id = "searchItemNameInput" type = "text" maxlength = "20"/>
                     </span>
                     <button id = "searchButton" type="button">搜索</button>
 
@@ -63,12 +63,12 @@ if($_SESSION['role_group'] < 2) {
                     <button id = "delButton">删除</button>
                 </div>
                 <div id = "editBoxContent">
-                    <label class = "labelStyle" id = "nameLabel">物品名称：<input id = "itemNameInput" type = "text" value = ""/></label>
+                    <label class = "labelStyle" id = "nameLabel">物品名称：<input id = "itemNameInput" type = "text" value = "" maxlength = "20"/></label>
                     <label class = "labelStyle" id = "classLabel">上级分类：<select id = "classSelect"></select></label>
                     <label class = "labelStyle" id = "warehouseLabel">所属仓库：<select id = "warehouseSelect"></select></label>
                     <label class = "labelStyle" id = "currentCountLabel">当前数量：<span id = "currentCountSpan"></span></label>
                     <label class = "labelStyle" id = "countLabel">变更数量：
-                        <input id = "itemCountInput" type = "text" value = ""/>
+                        <input id = "itemCountInput" type = "text" value = "" maxlength = "5"/>
                         <span id = "tips">负数表示从当前数量减去。</span>
                     </label>
                     <button id = "saveButton">保存</button>
