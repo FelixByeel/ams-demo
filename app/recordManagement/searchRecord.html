@@ -10,28 +10,34 @@
         <div id = "bodyWrapper">
             <!--搜索块-->
             <div id = "searchWrapper">
-                <label for = "startDate" class = "labelStyle">开始日期：</label>
-                <input id = "startDate" type = "date" />
-                <label for = "endDate" class = "labelStyle">结束日期：</label>
-                <input id = "endDate" type = "date" />
-                <label for = "itemName" class = "labelStyle">物品名称：</label>
-                <input id = "itemName" type = "text" />
-                <label for = "dealType" class = "labelStyle">处理类型：</label>
-                <select id = "dealType">
-                    <option value = "全部">全部</option>
-                    <option value = "出库">出库</option>
-                    <option value = "入库">入库</option>
-                    <option value = "其他">其他</option>
-                </select>
-                <label for = "consumerCode" class = "labelStyle">用户工号：</label>
-                <input id = "consumerCode" type = "text" />
-                <label for = "computerBarcode" class = "labelStyle">资产条码：</label>
-                <input id = "computerBarcode" type = "text" />
-                <label for = "itemSN" class = "labelStyle">物品序列号：</label>
-                <input id = "itemSN" type = "text" />
-                <label for = "username" class = "labelStyle">处理人：</label>
-                <input id = "username" type = "text" />
-                <button id = "searchButton" onclick="searchRecord()">搜索</button>
+                <div class="search-usually">
+                    <label for = "startDate" class = "labelStyle">开始日期：</label>
+                    <input id = "startDate" class="search-date" type = "date"/>
+                    <label for = "endDate" class = "labelStyle">结束日期：</label>
+                    <input id = "endDate" class="search-date" type = "date" />
+                    <label for = "consumerCode" class = "labelStyle">用户工号：</label>
+                    <input id = "consumerCode" class="search-consumer-code" type = "text" maxlength="10"/>
+                    <label for = "dealType" class = "labelStyle">处理类型：</label>
+                    <select id = "dealType" class="search-type">
+                        <option value = "全部">全部</option>
+                        <option value = "出库" selected = "selected">出库</option>
+                        <option value = "入库">入库</option>
+                        <option value = "其他">其他</option>
+                    </select>
+                    <button id = "searchButton" class="search-button" onclick="searchRecord()">搜索</button>
+                </div>
+
+                <div class = 'search-more'>
+                    <label for = "itemName" class = "labelStyle">物品名称：</label>
+                    <input id = "itemName" class="search-name" type = "text" maxlength="20"/>
+                    <label for = "itemSN" class = "labelStyle">物品序列号：</label>
+                    <input id = "itemSN" class="search-sn" type = "text" maxlength="20"/>
+                    <label for = "computerBarcode" class = "labelStyle">资产条码：</label>
+                    <input id = "computerBarcode" class="search-barcode" type = "text" maxlength="20"/>
+                    <label for = "username" class = "labelStyle">处理人：</label>
+                    <input id = "username" class="search-username" type = "text" maxlength="15"/>
+                </div>
+
             </div>
 
             <!--搜索结果显示-->
