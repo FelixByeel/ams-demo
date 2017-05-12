@@ -45,7 +45,7 @@ if (!empty($searchConditions)) {
     }
 
     if (!empty($searchConditions['itemName'])) {
-        $conditionStr .= 'it.item_name like \'%' . $searchConditions['itemName'] . '%\' and';
+        $conditionStr .= ' it.item_name like \'%' . $searchConditions['itemName'] . '%\' and';
     }
 
     if (!empty($searchConditions['dealType'])) {
