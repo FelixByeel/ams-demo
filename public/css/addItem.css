@@ -5,6 +5,10 @@ html,body{
     height: 70%;
 }
 
+*{
+    font: 14px/20px Arial,"Microsoft YaHei",sans-serif;
+}
+
 #bodyBox{
 
     width: 80%;
