@@ -4,50 +4,98 @@
 }
 
 /*------search-----*/
+.search-box {
+    padding: 5px 0;
+    height: 20px;
+    background-color: #FFF;
+    overflow: hidden;
+}
+
 .search-more {
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    height: 20px;
+    background-color: #FFF;
+    text-align: center;
+    border-top: 1px solid #AAA;
+}
+
+.s-more {
+    display: inline-block;
+    margin-top: -1px;
+    width: 100px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #FFF #AAA #AAA #AAA;
+}
+
+.s-more:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.arrow {
+    display: inline-block;
+    position: relative;
+    top:5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../icon/arrow-grey-down.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #FFF;
+}
+
+.search-subbox {
+    float: left;
 }
 
 .labelStyle {
+    background-color: #FFF;
+    display: block;
+    margin-bottom: 5px;
     margin-left: 20px;
+    width: 250px;
+    height: 24px;
+    line-height: 24px;
+    text-align: right;
 }
 
-.search-date {
+.search-box input {
+    padding: 1px 2px;
     width: 130px;
     height: 20px;
-    border: 1px solid #999;
-    border-radius: 3px;
-}
-
-.search-consumer-code, .search-username {
-    width: 100px;
-    height: 20px;
-    border: 1px solid #999;
+    border: 1px solid #888;
     border-radius: 3px;
 }
 
 .search-type {
-    padding: 0 1%;
-    height: 20px;
-    border: 1px solid #999;
+    padding-left: 40px;
+    width: 136px;
+    height: 24px;
+    border: 1px solid #888;
     border-radius: 3px;
 }
-
-.search-type option {
-    text-align: center;
-}
-.search-name, .search-sn, .search-barcode {
-    width: 130px;
-    height: 20px;
-    border: 1px solid #999;
-    border-radius: 3px;
-}
-.search-sn {}
-.search-barcode {}
-.search-username {}
 
 .search-button {
+    margin-left: 100px;
+    width: 80px;
+    height: 25px;
+    border: none;
+    background-color: #00BFFF;
+    color: #FFF;
+    border-radius: 5px;
+}
 
+.search-button:hover {
+    cursor: pointer;
+    background-color: #5CD6FF;
+}
+
+.search-button:active {
+    position: relative;
+    top:1px;
 }
 
 /*-----table------*/
