@@ -6,12 +6,51 @@ window.onload = function () {
     searchRecord();
 }
 
+
+//搜索更多,设置交互
+$(document).ready(function () {
+    var direction = "down";
+
+    $("#searchMoreContent").mouseenter(function () {
+        if ("down" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-down.png)");
+        } else if ("up" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-up.png)");
+        }
+    });
+
+    $("#searchMoreContent").mouseleave(function () {
+        if ("down" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-grey-down.png)");
+        } else if ("up" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-grey-up.png)");
+        }
+    });
+
+    //改变箭头方向，同时展开更多搜索条件
+    $("#searchMoreContent").click(function () {
+        if ("down" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-up.png)");
+            direction = "up";
+            $("#searchWrapper").animate({ height: "50px" }, 200);
+
+            var str = "收起<i id = 'search-arrow-icon' class = 'arrow'></i>";
+            $("#searchMoreContent").html(str);
+        } else if ("up" == direction) {
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-down.png)");
+            direction = "down";
+            $("#searchWrapper").animate({ height: "21px" }, 200);
+            var str = "更多<i id = 'search-arrow-icon' class = 'arrow'></i>";
+            $("#searchMoreContent").html(str);
+        }
+    });
+});
+
 //点击搜索按钮
 function searchRecord(page = 0) {
-
     var searchConditions = getInputConditions();
     if (searchConditions) {
-        $("#contentWrapper").load("getSearchRecordService.php", { "searchConditions": searchConditions, "page":page });
+        $("#contentWrapper").load("getSearchRecordService.php", { "searchConditions": searchConditions, "page": page });
     }
 }
 
@@ -25,11 +64,11 @@ function getInputConditions() {
     var endTime = stringParseToTimestamp(endTimeStr + "T00:00:00"); //FUCK THE TIMEZONE
 
     //查询结果包含当前选择的日期，例：开始日期和结束日期为 2017-05-09,格式化为Unix时间戳为1494259200，表示“2017-05-09 00:00:00”，减1，则表示为"2017-05-08 23:59:59",加86400,则表示为"2017-05-10 00:00:00"
-    if(startTime) {
+    if (startTime) {
         startTime -= 1;
     }
 
-    if(endTime) {
+    if (endTime) {
         endTime += 86400;
     }
 
