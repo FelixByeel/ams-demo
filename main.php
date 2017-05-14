@@ -19,11 +19,9 @@ window.onload = function () {
 }
 
 //show profile box
-
 function showProfileBox() {
     let obj = document.getElementById('profile_box');
     obj.style.display = "block";
-
 }
 function hideProfileBox() {
     let obj = document.getElementById('profile_box');
@@ -35,8 +33,6 @@ $(document).ready(function(){
     $("#welcome").click(function () {
         showProfileBox();
     });
-
-
 
     $("#profile_box").mouseleave(function(){
         hideProfileBox();
