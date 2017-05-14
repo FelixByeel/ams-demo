@@ -13,6 +13,10 @@
 <script type="text/javascript" src="public/js/jquery-1.8.3/jquery.js"></script>
 
 <script>
+//页面加载默认显示内容
+window.onload = function () {
+    $("#con_default").load("app/defaultPageManagement/defaultPage.html");
+}
 
 //show profile box
 
@@ -173,20 +177,17 @@ $(document).ready(function(){
             <!--TAB标签box-->
             <div id = "tab_box">
                 <ul id = "tab_ul">
-                    <li id = "tab_default" class = "tab_enable"><span class="tab_title" >字体测试</span></li>
-
+                    <li id = "tab_default" class = "tab_enable"><span class="tab_title" >首页</span></li>
                 </ul>
             </div>
             <!-- 内容 -->
             <div id = "content">
-                <div id = "con_default" class = "div_enable">中文字体测试,字体样式名："Microsoft YaHei"</div>
-
+                <div id = "con_default" class = "div_enable"></div>
             </div>
         </div>
         <!--footer-->
         <div id = "footer">&copy <script>document.write((new Date().getFullYear()));</script>.</div>
     </div>
 </body>
-
 </html>
 
