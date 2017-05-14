@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-.search-more {
+.search-more-box {
     margin-top: 5px;
     margin-bottom: 20px;
     height: 20px;
@@ -20,7 +20,7 @@
     border-top: 1px solid #AAA;
 }
 
-.s-more {
+.search-more-content {
     display: inline-block;
     margin-top: -1px;
     width: 100px;
@@ -30,7 +30,7 @@
     color: #666;
 }
 
-.s-more:hover {
+.search-more-content:hover {
     cursor: pointer;
     color:red
 }
