@@ -20,13 +20,26 @@ window.onload = function () {
 
 //show profile box
 
-$(function () {
-    $("#welcome").click(function (e){
-        $("#profile_box").toggle();
-        $(document).one("click", function(){
-            $("#profile_box").hide();
-        });
-        e.stopPropagation();
+function showProfileBox() {
+    let obj = document.getElementById('profile_box');
+    obj.style.display = "block";
+
+}
+function hideProfileBox() {
+    let obj = document.getElementById('profile_box');
+    obj.style.display = "none";
+}
+
+$(document).ready(function(){
+
+    $("#welcome").click(function () {
+        showProfileBox();
+    });
+
+
+
+    $("#profile_box").mouseleave(function(){
+        hideProfileBox();
     });
 });
 

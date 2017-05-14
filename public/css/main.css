@@ -43,10 +43,10 @@ li{
 
 #welcome{
     float: right;
-    line-height: 1;
     margin-top:20px;
     margin-right: 50px;
-    font-size: 1em;
+    height: 30px;
+    line-height: 30px;
 }
 
 #welcome:hover{
