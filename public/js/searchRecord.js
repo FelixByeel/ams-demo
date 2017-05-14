@@ -151,3 +151,16 @@ function stringParseToTimestamp(timeStr) {
     return isNaN(timestamp) ? 0 : timestamp;
 }
 
+//重置输入
+$(document).ready(function () {
+    $("#resetButton").click(function () {
+        $("#startDate").val("");
+        $("#endDate").val("");
+        $("#itemName").val("");
+        $("#consumerCode").val("");
+        $("#computerBarcode").val("");
+        $("#itemSN").val("");
+        $("#username").val("");
+        $("#dealType").val("出库");
+    });
+});
