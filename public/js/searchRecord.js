@@ -27,21 +27,20 @@ $(document).ready(function () {
         }
     });
 
-    //改变箭头方向，同时展开更多搜索条件
+    //展开更多搜索条件
     $("#searchMoreContent").click(function () {
         if ("down" == direction) {
-            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-up.png)");
             direction = "up";
             $("#searchWrapper").animate({ height: "50px" }, 200);
-
             var str = "收起<i id = 'search-arrow-icon' class = 'arrow'></i>";
             $("#searchMoreContent").html(str);
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-up.png)");
         } else if ("up" == direction) {
-            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-down.png)");
             direction = "down";
             $("#searchWrapper").animate({ height: "21px" }, 200);
             var str = "更多<i id = 'search-arrow-icon' class = 'arrow'></i>";
             $("#searchMoreContent").html(str);
+            $("#search-arrow-icon").css("background-image", "url(../../public/icon/arrow-red-down.png)");
         }
     });
 });
