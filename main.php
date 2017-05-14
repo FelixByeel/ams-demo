@@ -20,19 +20,13 @@ window.onload = function () {
 
 //show profile box
 
-function showProfileBox() {
-    let obj = document.getElementById('profile_box');
-    obj.style.display = "block";
-
-}
-function hideProfileBox() {
-    let obj = document.getElementById('profile_box');
-    obj.style.display = "none";
-}
-
-$(document).ready(function(){
-    $("#profile_box").mouseleave(function(){
-        hideProfileBox();
+$(function () {
+    $("#welcome").click(function (e){
+        $("#profile_box").toggle();
+        $(document).one("click", function(){
+            $("#profile_box").hide();
+        });
+        e.stopPropagation();
     });
 });
 
@@ -132,7 +126,7 @@ $(document).ready(function(){
         <!--头部信息-->
         <div id = "headbox">
             <span id="title">资产管理系统-AMS</span>
-            <span id="welcome" onmouseover = "showProfileBox()">
+            <span id="welcome">
                     <?php  echo $_SESSION['nick_name'];?>，欢迎。
             </span>
             <div id = "profile_box" >
