@@ -110,6 +110,7 @@
 /*-----table------*/
 .result-table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     text-align: center;
 }
@@ -123,13 +124,21 @@
     padding: 5px 0;
 }
 
+.type-column {
+    width: 
+}
+
 .name-column {
     text-align: left;
     padding-left: 10px;
 }
 
+.odd-row {
+    background-color: #F8F8F8;
+}
+
 .odd-row:hover, .even-row:hover {
-    background-color: #F6F6F6;
+    background-color: #F1F1F1;
 }
 
 /*---------底部分页页码样式-----------*/
