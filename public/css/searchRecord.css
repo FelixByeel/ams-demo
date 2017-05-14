@@ -27,11 +27,12 @@
     border-width: 1px;
     border-style: solid;
     border-color: #FFF #AAA #AAA #AAA;
+    color: #666;
 }
 
 .s-more:hover {
-    color: red;
     cursor: pointer;
+    color:red
 }
 
 .arrow {
