@@ -159,7 +159,16 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
     if ($row['computer_barcode']) {
-        $htmlStr .= "<td class = 'computer-barcode-column td-content'>{$row['computer_barcode']}</td>";
+        $sourceStr = $row['computer_barcode'];
+        $afterTreatmentStr = '';
+        for($i = 0; $i < strlen($sourceStr); $i++) {
+            if($i % 3) {
+                $afterTreatmentStr .= $sourceStr[$i];
+            }else {
+                $afterTreatmentStr .= ' ' . $sourceStr[$i];
+            }
+        }
+        $htmlStr .= "<td class = 'computer-barcode-column td-content'>$afterTreatmentStr</td>";
     } else {
         $htmlStr .= '<td class = \'computer-barcode-column td-content\'>-</td>';
     }
