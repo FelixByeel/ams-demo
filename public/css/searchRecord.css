@@ -99,7 +99,8 @@
 }
 
 .reset-button {
-    margin-left: 200px;
+    margin-left: 50px;
+    margin-top: 5px;
     background-color: #444;
     color: #FFF;
 }
@@ -107,6 +108,7 @@
 .reset-button:hover {
     background-color: #666;
 }
+
 /*-----table------*/
 .result-table {
     width: 100%;
@@ -122,10 +124,6 @@
 .td-content{
     border-bottom: 1px solid #B2CBD6;
     padding: 5px 0;
-}
-
-.type-column {
-    width: 
 }
 
 .name-column {
