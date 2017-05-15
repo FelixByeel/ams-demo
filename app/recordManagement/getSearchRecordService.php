@@ -161,11 +161,11 @@ while ($row = mysqli_fetch_assoc($result)) {
     if ($row['computer_barcode']) {
         $sourceStr = $row['computer_barcode'];
         $afterTreatmentStr = '';
-        for($i = 0; $i < strlen($sourceStr); $i++) {
-            if($i % 3) {
-                $afterTreatmentStr .= $sourceStr[$i];
+        for($j = 0; $j < strlen($sourceStr); $j++) {
+            if($j % 3) {
+                $afterTreatmentStr .= $sourceStr[$j];
             }else {
-                $afterTreatmentStr .= ' ' . $sourceStr[$i];
+                $afterTreatmentStr .= ' ' . $sourceStr[$j];
             }
         }
         $htmlStr .= "<td class = 'computer-barcode-column td-content'>$afterTreatmentStr</td>";
