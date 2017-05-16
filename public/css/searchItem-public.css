@@ -189,20 +189,17 @@ li{
 }
 
 .odd-row{
-    background-color: #eee;
+    background-color: #F8F8F8;
 }
 
 .even-row{
-    background-color: #ddd;
+
 }
 
-.odd-row:hover{
-    background-color: #9CBDE1;
+.odd-row:hover, .even-row:hover{
+    background-color: #F1F1F1;
 }
 
-.even-row:hover{
-    background-color: #9CBDE1;
-}
 /*-----------------table-------------------*/
 
 button{
