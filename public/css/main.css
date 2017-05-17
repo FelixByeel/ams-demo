@@ -106,18 +106,17 @@ li{
     font-size: 1em;
     line-height:40px;
     margin: 10px auto;
-    border-bottom: 2px solid #4F5D75;
+    border-bottom: 3px solid #4F5D75;
 }
 
 .nav_li:hover{
-    border-bottom: 2px solid #7E08B7;
-    background-color: #333;
+    border-bottom: 3px solid #7E1F86;
+    background-color: #222;
     transition:background-color 0.3s;
 }
 
 /*-------main content style start--------*/
 #main_box{
-    float:left;
     position:absolute;
     top:55px;
     right:0px;
@@ -126,13 +125,12 @@ li{
 }
 
 #content{
-    float: left;
-    border-top: solid 1px #00BFFF;
     position:absolute;
     top:40px;
     left: 0px;
     right: 0px;
     bottom:0px;
+    border-top: solid 1px #00BFFF;
     overflow: hidden;
 }
 
@@ -142,6 +140,15 @@ li{
 
 .div_disable{
     display: none;
+}
+
+.default-page {
+    position:absolute;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    bottom:0px;
+    overflow: hidden;
 }
 
 /*------tab样式 start-------*/
@@ -171,13 +178,13 @@ li{
     border-right:solid 1px #00BFFF;
     box-shadow: 0px -1px 1px 0px #000;
     background-color: #00BFFF;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
     color: #FFF;
 }
 
 .tab_enable:hover{
     background-color: #00AEE8;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
 }
 
 .tab_disable{
@@ -185,13 +192,13 @@ li{
     border-left:solid 1px #808080;
     border-right:solid 1px #808080;
     background-color: #EEEEEE;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
     color: #000;
 }
 
 .tab_disable:hover{
     background-color: #DCDCDC;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
     color: #000;
 }
 
