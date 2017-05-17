@@ -185,7 +185,7 @@ $(document).ready(function(){
             </div>
             <!-- 内容 -->
             <div id = "content">
-                <div id = "con_default" class = "div_enable"></div>
+                <div id = "con_default" class = "default-page div_enable"></div>
             </div>
         </div>
         <!--footer-->
