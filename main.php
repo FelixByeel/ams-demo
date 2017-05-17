@@ -189,7 +189,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--footer-->
-        <div id = "footer">&copy <script>document.write((new Date().getFullYear()));</script>.</div>
+        <div id = "footer">&copy <?php echo date('Y'); ?>.</div>
     </div>
 </body>
 </html>
