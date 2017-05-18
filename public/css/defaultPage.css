@@ -1,0 +1,26 @@
+.chart-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 45%;
+    height: 50%;
+    border: 1px solid #DDD;
+}
+
+.recent-checkout-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40%;
+    height: 50%;
+    border: 1px solid #DDD;
+}
+
+.item-count-warning-box {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    width: 50%;
+    height: 50%;
+    border: 1px solid #DDD;
+}
