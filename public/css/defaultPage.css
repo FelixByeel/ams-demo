@@ -34,7 +34,6 @@
     left: 20px;
     bottom: 20px;
     width: 60%;
-    border: 1px solid #ccc;
 }
 
 .recent-checkout-box {
@@ -43,7 +42,6 @@
     right: 20px;
     width: 35%;
     height: 44%;
-    border: 1px solid #DDD;
 }
 
 .item-count-warning-box {
@@ -52,5 +50,16 @@
     bottom: 20px;
     width: 35%;
     height: 44%;
-    border: 1px solid #DDD;
+}
+
+.chart-box, .recent-checkout-box, .item-count-warning-box {
+    border: 1px solid #ddd;
+}
+
+.title {
+    margin: 0;
+    padding: 2px 5px;
+    font-size: 1em;
+    border-bottom: 1px solid #ddd;
+    background-color: #eee;
 }
