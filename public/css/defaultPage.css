@@ -1,26 +1,56 @@
+/*
+.chart-box {
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 94%;
+    width: 60%;
+    border: 1px solid #ccc;
+}
+
+.recent-checkout-box {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 35%;
+    height: 45%;
+    border: 1px solid #DDD;
+}
+
+.item-count-warning-box {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 35%;
+    height: 45%;
+    border: 1px solid #DDD;
+}
+
+*/
+
 .chart-box {
     position: absolute;
-    top: 20px;
+    top:20px;
     left: 20px;
-    width: 45%;
-    height: 50%;
-    border: 1px solid #DDD;
+    bottom: 20px;
+    width: 60%;
+    border: 1px solid #ccc;
 }
 
 .recent-checkout-box {
     position: absolute;
-    top: 20px;
+    top:20px;
     right: 20px;
-    width: 40%;
-    height: 50%;
+    width: 35%;
+    height: 45%;
     border: 1px solid #DDD;
 }
 
 .item-count-warning-box {
     position: absolute;
-    top: 50%;
-    left: 20px;
-    width: 50%;
-    height: 50%;
+    right: 20px;
+    bottom: 20px;
+    width: 35%;
+    height: 45%;
     border: 1px solid #DDD;
 }
