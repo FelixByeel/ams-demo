@@ -63,3 +63,9 @@
     border-bottom: 1px solid #ddd;
     background-color: #eee;
 }
+
+.recent-checkout {
+    padding: 30px 10px;
+    font-size: 14px;
+    overflow: hidden;
+}

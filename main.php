@@ -190,7 +190,7 @@ $(document).ready(function(){
                     </div>
                     <div class = "recent-checkout-box">
                         <p class = "recent-checkout-title title">最近出库记录</p>
-                        <div class = "recent-checkout"></div>
+                        <div id = "recentCheckout" class = "recent-checkout"></div>
                     </div>
                     <div class = "item-count-warning-box">
                         <p class = "item-count-warring-title title">库存预警</p>
