@@ -182,6 +182,7 @@ $(document).ready(function(){
             </div>
             <!-- 内容 -->
             <div id = "content">
+                <!--default page start-->
                 <div id = "con_default" class = "default-page div_enable">
                     <div class = "chart-box">
                         <p class = "chart-title title">物品使用统计</p>
@@ -196,6 +197,7 @@ $(document).ready(function(){
                         <div class = "item-count-warring"></div>
                     </div>
                 </div>
+                <!--default page end-->
             </div>
         </div>
         <!--footer-->
