@@ -182,7 +182,20 @@ $(document).ready(function(){
             </div>
             <!-- 内容 -->
             <div id = "content">
-                <div id = "con_default" class = "default-page div_enable"></div>
+                <div id = "con_default" class = "default-page div_enable">
+                    <div class = "chart-box">
+                        <p class = "chart-title title">物品使用统计</p>
+                        <div class = "checkout-line-chart"></div>
+                    </div>
+                    <div class = "recent-checkout-box">
+                        <p class = "recent-checkout-title title">最近出库记录</p>
+                        <div class = "recent-checkout"></div>
+                    </div>
+                    <div class = "item-count-warning-box">
+                        <p class = "item-count-warring-title title">库存预警</p>
+                        <div class = "item-count-warring"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <!--footer-->
