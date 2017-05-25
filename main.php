@@ -12,12 +12,8 @@
 <link href="public/css/main.css" rel="stylesheet" type="text/css" />
 <link href="public/css/defaultPage.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="public/js/jquery-1.8.3/jquery.js"></script>
-
+<script type="text/javascript" src="public/js/defaultPage.js"></script>
 <script>
-//页面加载默认显示内容
-window.onload = function () {
-    $("#con_default").load("app/defaultPageManagement/defaultPage.html");
-}
 
 //show profile box
 function showProfileBox() {
