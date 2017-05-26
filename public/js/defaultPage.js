@@ -5,6 +5,8 @@ window.onload = function () {
 
 //5分钟自动加载一次内容
 var timer = setInterval("loadAllPage()", 300000);
+
+//加载模块
 function loadAllPage() {
     var recentCheckoutId = "recentCheckout";
     var recentCheckoutUrl = "app/defaultPageManagement/recentCheckout.php";
