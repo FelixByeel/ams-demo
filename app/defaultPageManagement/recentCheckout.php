@@ -28,15 +28,23 @@ if (1) {
 } else {
     $orderByDate = ' order by record_time asc';
 }
-$limit = ' limit 0,8';
+$limit = ' limit 0,6';
 
 $sqlStr = 'select ' . $columnStr . ' from ' . $joinCondition . ' where ' . $conditionStr . $orderByDate . $limit;
 
 $result = $mysqli->query($sqlStr);
 
+$str = '<table class = \'recent-checkout-table\'>';
+
 while ($row = mysqli_fetch_assoc($result)) {
-    //echo $row['item_name'] . ' | ' . $row['consumer_code'] . ' | ' . $row['record_time'] . '<br/>';
     $recordTime = date('m-d', $row['record_time']);
-    echo $recordTime . '，' . '用户：' . $row['consumer_code'] . '，物品：' . $row['item_name'] . '<br/>';
+
+    $str .= '<tr class = \'conten-tr\'>';
+    $str .= '<td class = \'conten-td\'>' . $recordTime . '</td>';
+    $str .= '<td class = \'conten-td\'>' . '用户：' . $row['consumer_code'] . '</td>';
+    $str .= '<td class = \'conten-td\'>' . '物品：' . $row['item_name'] . '</td>';
+    $str .= '</tr>';
 }
-//echo date('Y-m-d H:i:s', time());
+
+$str .= '</table>';
+echo $str;

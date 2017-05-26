@@ -20,7 +20,7 @@ $conditionStr   = ' is_ended = 1 order by item_count asc';
 
 $result = $mysqli->select($tableName, $columnArray, $conditionStr);
 
-$str = '<table class = \'default-page-result\'>';
+$str = '<table class = \'item-warning-table\'>';
 
 while ($row = mysqli_fetch_assoc($result)) {
     if($row['item_count'] < 5) {
