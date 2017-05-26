@@ -9,6 +9,10 @@ function loadAllPage() {
     var recentCheckoutId = "recentCheckout";
     var recentCheckoutUrl = "app/defaultPageManagement/recentCheckout.php";
     loadPage(recentCheckoutId, recentCheckoutUrl);
+
+    var itemCountWarningId = "itemCountWarning";
+    var itemCountWarningUrl = "app/defaultPageManagement/itemCountWarning.php";
+    loadPage(itemCountWarningId, itemCountWarningUrl);
 }
 
 function loadPage(contentId, pageUrl) {

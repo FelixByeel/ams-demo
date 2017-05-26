@@ -194,7 +194,7 @@ $(document).ready(function(){
                     </div>
                     <div class = "item-count-warning-box">
                         <p class = "item-count-warning-title title">库存预警</p>
-                        <div class = "item-count-warning"></div>
+                        <div id = "itemCountWarning" class = "item-count-warning"></div>
                     </div>
                 </div>
                 <!--default page end-->
