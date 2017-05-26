@@ -193,8 +193,8 @@ $(document).ready(function(){
                         <div id = "recentCheckout" class = "recent-checkout"></div>
                     </div>
                     <div class = "item-count-warning-box">
-                        <p class = "item-count-warring-title title">库存预警</p>
-                        <div class = "item-count-warring"></div>
+                        <p class = "item-count-warning-title title">库存预警</p>
+                        <div class = "item-count-warning"></div>
                     </div>
                 </div>
                 <!--default page end-->
