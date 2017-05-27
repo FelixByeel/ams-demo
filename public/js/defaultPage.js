@@ -11,7 +11,7 @@ function loadAllPage() {
 
     var checkoutChartId     = "checkoutChart";
     var checkoutChartUrl    = "app/defaultPageManagement/checkoutChart.php";
-    loadPage(checkoutChartId, checkoutChartUrl);
+    loadPage(checkoutChartId, checkoutChartUrl, "hello");
 
     var recentCheckoutId    = "recentCheckout";
     var recentCheckoutUrl   = "app/defaultPageManagement/recentCheckout.php";
@@ -22,6 +22,6 @@ function loadAllPage() {
     loadPage(itemCountWarningId, itemCountWarningUrl);
 }
 
-function loadPage(contentId, pageUrl) {
-    $("#" + contentId).load(pageUrl);
+function loadPage(contentId, pageUrl, data = '') {
+    $("#" + contentId).load(pageUrl,{"data" : data});
 }
