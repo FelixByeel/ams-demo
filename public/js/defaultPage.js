@@ -8,11 +8,16 @@ var timer = setInterval("loadAllPage()", 300000);
 
 //加载模块
 function loadAllPage() {
-    var recentCheckoutId = "recentCheckout";
-    var recentCheckoutUrl = "app/defaultPageManagement/recentCheckout.php";
+
+    var checkoutChartId     = "checkoutChart";
+    var checkoutChartUrl    = "app/defaultPageManagement/checkoutChart.php";
+    loadPage(checkoutChartId, checkoutChartUrl);
+
+    var recentCheckoutId    = "recentCheckout";
+    var recentCheckoutUrl   = "app/defaultPageManagement/recentCheckout.php";
     loadPage(recentCheckoutId, recentCheckoutUrl);
 
-    var itemCountWarningId = "itemCountWarning";
+    var itemCountWarningId  = "itemCountWarning";
     var itemCountWarningUrl = "app/defaultPageManagement/itemCountWarning.php";
     loadPage(itemCountWarningId, itemCountWarningUrl);
 }
