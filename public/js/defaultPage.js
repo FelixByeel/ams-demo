@@ -11,7 +11,10 @@ function loadAllPage() {
 
     var checkoutChartId     = "checkoutChart";
     var checkoutChartUrl    = "app/defaultPageManagement/checkoutChart.php";
-    loadPage(checkoutChartId, checkoutChartUrl, "hello");
+
+    var windowScreenHeight  = window.screen.height;
+
+    loadPage(checkoutChartId, checkoutChartUrl, windowScreenHeight);
 
     var recentCheckoutId    = "recentCheckout";
     var recentCheckoutUrl   = "app/defaultPageManagement/recentCheckout.php";
