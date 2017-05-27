@@ -184,9 +184,9 @@ $(document).ready(function(){
             <div id = "content">
                 <!--default page start-->
                 <div id = "con_default" class = "default-page div_enable">
-                    <div class = "chart-box">
-                        <p class = "chart-title title">物品使用统计</p>
-                        <div class = "checkout-line-chart"></div>
+                    <div class = "checkout-chart-box">
+                        <p class = "checkout-chart-title title">物品使用统计</p>
+                        <div id = "checkoutChart" class = "checkout-chart"></div>
                     </div>
                     <div class = "recent-checkout-box">
                         <p class = "recent-checkout-title title">最近出库记录</p>

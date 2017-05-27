@@ -1,5 +1,5 @@
 
-.chart-box {
+.checkout-chart-box {
     position: absolute;
     top:20px;
     left: 20px;
@@ -23,7 +23,7 @@
     height: 44%;
 }
 
-.chart-box, .recent-checkout-box, .item-count-warning-box {
+.checkout-chart-box, .recent-checkout-box, .item-count-warning-box {
     border: 1px solid #ddd;
 }
 
@@ -41,14 +41,13 @@
     overflow: hidden;
 }
 
-/*最近出库记录模块*/
+/*最近出库记录模块,库存预警模块*/
 .recent-checkout-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-/*库存预警模块*/
 .item-warning-table {
     width: 100%;
     table-layout: fixed;
