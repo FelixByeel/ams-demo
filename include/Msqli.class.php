@@ -1,10 +1,11 @@
 <?php
-/*
-*@Purpose:      封装常用CURD操作
-*@Class Name:   Msqli
-*@Author:       felix
-*@Date:         2017-02-16
+/**
+*封装常用CURD操作.
 *
+*@Name:   Msqli.
+*@Author:       Felix.
+*@Date:         2017-02-16.
+*@Update:       2017-05-28.
 *@Param $host
 *@Param $port
 *@Param $db_name
