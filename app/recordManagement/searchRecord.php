@@ -1,3 +1,8 @@
+<?php
+    //定义根目录，加载数据库相关文件
+    define('APP_ROOT', dirname(dirname(__DIR__)).'/');
+    require_once (APP_ROOT.'app/login/loginCheck.php');
+?>
 <!--查询出入库记录-->
 <!DOCTYPE html>
 <html lang="en">
