@@ -1,3 +1,15 @@
+<?php
+//已有登陆状态，自动跳转主页
+session_start();
+
+if(isset($_SESSION['uid']) && !empty($_SESSION['uid'])){
+    echo "
+    <script language='javascript' type='text/javascript'>
+        window.location.href='main.php';
+    </script>
+    ";
+}
+?>
 <!Doctype html>
 <html xmlns=http://www.w3.org/1999/xhtml>
 <head>
