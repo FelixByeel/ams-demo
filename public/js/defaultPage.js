@@ -9,21 +9,30 @@ var timer = setInterval("loadAllPage()", 300000);
 function loadAllPage() {
 
     //加载统计图表模块
-    var checkoutChartId = "checkoutChart";
-    var checkoutChartUrl = "app/defaultPageManagement/checkoutChart.php";
-    var windowScreenHeight = window.screen.height;  //获取屏幕高度
+    var checkoutChartId     = "checkoutChart";
+    var checkoutChartUrl    = "app/defaultPageManagement/checkoutChart.php";
+    var windowScreenHeight  = window.screen.height;                     //获取屏幕高度
+    var itemSelectObj       = document.getElementById("itemSelect");    //获取select对象
+    var itemSelectValue     = 0;
+
+    if (itemSelectObj != null) { //select对象存在时，获取select的值
+        var index = itemSelectObj.selectedIndex;
+        itemSelectValue = itemSelectObj.options[index].value;
+    }
+
     var data = {
-        "windowScreenHeight": windowScreenHeight
+        "windowScreenHeight": windowScreenHeight,
+        "itemSelectValue": itemSelectValue
     }
     loadChart(checkoutChartId, checkoutChartUrl, data);
 
     //加载最近出库记录模块
-    var recentCheckoutId = "recentCheckout";
-    var recentCheckoutUrl = "app/defaultPageManagement/recentCheckout.php";
+    var recentCheckoutId    = "recentCheckout";
+    var recentCheckoutUrl   = "app/defaultPageManagement/recentCheckout.php";
     loadPage(recentCheckoutId, recentCheckoutUrl);
 
     //加载库存预警模块
-    var itemCountWarningId = "itemCountWarning";
+    var itemCountWarningId  = "itemCountWarning";
     var itemCountWarningUrl = "app/defaultPageManagement/itemCountWarning.php";
     loadPage(itemCountWarningId, itemCountWarningUrl);
 }
@@ -40,15 +49,15 @@ function loadPage(contentId, pageUrl) {
     $("#" + contentId).load(pageUrl);
 }
 
-function selectChange(){
+function selectChange() {
     //加载统计图表模块
-    var checkoutChartId = "checkoutChart";
-    var checkoutChartUrl = "app/defaultPageManagement/checkoutChart.php";
-    var windowScreenHeight = window.screen.height;
-    var itemSelectValue = $("#itemSelect").val();
+    var checkoutChartId     = "checkoutChart";
+    var checkoutChartUrl    = "app/defaultPageManagement/checkoutChart.php";
+    var windowScreenHeight  = window.screen.height;
+    var itemSelectValue     = $("#itemSelect").val();
     var data = {
         "windowScreenHeight": windowScreenHeight,
-        "itemSelectValue": itemSelectValue,
+        "itemSelectValue": itemSelectValue
     }
     loadChart(checkoutChartId, checkoutChartUrl, data);
 }
@@ -56,9 +65,9 @@ function selectChange(){
 
 function loadChart(checkoutChartId, checkoutChartUrl, data) {
 
-    $("#" + checkoutChartId).load(checkoutChartUrl, { "data": data }, function(){
+    $("#" + checkoutChartId).load(checkoutChartUrl, { "data": data }, function () {
         var selectObj = document.getElementById("itemSelect");
-        selectObj.addEventListener("change", function(){
+        selectObj.addEventListener("change", function () {
             selectChange();
         });
     });
