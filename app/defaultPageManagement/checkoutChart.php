@@ -13,38 +13,74 @@ require_once (APP_ROOT.'include/Msqli.class.php');
 
 //处理提交的数据
 $windowScreenHeight     = isset($_POST['data']['windowScreenHeight']) ? $_POST['data']['windowScreenHeight'] : 768;
+//当前select选择项
 $itemSelectValue        = isset($_POST['data']['itemSelectValue']) ? $_POST['data']['itemSelectValue'] : 0;
 
-if(0 != $itemSelectValue && !preg_match('/^[1-9][0-9]*$/', $itemSelectValue)) {
+if (0 != $itemSelectValue && !preg_match('/^[1-9][0-9]*$/', $itemSelectValue)) {
     die('提交的数据异常');
 }
 
-if(!preg_match('/^[1-9][0-9]*$/', $windowScreenHeight)) {
+if (!preg_match('/^[1-9][0-9]*$/', $windowScreenHeight)) {
     die('提交的数据异常');
 }
 
-//连接数据库
 $mysqli         = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
-$tableName = 'item_t';
-$columnArray = array('id', 'item_name');
-$conditionStr = ' is_ended = 1 order by CONVERT(item_name USING gbk)';
+//查询分类列表，并输出分类为select列表
+$tableName      = 'item_t';
+$columnArray    = array('id', 'item_name');
+$conditionStr   = ' is_ended = 1 order by CONVERT(item_name USING gbk)';
 
 $result = $mysqli->select($tableName, $columnArray, $conditionStr);
 
-$itemName = array();
-$htmlStr = "<select id = 'itemSelect' class = 'chart-select'>";
+$itemArr   = array();
+$htmlStr    = "<select id = 'itemSelect' class = 'chart-select'>";
 while ($row = mysqli_fetch_assoc($result)) {
-    $itemName[] = $row['item_name'];
-    if($itemSelectValue == $row['id']) {
+    $itemArr[$row['id']] = $row['item_name'];
+    if ($itemSelectValue == $row['id']) {
         $htmlStr .= "<option value = '{$row['id']}' selected = 'selected'>{$row['item_name']}</option>";
-    }else {
+    } else {
         $htmlStr .= "<option value = '{$row['id']}'>{$row['item_name']}</option>";
     }
 }
 $htmlStr .= "</select>";
 echo $htmlStr;
 
+//查询出库记录并统计数据
+$tableName = 'record_t';
+$columnArray = array('record_time', 'update_count');
+$conditionStr = " item_id = {$itemSelectValue} and record_status = '出库'";
+
+//保存最近5个月的月份
+$monthArr = array();
+for($i = 0; $i < 5; $i++) {
+    if(!$i) {
+        $monthArr[$i] = date('m');
+    } else {
+        $monthArr[$i] = getLastMonth($monthArr[$i - 1]);
+    }
+}
+
+echo '<br/>';
+
+$itemCount = 0;
+$result = $mysqli->select($tableName, $columnArray, $conditionStr);
+while ($row = mysqli_fetch_assoc($result)) {
+    $itemCount += $row['update_count'];
+}
 //测试输出数据
 var_dump($_POST['data']) . '<br/>';
 
+echo $itemCount;
+echo '<br/>';
+
+
+//根据当前月份获取上月
+function getLastMonth($monthStr) {
+    if(1 == $monthStr) {
+        $monthStr = 12;
+    } else {
+        $monthStr -= 1;
+    }
+    return $monthStr;
+}
