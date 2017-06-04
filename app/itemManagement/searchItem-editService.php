@@ -17,7 +17,7 @@ require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
 //验证用户权限
-if($_SESSION['role_group'] < 2) {
+if ($_SESSION['role_group'] < 2) {
     die('当前用户无法进行此操作！');
 }
 
@@ -32,13 +32,11 @@ $itemData = $_POST['itemData'];
 $isNumberReg = '/^[1-9]+[0-9]*]*$/';
 
 foreach ($itemData as $key => $value) {
-    if(($key == 'itemCount') && ($value[0] == '-')){
-        if(checkInput(substr($value,1))){
+    if (($key == 'itemCount') && ($value[0] == '-')) {
+        if (checkInput(substr($value, 1))) {
             die('输入的内容不能包含字符 ：' . checkInput($value));
         }
-
-    }
-    else {
+    } else {
         if (checkInput($value)) {
             die('输入的内容不能包含字符 ：' . checkInput($value));
         }
@@ -54,79 +52,70 @@ if (array_key_exists('tableName', $itemData)) {
 }
 
 //------------------------------------------------
-if(array_key_exists('itemID', $itemData)){
-    if(!preg_match($isNumberReg, $itemData['itemID'])){
+if (array_key_exists('itemID', $itemData)) {
+    if (!preg_match($isNumberReg, $itemData['itemID'])) {
         die("操作项ID异常");
     }
-}
-else{
+} else {
     die("操作项ID异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('itemName', $itemData)){
-    if(empty($itemData['itemName'])){
+if (array_key_exists('itemName', $itemData)) {
+    if (empty($itemData['itemName'])) {
         die("分类名称异常");
     }
-}
-else{
+} else {
     die("分类名称异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('parentID', $itemData)){
-    if(!empty($itemData['parentID'])){
-        if(!preg_match($isNumberReg, $itemData['parentID'])){
+if (array_key_exists('parentID', $itemData)) {
+    if (!empty($itemData['parentID'])) {
+        if (!preg_match($isNumberReg, $itemData['parentID'])) {
             die("上级分类ID异常");
         }
     }
-}
-else{
+} else {
     die("上级分类ID异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('warehouseID', $itemData)){
-    if(!preg_match($isNumberReg, $itemData['warehouseID'])){
+if (array_key_exists('warehouseID', $itemData)) {
+    if (!preg_match($isNumberReg, $itemData['warehouseID'])) {
         die("仓库信息异常");
     }
-}
-else{
+} else {
     die("仓库信息异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('itemCount', $itemData)){
-    if(!empty($itemData['itemCount'])){
-        if($itemData['itemCount'][0] == '-'){
-            if(!preg_match($isNumberReg, substr($itemData['itemCount'], 1))){
+if (array_key_exists('itemCount', $itemData)) {
+    if (!empty($itemData['itemCount'])) {
+        if ($itemData['itemCount'][0] == '-') {
+            if (!preg_match($isNumberReg, substr($itemData['itemCount'], 1))) {
                 die("输入数量异常");
             }
-        }
-        else if(!preg_match($isNumberReg, $itemData['itemCount'])){
+        } elseif (!preg_match($isNumberReg, $itemData['itemCount'])) {
             die("输入数量异常");
         }
-    }
-    else {
+    } else {
         $itemData['itemCount'] = 0;
     }
-}
-else{
+} else {
     die("输入数量异常");
 }
 
 //------------------------------------------------
-if(array_key_exists('currentCount', $itemData)){
-    if(!empty($itemData['currentCount'])){
-        if(!preg_match($isNumberReg, $itemData['currentCount'])){
+if (array_key_exists('currentCount', $itemData)) {
+    if (!empty($itemData['currentCount'])) {
+        if (!preg_match($isNumberReg, $itemData['currentCount'])) {
             die("物品数量异常");
         }
-    }
-    else {
+    } else {
         $itemData['currentCount'] = 0;
     }
-}
-else{
+} else {
     die("物品数量异常");
 }
 
@@ -149,7 +138,7 @@ $row = mysqli_fetch_assoc($result);
 $itemColumnToValue['item_count'] = (int)$row['item_count'] + (int)$itemData['itemCount'];
 
 //处理物品数量的是否正确。
-if($itemColumnToValue['item_count'] < 0) {
+if ($itemColumnToValue['item_count'] < 0) {
     die("物品数量不能为负数");
 }
 
@@ -158,13 +147,12 @@ $flag = 0;
 $mysqli->update($tableName, $itemColumnToValue, $condition);
 
 //当前分类仓库信息变动，则同步更新祖先分类的仓库信息
-if($itemData['warehouseID'] != $row['warehouse_id']) {
+if ($itemData['warehouseID'] != $row['warehouse_id']) {
     changeWarehouseID($mysqli, $row['item_id'], $itemData['warehouseID']);
 }
 
 //判断item_count是否有变动，有则同步写入record_t
-if($itemData['itemCount']) {
-
+if ($itemData['itemCount']) {
     $recordData['item_id'] = $itemData['itemID'];
     $recordData['record_status'] = '入库';
     $recordData['update_count'] = $itemData['itemCount'];
@@ -175,11 +163,10 @@ if($itemData['itemCount']) {
 }
 
 //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
-if($mysqli->getAffectedRows() < 0){
+if ($mysqli->getAffectedRows() < 0) {
     die('更新失败');
-}
-else {
-    if($mysqli->getAffectedRows() > 0){
+} else {
+    if ($mysqli->getAffectedRows() > 0) {
         $flag++;
     }
 
@@ -189,51 +176,48 @@ else {
 
     $result = $mysqli->update($tableName, $itemParentID, $condition);
     //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
-    if($mysqli->getAffectedRows() < 0){
+    if ($mysqli->getAffectedRows() < 0) {
         die('更新失败');
-    }
-    else if($mysqli->getAffectedRows() > 0){
+    } elseif ($mysqli->getAffectedRows() > 0) {
         $flag++;
 
         $itemID[] = 'item_id';
         $condition = 'id = ' . $itemData['parentID'];
         $result = $mysqli->select($tableName, $itemID, $condition); //  获取上级分类的item_id
 
-        if(1 == $mysqli->getAffectedRows()) {
+        if (1 == $mysqli->getAffectedRows()) {
             //更新当前记录的item_id
             $currentItemID['item_id'] = mysqli_fetch_assoc($result)['item_id'] . '-' . $itemData['itemID'];
             $condition = " id = " .$itemData['itemID'];
 
             $mysqli->update($tableName, $currentItemID, $condition);
             //上一次更新成功，则继续执行,否则停止执行，并返回操作失败提示
-            if($mysqli->getAffectedRows() < 0){
+            if ($mysqli->getAffectedRows() < 0) {
                 die('更新失败');
-            }
-            else if($mysqli->getAffectedRows() > 0) {
+            } elseif ($mysqli->getAffectedRows() > 0) {
                 $flag++;
             }
         }
     }
 }
 
-if($flag > 0) {
+if ($flag > 0) {
     echo '更新成功';
-}
-else {
+} else {
     echo '当前无更新';
 }
 
 //更新分类的仓库信息，$itemID -> item_id
-function changeWarehouseID($mysqli, $itemID, $warehouseID){
+function changeWarehouseID($mysqli, $itemID, $warehouseID)
+{
     $itemParentIDArr = explode('-', $itemID);
     $columnWarehouse['warehouse_id'] = $warehouseID;
 
-    if(empty($itemParentIDArr)) {
+    if (empty($itemParentIDArr)) {
         $condition = "id = " . $itemID;
         $mysqli->update('item_t', $columnWarehouse, $condition);
-    }
-    else{
-        for($i = 0; $i < count($itemParentIDArr) - 1; $i++){
+    } else {
+        for ($i = 0; $i < count($itemParentIDArr) - 1; $i++) {
             $condition = "id = " . $itemParentIDArr[$i];
             $mysqli->update('item_t', $columnWarehouse, $condition);
         }

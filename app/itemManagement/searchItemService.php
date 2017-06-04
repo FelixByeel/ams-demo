@@ -90,13 +90,13 @@ if (!empty($searchCondition['itemID'])) {
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'' . $searchCondition['itemID'] . '-%\' or ';
     $conditionStr .= 'item_id like \'%-' . $searchCondition['itemID'] . '\'';
-} else{
+} else {
     if (!empty($searchCondition['itemParentID'])) {
         $conditionStr .= 'item_id like \'%-' . $searchCondition['itemParentID'] . '-%\' or ' . 'item_id like \'' . $searchCondition['itemParentID'] . '-%\'';
     }
 
-    if(!empty($searchCondition['itemName'])) {
-        if(!empty($conditionStr)){
+    if (!empty($searchCondition['itemName'])) {
+        if (!empty($conditionStr)) {
             $conditionStr = "(" . $conditionStr . ") and ";
         }
         $conditionStr .= ' item_name like \'%' . $searchCondition['itemName'] . '%\'';
