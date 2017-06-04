@@ -186,7 +186,9 @@ $(document).ready(function(){
                 <div id = "con_default" class = "default-page div_enable">
                     <div class = "checkout-chart-box">
                         <p class = "checkout-chart-title title">物品使用统计</p>
-                        <div id = "checkoutChart" class = "checkout-chart"></div>
+                        <div id = "itemSelectBox" class = "item-select-box"></div>
+                        <div id = "loadChart" style = "display:hidden"></div>
+                        <img id = "checkoutChart" class = "checkout-chart">
                     </div>
                     <div class = "recent-checkout-box">
                         <p class = "recent-checkout-title title">最近出库记录</p>

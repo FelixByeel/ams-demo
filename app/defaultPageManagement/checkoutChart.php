@@ -32,18 +32,10 @@ $columnArray    = array('id', 'item_name');
 $conditionStr   = ' is_ended = 1 order by CONVERT(item_name USING gbk)';
 $result         = $mysqli->select($tableName, $columnArray, $conditionStr);
 $itemArr        = array();
-$htmlStr        = "<select id = 'itemSelect' class = 'chart-select'>";
 
 while ($row = mysqli_fetch_assoc($result)) {
     $itemArr[] = $row['id'];
-    if ($itemSelectValue == $row['id']) {
-        $htmlStr .= "<option value = '{$row['id']}' selected = 'selected'>{$row['item_name']}</option>";
-    } else {
-        $htmlStr .= "<option value = '{$row['id']}'>{$row['item_name']}</option>";
-    }
 }
-$htmlStr .= "</select>";
-echo $htmlStr;
 
 /**
 *统计出库数据。
@@ -96,12 +88,13 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 //测试数据
+/*
 foreach ($itemCount as $key => $value) {
     echo '<br/>';
     echo $key . ' : ' . $value;
     echo '<br/>';
 }
-
+*/
 //根据当前月份获取上月
 function getLastMonth($dateStr)
 {
@@ -118,3 +111,10 @@ function getLastMonth($dateStr)
 }
 
 //将上面获得的统计数据，以图表展示。此处为折线图。
+header ('Content-Type: image/png');
+$im = @imagecreatetruecolor(120, 20)
+      or die('Cannot Initialize new GD image stream');
+$text_color = imagecolorallocate($im, 233, 14, 91);
+imagestring($im, 1, 5, 5,  date('Y-m-d H:i:s'), $text_color);
+imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
+imagedestroy($im);
