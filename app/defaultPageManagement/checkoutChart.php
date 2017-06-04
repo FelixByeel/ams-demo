@@ -112,9 +112,9 @@ function getLastMonth($dateStr)
 
 //将上面获得的统计数据，以图表展示。此处为折线图。
 header ('Content-Type: image/png');
-$im = @imagecreatetruecolor(120, 20)
+$im = @imagecreatetruecolor(200, 30)
       or die('Cannot Initialize new GD image stream');
 $text_color = imagecolorallocate($im, 233, 14, 91);
-imagestring($im, 1, 5, 5,  date('Y-m-d H:i:s'), $text_color);
+imagestring($im, 5, 5, 5, date('Y-m-d H:i:s'), $text_color);
 imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
 imagedestroy($im);
