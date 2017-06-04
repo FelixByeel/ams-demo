@@ -11,6 +11,9 @@ require_once (APP_ROOT.'include/checkInput.php');
 require_once (APP_ROOT.'include/dbConfig.php');
 require_once (APP_ROOT.'include/Msqli.class.php');
 
+//加载折线图类
+require_once (APP_ROOT.'include/LineChart.class.php');
+
 //处理提交的数据
 $windowScreenHeight     = isset($_POST['data']['windowScreenHeight']) ? $_POST['data']['windowScreenHeight'] : 768;
 //当前select选择项
@@ -31,10 +34,10 @@ $tableName      = 'item_t';
 $columnArray    = array('id', 'item_name');
 $conditionStr   = ' is_ended = 1 order by CONVERT(item_name USING gbk)';
 $result         = $mysqli->select($tableName, $columnArray, $conditionStr);
-$itemArr        = array();
-
+//$itemIDArr        = array();
+//$itemNameArr        = array();
 while ($row = mysqli_fetch_assoc($result)) {
-    $itemArr[] = $row['id'];
+    $itemIDArr[$row['id']] = $row['item_name'];
 }
 
 /**
@@ -59,7 +62,7 @@ $columnArray    = array('record_time', 'update_count');
 //查询条件
 //第一次页面加载，默认查询第一项,并查询最近{$length}个月的数据。
 if (!$itemSelectValue) {
-    $itemSelectValue = $itemArr[0];
+    $itemSelectValue = array_keys($itemIDArr)[0];
 }
 $length = count($dateArr);
 $startDate  = strtotime($dateArr[$length - 1]);
@@ -112,9 +115,14 @@ function getLastMonth($dateStr)
 
 //将上面获得的统计数据，以图表展示。此处为折线图。
 header ('Content-Type: image/png');
+/*
 $im = @imagecreatetruecolor(200, 30)
       or die('Cannot Initialize new GD image stream');
 $text_color = imagecolorallocate($im, 233, 14, 91);
 imagestring($im, 5, 5, 5, date('Y-m-d H:i:s'), $text_color);
 imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
 imagedestroy($im);
+*/
+$img = new LineChart($itemIDArr[$itemSelectValue], array(), array(), 400, 30);
+$img->setLineColor(255,255,255);
+$img->drawLineChart();
