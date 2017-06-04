@@ -5,6 +5,7 @@
     left: 20px;
     bottom: 20px;
     width: 60%;
+    overflow:hidden;
 }
 
 .recent-checkout-box {
@@ -13,6 +14,7 @@
     right: 20px;
     width: 35%;
     height: 44%;
+    overflow:hidden;
 }
 
 .item-count-warning-box {
@@ -21,6 +23,7 @@
     bottom: 20px;
     width: 35%;
     height: 44%;
+    overflow:hidden;
 }
 
 .checkout-chart-box, .recent-checkout-box, .item-count-warning-box {
