@@ -123,6 +123,6 @@ imagestring($im, 5, 5, 5, date('Y-m-d H:i:s'), $text_color);
 imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
 imagedestroy($im);
 */
-$img = new LineChart('This time is now:', array(), array(), 400, 30);
+$img = new LineChart('当前时间:', array(), array(), 400, 30);
 $img->setLineColor(255,255,255);
 $img->drawLineChart();
