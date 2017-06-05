@@ -68,6 +68,7 @@ class LineChart
     {
 
         //imagestring($this->_image, 5, 5, 5, $this->_title . ' ' . date('Y-m-d H:i:s'), $this->_lineColor);
+        //指定中文字体
         $font = '../../public/font/msyh.ttc';
         imagettftext($this->_image, 12, 0, 10, 20, $this->_lineColor, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
