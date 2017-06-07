@@ -124,5 +124,6 @@ imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
 imagedestroy($im);
 */
 $img = new LineChart('当前时间:', array(), array(), 400, 30);
-$img->setLineColor(255,255,255);
+$img->setColor(255,12,255);
+$img->setBackgroundColor(0, 0, 112, 32, 123);
 $img->drawLineChart();
