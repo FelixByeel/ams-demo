@@ -47,7 +47,7 @@ class LineChart
     *@param int     $height         图像高度
     *@param string  $imageUri       图像输出位置
     */
-    function __construct($title, $xDataArr, $yDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
+    public function __construct($title, $xDataArr, $yDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
     {
         $this->_title               = $title;
         $this->_xDataArr            = $xDataArr;
@@ -63,14 +63,14 @@ class LineChart
         imagefill($this->_image, 0, 0, $this->_backgroundColor);
     }
 
-    //set brush color
+    //Set brush color
     public function setColor($red, $green, $blue)
     {
         $this->_color = imagecolorallocate($this->_image, $red, $green, $blue);
     }
 
     /**
-    *set background color
+    *Set background color
     *
     *@param int $x      填充区域起始位置X坐标
     *@param int $y      填充区域起始位置Y坐标（左上角为0，0）
@@ -84,10 +84,23 @@ class LineChart
         imagefill($this->_image, $x, $y, $this->_backgroundColor);
     }
 
+    /**
+    *Gets the maximum value from the array,return the value.
+    */
+    private function getMaxValue($arr)
+    {
+        $tempValue = 0;
+        foreach ($arr as $key => $value) {
+            if ($tempValue < $value) {
+                $tempValue = $value;
+            }
+        }
+        return $tempValue;
+    }
+
     //开始画图
     public function drawLineChart()
     {
-
         //imagestring($this->_image, 5, 5, 5, $this->_title . ' ' . date('Y-m-d H:i:s'), $this->_color);
         //指定中文字体
         $font = '../../public/font/msyh.ttc';
