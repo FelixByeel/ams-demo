@@ -44,6 +44,11 @@
     overflow: hidden;
 }
 
+/*chart*/
+.checkout-chart {
+    margin-top: 20px;
+    margin-left: 10px;
+}
 /*最近出库记录模块,库存预警模块*/
 .recent-checkout-table {
     width: 100%;

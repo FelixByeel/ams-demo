@@ -16,6 +16,7 @@ require_once (APP_ROOT.'include/LineChart.class.php');
 
 //处理提交的数据
 $windowScreenHeight     = isset($_POST['data']['windowScreenHeight']) ? $_POST['data']['windowScreenHeight'] : 768;
+$windowScreenWidth      = isset($_POST['data']['windowScreenWidth']) ? $_POST['data']['windowScreenWidth'] : 1366;
 //当前select选择项
 $itemSelectValue        = isset($_POST['data']['itemSelectValue']) ? $_POST['data']['itemSelectValue'] : 0;
 //检查提交的数据合法性
@@ -123,7 +124,7 @@ imagestring($im, 5, 5, 5, date('Y-m-d H:i:s'), $text_color);
 imagepng($im, APP_ROOT . 'public/images/checkoutChart/checkoutChart.png');
 imagedestroy($im);
 */
-$img = new LineChart('当前时间:', array(), array(), 400, 30);
-$img->setColor(255,12,255);
-$img->setBackgroundColor(0, 0, 112, 32, 123);
+$chartWidth = $windowScreenWidth * 0.5;
+$chartHeight = $windowScreenHeight * 0.5;
+$img = new LineChart('宽:' . $chartWidth . '- 高：' . $chartHeight, array(), array(), $chartWidth, $chartHeight);
 $img->drawLineChart();

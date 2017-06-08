@@ -12,6 +12,7 @@ function loadAllPage() {
     var checkoutChartId = "itemSelectBox";
     var checkoutChartUrl = "app/defaultPageManagement/itemSelect.php";
     var windowScreenHeight = window.screen.height;                     //获取屏幕高度
+    var windowScreenWidth = window.screen.width;
     var itemSelectObj = document.getElementById("itemSelect");    //获取select对象
     var itemSelectValue = 0;
 
@@ -22,6 +23,7 @@ function loadAllPage() {
 
     var data = {
         "windowScreenHeight": windowScreenHeight,
+        "windowScreenWidth": windowScreenWidth,
         "itemSelectValue": itemSelectValue
     }
     loadChart(checkoutChartId, checkoutChartUrl, data);
@@ -54,9 +56,11 @@ function selectChange() {
     var checkoutChartId = "itemSelectBox";
     var checkoutChartUrl = "app/defaultPageManagement/itemSelect.php";
     var windowScreenHeight = window.screen.height;
+    var windowScreenWidth = window.screen.width;
     var itemSelectValue = $("#itemSelect").val();
     var data = {
         "windowScreenHeight": windowScreenHeight,
+        "windowScreenWidth": windowScreenWidth,
         "itemSelectValue": itemSelectValue
     }
     loadChart(checkoutChartId, checkoutChartUrl, data);

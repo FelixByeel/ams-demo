@@ -8,19 +8,19 @@
  *
  *$imageUri图像输出位置，默认为“public/images/checkoutChart/checkoutChart.png”,如需指定路径，需要给出路径和完整文件名称，即包括文件后缀。
  *
- *@name     LineChar
+ *@name     LineChart
  *@author   Felix
  *@date     2017-06-04
  *@update   2017-06-07
- *@param    resource    $_image         图像资源
- *@param    string      $_title         图表标题
- *@param    array       $_xDataArr      横轴数据
- *@param    array       $_yDataArr      纵轴数据
- *@param    int         $_width         图像宽度
- *@param    int         $_height        图像高度
- *@param    int         $_color         线条颜色
- *@param    int         $_backgroundColor
- *@param    int         $_space         横轴间隔
+ *@param    resource    $_image             图像资源
+ *@param    string      $_title             图表标题
+ *@param    array       $_xDataArr          横轴数据
+ *@param    array       $_yDataArr          纵轴数据
+ *@param    int         $_width             图像宽度
+ *@param    int         $_height            图像高度
+ *@param    int         $_color             笔画颜色
+ *@param    int         $_backgroundColor   背景颜色
+ *@param    string      $_imageUri          生成图表保存路径
  */
 class LineChart
 {
@@ -32,7 +32,6 @@ class LineChart
     private $_height;
     private $_color;
     private $_backgroundColor;
-    private $_space;
     private $_imageUri;
 
     /**
@@ -64,9 +63,9 @@ class LineChart
     }
 
     //Set brush color
-    public function setColor($red, $green, $blue)
+    private function setColor($red, $green, $blue)
     {
-        $this->_color = imagecolorallocate($this->_image, $red, $green, $blue);
+        return imagecolorallocate($this->_image, $red, $green, $blue);
     }
 
     /**
@@ -78,7 +77,7 @@ class LineChart
     *@param int $green
     *@param int $blue
     */
-    public function setBackgroundColor($x, $y, $red, $green, $blue)
+    private function setBackgroundColor($x, $y, $red, $green, $blue)
     {
         $this->_backgroundColor = imagecolorallocate($this->_image, $red, $green, $blue);
         imagefill($this->_image, $x, $y, $this->_backgroundColor);
@@ -98,13 +97,26 @@ class LineChart
         return $tempValue;
     }
 
-    //开始画图
+    //draw chart start
     public function drawLineChart()
     {
-        //imagestring($this->_image, 5, 5, 5, $this->_title . ' ' . date('Y-m-d H:i:s'), $this->_color);
-        //指定中文字体
-        $font = '../../public/font/msyh.ttc';
-        imagettftext($this->_image, 12, 0, 10, 20, $this->_color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
+        $width = $this->_width;
+        $height = $this->_height;
+        $xSpace;
+        $ySpace;
+        $borderSpace = 50;
+        $font = '../../public/font/msyh.ttc';       //指定中文字体
+        $color = $this->setColor(0, 0, 0);
+
+        $this->setBackgroundColor(0, 0, 240, 240, 240);
+        imagettftext($this->_image, 12, 0, 10, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
+
+        //draw Y line
+        imageline($this->_image, $borderSpace, $borderSpace, $borderSpace, $height - $borderSpace, $color);
+
+        //draw X line
+        imageline($this->_image, $borderSpace, $height - $borderSpace, $width - $borderSpace, $height - $borderSpace, $color);
+
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
         imagedestroy($this->_image);
     }
