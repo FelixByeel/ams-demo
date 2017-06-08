@@ -118,6 +118,8 @@ class LineChart
         imageline($this->_image, $borderSpace, $height - $borderSpace, $width - $borderSpace, $height - $borderSpace, $color);
 
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
+        //直接输出图片到浏览器
+        //imagepng($this->_image);
         imagedestroy($this->_image);
     }
 }

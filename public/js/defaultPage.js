@@ -78,5 +78,8 @@ function loadChart(checkoutChartId, checkoutChartUrl, data) {
         $("#loadChart").load("app/defaultPageManagement/checkoutChart.php", { "data": data }, function () {
             document.getElementById("checkoutChart").src = "public/images/checkoutChart/checkoutChart.png?" + Math.random();
         });
+
+        //直接调用图片地址
+        //document.getElementById("checkoutChart").src = "app/defaultPageManagement/checkoutChart.php?" + Math.random();
     });
 }
