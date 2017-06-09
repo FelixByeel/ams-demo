@@ -73,12 +73,13 @@ $conditionStr   = " item_id = {$itemSelectValue} and record_time > {$startDate} 
 $result     = $mysqli->select($tableName, $columnArray, $conditionStr);
 
 //初始化以日期为key的统计数组，将查询结果以月份进行统计。
-//$itemCount['2017-6'] = 0;
-//$itemCount['2017-5'] = 0;
-//$itemCount['2017-4'] = 0;
-//...
+//$countByMonthArr['2017-06'] = 0;
+//$countByMonthArr['2017-05'] = 0;
+//$countByMonthArr['2017-04'] = 0;
+
+//初始化统计数组 $countByMonthArr[]
 foreach ($dateArr as $key => $value) {
-    $itemCount[$value] = 0;
+    $countByMonthArr[$value] = 0;
 }
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -86,14 +87,14 @@ while ($row = mysqli_fetch_assoc($result)) {
         $startDate = strtotime($dateArr[$i]);
         $endDate = $i ? strtotime($dateArr[$i - 1]) : time();
         if ($row['record_time'] > $startDate && $row['record_time'] < $endDate) {
-            $itemCount[$dateArr[$i]] += $row['update_count'];
+            $countByMonthArr[$dateArr[$i]] += $row['update_count'];
         }
     }
 }
 
 //测试数据
 /*
-foreach ($itemCount as $key => $value) {
+foreach ($countByMonthArr as $key => $value) {
     echo '<br/>';
     echo $key . ' : ' . $value;
     echo '<br/>';
@@ -111,6 +112,10 @@ function getLastMonth($dateStr)
     } else {
         $month  -= 1;
     }
+
+    if($month < 10) {
+        return $year . '-' . '0' . $month;
+    }
     return $year . '-' . $month;
 }
 
@@ -126,5 +131,5 @@ imagedestroy($im);
 */
 $chartWidth = $windowScreenWidth * 0.5;
 $chartHeight = $windowScreenHeight * 0.5;
-$img = new LineChart('宽:' . $chartWidth . '- 高：' . $chartHeight, array(), array(), $chartWidth, $chartHeight);
+$img = new LineChart('宽:' . $chartWidth . '- 高：' . $chartHeight, array(), $chartWidth, $chartHeight);
 $img->drawLineChart();

@@ -4,7 +4,7 @@
  *
  *通过给定的参数画出对应的折线图表
  *
- *new LineChart($title, $xDataArr, $yDataArr, $width, $height, [$imageUri]);
+ *new LineChart($title, $xDataArr, $countDataArr, $width, $height, [$imageUri]);
  *
  *$imageUri图像输出位置，默认为“public/images/checkoutChart/checkoutChart.png”,如需指定路径，需要给出路径和完整文件名称，即包括文件后缀。
  *
@@ -14,8 +14,7 @@
  *@update   2017-06-07
  *@param    resource    $_image             图像资源
  *@param    string      $_title             图表标题
- *@param    array       $_xDataArr          横轴数据
- *@param    array       $_yDataArr          纵轴数据
+ *@param    array       $_countDataArr      纵轴数据
  *@param    int         $_width             图像宽度
  *@param    int         $_height            图像高度
  *@param    int         $_color             笔画颜色
@@ -26,8 +25,7 @@ class LineChart
 {
     private $_image;
     private $_title;
-    private $_xDataArr;
-    private $_yDataArr;
+    private $_countDataArr;
     private $_width;
     private $_height;
     private $_color;
@@ -40,17 +38,15 @@ class LineChart
     *创建图像资源，并设置默认的前景色和背景色。
     *
     *@param string  $title          图像标题
-    *@param array   $xDataArr       横轴数据
-    *@param array   $yDataArr       纵轴数据
+    *@param array   $countDataArr   纵轴数据
     *@param int     $width          图像宽度
     *@param int     $height         图像高度
     *@param string  $imageUri       图像输出位置
     */
-    public function __construct($title, $xDataArr, $yDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
+    public function __construct($title, $countDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
     {
         $this->_title               = $title;
-        $this->_xDataArr            = $xDataArr;
-        $this->_yDataArr            = $yDataArr;
+        $this->_countDataArr        = $countDataArr;
         $this->_width               = $width;
         $this->_height              = $height;
         $this->_imageUri            = $imageUri;
