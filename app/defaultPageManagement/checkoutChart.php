@@ -93,6 +93,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 //测试数据
+ksort($countByMonthArr); //按$key升序排序
 /*
 foreach ($countByMonthArr as $key => $value) {
     echo '<br/>';
