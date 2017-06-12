@@ -131,5 +131,5 @@ imagedestroy($im);
 */
 $chartWidth = $windowScreenWidth * 0.5;
 $chartHeight = $windowScreenHeight * 0.5;
-$img = new LineChart('宽:' . $chartWidth . '- 高：' . $chartHeight, array(), $chartWidth, $chartHeight);
+$img = new LineChart('宽:' . $chartWidth . '- 高：' . $chartHeight, $countByMonthArr, $chartWidth, $chartHeight);
 $img->drawLineChart();
