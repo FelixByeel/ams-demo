@@ -11,7 +11,7 @@
  *@name     LineChart
  *@author   Felix
  *@date     2017-06-04
- *@update   2017-06-13
+ *@update   2017-06-14
  *@param    resource    $_image             图像资源
  *@param    string      $_title             图表标题
  *@param    array       $_countDataArr      纵轴数据
@@ -56,6 +56,7 @@ class LineChart
         $this->_color               = imagecolorallocate($this->_image, 0, 0, 0);           //默认颜色为黑色
         $this->_backgroundColor     = imagecolorallocate($this->_image, 255, 255, 255);     //默认背景色为白色
         imagefill($this->_image, 0, 0, $this->_backgroundColor);
+        imageantialias($this->_image, true);        //开启抗锯齿
     }
 
     //Set brush color
@@ -116,27 +117,30 @@ class LineChart
         imageline($this->_image, $borderSpace, $height - $borderSpace, $width - $borderSpace + 1, $height - $borderSpace, $color);
 
         //draw X-axis line
-        $this->drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $yDataPositionArr = $this->drawXAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
         //draw Y-axis line
-        $this->drawXAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $xDataPositionArr = $this->drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
 
+        //draw line
+        $this->drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr);
         $color = $this->setColor(123, 3, 111);
-        imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
+        //imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
         imagedestroy($this->_image);
     }
 
     //draw Y-axis line
-    private function drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    private function drawYAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
         $xAxisCount = count($countDataArr) + 2;  //获取横轴名称数，加2个是为了右边留空一个间隔。
         //$xAxisSpace = floor(($width - $borderSpace * 2) / $xAxisCount);   //除去边距
         $xAxisSpace = floor($width / $xAxisCount);
-
+        $xDataPositionArr   = array();
         //draw line
         $color = $this->setColor(200, 200, 200);
         for ($i=1; $i < $xAxisCount - 1; $i++) {    //边界减1位不画X轴最右边的线
             imagedashedline($image, $borderSpace + $xAxisSpace * $i, $borderSpace - 1, $borderSpace + $xAxisSpace * $i, $height - $borderSpace, $color);
+            $xDataPositionArr[$i] = $borderSpace + $xAxisSpace * $i;  //save X
         }
 
         //draw name
@@ -148,14 +152,16 @@ class LineChart
             imagettftext($image, 12, 0, $borderSpace + $xAxisSpace * $i - $textWidth / 2, $height - $borderSpace + 20, $color, $font, $key);
             $i++;
         }
+
+        return $xDataPositionArr;
     }
 
     //draw X-axis line
-    private function drawYAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    private function drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
         $maxValue = $this->getMaxValue($countDataArr);  //获取纵轴数据中最大值
         $yAxisCount = count($countDataArr);             //获取纵轴数据统计个数。
-
+        $yDataPositionArr   = array();
         //设定纵轴数据单位个数。
         if ($yAxisCount < 10) {
             $yAxisCount = 11;   //边界加1位，不画Y轴最上面的线
@@ -166,17 +172,40 @@ class LineChart
         //获取单位间隔距离
         $yAxisSpace = floor(($height - $borderSpace * 2) / $yAxisCount);
 
+        //draw line and number
         for ($i=1; $i < $yAxisCount; $i++) {
-            $color = $this->setColor(200, 200, 200);
-            imageline($image, $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $width - $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $color);
-            $color = $this->setColor(105, 105, 105);
-            imagettftext($image, 12, 0, $borderSpace - 25, $height - $borderSpace - $yAxisSpace * $i + 5, $color, $font, $i);
+            if (!($i % 2)) {
+                $color = $this->setColor(200, 200, 200);
+                imageline($image, $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $width - $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $color);
+                $color = $this->setColor(105, 105, 105);
+                imagettftext($image, 12, 0, $borderSpace - 25, $height - $borderSpace - $yAxisSpace * $i + 5, $color, $font, $i);
+            }
+            $yDataPositionArr[$i] = $height - $borderSpace - $yAxisSpace * $i;
         }
+        $yDataPositionArr[0] = $height - $borderSpace;
+        return $yDataPositionArr;
     }
 
-    //draw line
-    private function drawLine($image)
+    /**
+    *draw  broken line and line point
+    *
+    *通过$xDataPostionArr和$yDataPositionArr来确定$countDataArr中的数据在图表中的位置
+    *
+    *@param array $xDataPositionArr     横轴名称数组
+    *@param array $yDataPositionArr     纵轴单位数组
+    *@param array $countDataArr         数据数组
+    */
+    private function drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr)
     {
-        # code...
+        $i = 1;
+        foreach ($countDataArr as $key => $value) {
+            if($i > 1){
+                $color = $this->setColor(60,179,113);
+                imageline($image, $xDataPositionArr[$i - 1], $yDataPositionArr[$temp], $xDataPositionArr[$i], $yDataPositionArr[$value], $color);
+            }
+            $color = $this->setColor(60,179,113);
+            imagefilledellipse($image, $xDataPositionArr[$i++], $yDataPositionArr[$value], 6, 6, $color);
+            $temp = $value;
+        }
     }
 }
