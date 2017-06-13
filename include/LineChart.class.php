@@ -129,13 +129,13 @@ class LineChart
     //draw Y-axis line
     private function drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
-        $xAxisCount = count($countDataArr) + 1;  //获取横轴名称数，加1个是为了右边留空一个间隔。
+        $xAxisCount = count($countDataArr) + 2;  //获取横轴名称数，加2个是为了右边留空一个间隔。
         //$xAxisSpace = floor(($width - $borderSpace * 2) / $xAxisCount);   //除去边距
         $xAxisSpace = floor($width / $xAxisCount);
 
         //draw line
         $color = $this->setColor(200, 200, 200);
-        for ($i=1; $i < $xAxisCount; $i++) {
+        for ($i=1; $i < $xAxisCount - 1; $i++) {    //边界减1位不画X轴最右边的线
             imagedashedline($image, $borderSpace + $xAxisSpace * $i, $borderSpace - 1, $borderSpace + $xAxisSpace * $i, $height - $borderSpace, $color);
         }
 
@@ -158,15 +158,15 @@ class LineChart
 
         //设定纵轴数据单位个数。
         if ($yAxisCount < 10) {
-            $yAxisCount = 10;
+            $yAxisCount = 11;   //边界加1位，不画Y轴最上面的线
         } else {
-            $yAxisCount = 20;
+            $yAxisCount = 21;
         }
 
         //获取单位间隔距离
         $yAxisSpace = floor(($height - $borderSpace * 2) / $yAxisCount);
 
-        for ($i=1; $i < $yAxisCount + 1; $i++) {
+        for ($i=1; $i < $yAxisCount; $i++) {
             $color = $this->setColor(200, 200, 200);
             imageline($image, $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $width - $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $color);
             $color = $this->setColor(105, 105, 105);
