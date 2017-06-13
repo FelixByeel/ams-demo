@@ -14,7 +14,7 @@
  *@update   2017-06-14
  *@param    resource    $_image             图像资源
  *@param    string      $_title             图表标题
- *@param    array       $_countDataArr      纵轴数据
+ *@param    array       $_countDataArr      按月统计数据数组
  *@param    int         $_width             图像宽度
  *@param    int         $_height            图像高度
  *@param    int         $_color             笔画颜色
@@ -38,7 +38,7 @@ class LineChart
     *创建图像资源，并设置默认的前景色和背景色。
     *
     *@param string  $title          图像标题
-    *@param array   $countDataArr   纵轴数据
+    *@param array   $countDataArr   按月统计数据数组
     *@param int     $width          图像宽度
     *@param int     $height         图像高度
     *@param string  $imageUri       图像输出位置
