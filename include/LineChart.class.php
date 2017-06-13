@@ -101,7 +101,7 @@ class LineChart
         $height = $this->_height;
         $font = '../../public/font/msyh.ttc';       //指定中文字体
         $color = $this->setColor(123, 191, 214);
-        $this->setBackgroundColor(0, 0, 240, 240, 240);
+        $this->setBackgroundColor(0, 0, 255, 255, 255);
 
         //画左和下的边框
         $borderSpace = 50; //边距
@@ -123,7 +123,7 @@ class LineChart
 
         //draw line
         $this->drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr);
-        $color = $this->setColor(123, 3, 111);
+        //$color = $this->setColor(123, 3, 111);
         //imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
         imagedestroy($this->_image);
@@ -149,7 +149,7 @@ class LineChart
         foreach ($countDataArr as $key => $value) {
             $textBox = imagettfbbox(12, 0, $font, $key);
             $textWidth = abs($textBox[2] - $textBox[0]);
-            imagettftext($image, 12, 0, $borderSpace + $xAxisSpace * $i - $textWidth / 2, $height - $borderSpace + 20, $color, $font, $key);
+            imagettftext($image, 12, -25, $borderSpace + $xAxisSpace * $i - $textWidth / 2, $height - $borderSpace + 20, $color, $font, $key);
             $i++;
         }
 
@@ -159,17 +159,17 @@ class LineChart
     //draw X-axis line
     private function drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
-        $maxValue = $this->getMaxValue($countDataArr);  //获取纵轴数据中最大值
-        $yAxisCount = count($countDataArr);             //获取纵轴数据统计个数。
+        $maxValue   = $this->getMaxValue($countDataArr);    //获取纵轴数据中最大值
+        $yAxisCount = 0;                                    //初始化纵轴数据单元个数。
         $yDataPositionArr   = array();
-        //设定纵轴数据单位个数。
-        if ($yAxisCount < 10) {
+        //根据最大数值设定纵轴数据单元个数。
+        if ($maxValue < 10) {
             $yAxisCount = 11;   //边界加1位，不画Y轴最上面的线
         } else {
             $yAxisCount = 21;
         }
 
-        //获取单位间隔距离
+        //获取单位间隔距离，减去上下边距，平分为$yAxisCount单元个数的间隔距离。
         $yAxisSpace = floor(($height - $borderSpace * 2) / $yAxisCount);
 
         //draw line and number
@@ -202,6 +202,7 @@ class LineChart
             if($i > 1){
                 $color = $this->setColor(60,179,113);
                 imageline($image, $xDataPositionArr[$i - 1], $yDataPositionArr[$temp], $xDataPositionArr[$i], $yDataPositionArr[$value], $color);
+                //imageline($image, $xDataPositionArr[$i - 1] + 1, $yDataPositionArr[$temp] + 1, $xDataPositionArr[$i] + 1, $yDataPositionArr[$value] + 1, $color);
             }
             $color = $this->setColor(60,179,113);
             imagefilledellipse($image, $xDataPositionArr[$i++], $yDataPositionArr[$value], 6, 6, $color);

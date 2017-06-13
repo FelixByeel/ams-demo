@@ -46,9 +46,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 *根据当前所选择的项，统计最近5个月的出库数量。例如 笔记本硬盘500G， 2017-6 出库数量为 1 ， 2017-5 出库数量为 2
 */
 
-//获取最近5个月的月份
+//获取最近$months个月的月份
 $dateArr = array();
-for ($i = 0; $i < 5; $i++) {
+$months = 10;
+for ($i = 0; $i < $months; $i++) {
     if (!$i) {
         $dateArr[$i] = date('Y-m');
     } else {
