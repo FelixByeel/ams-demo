@@ -75,7 +75,7 @@ function loadChart(checkoutChartId, checkoutChartUrl, data) {
             selectChange();
         });
         //加载图表。先调用生成图表的页面，输出图表到路径：public/images/checkoutChart/checkoutChart.png，然后在把上述路径图表加载到html的img里面
-        $("#loadChart").load("app/defaultPageManagement/checkoutChart.php", { "data": data }, function () {
+        $(document).load("app/defaultPageManagement/checkoutChart.php", { "data": data }, function () {
             document.getElementById("checkoutChart").src = "public/images/checkoutChart/checkoutChart.png?" + Math.random();
         });
     });
