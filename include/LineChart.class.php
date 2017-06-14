@@ -1,12 +1,21 @@
 <?php
 /**
- * 折线图类
+ * 折线图类,描绘数据走势
  *
- *通过给定的参数画出对应的折线图表
+ *功能：通过给定的参数画出对应的折线图表。
  *
- *new LineChart($title, $countDataArr, $width, $height, [$imageUri]);
+ *用法：new LineChart($title, $nameDataArr, $width, $height, [$imageUri]);
  *
- *$imageUri图像输出位置，默认为“public/images/checkoutChart/checkoutChart.png”,如需指定路径，需要给出路径和完整文件名称，即包括文件后缀。
+ *$title：       图表标题。
+ *
+ *$nameDataArr： 名称数据数组，$key为横轴名称，$value为对应数据。
+ *
+ *$width：       图表宽度。
+ *
+ *$height：      图表高度。
+ *
+ *$imageUri：    图像输出位置及保存为文件时的文件名，默认为“public/images/checkoutChart/checkoutChart.png”,
+ *如需指定路径，需要给出路径和完整文件名称，即包括文件后缀。
  *
  *@name     LineChart
  *@author   Felix
@@ -14,7 +23,7 @@
  *@update   2017-06-14
  *@param    resource    $_image             图像资源
  *@param    string      $_title             图表标题
- *@param    array       $_countDataArr      按月统计数据数组
+ *@param    array       $_nameDataArr       按月统计数据数组
  *@param    int         $_width             图像宽度
  *@param    int         $_height            图像高度
  *@param    int         $_color             笔画颜色
@@ -25,7 +34,7 @@ class LineChart
 {
     private $_image;
     private $_title;
-    private $_countDataArr;
+    private $_nameDataArr;
     private $_width;
     private $_height;
     private $_color;
@@ -38,15 +47,15 @@ class LineChart
     *创建图像资源，并设置默认的前景色和背景色。
     *
     *@param string  $title          图像标题
-    *@param array   $countDataArr   按月统计数据数组
+    *@param array   $nameDataArr    按月统计数据数组
     *@param int     $width          图像宽度
     *@param int     $height         图像高度
     *@param string  $imageUri       图像输出位置
     */
-    public function __construct($title, $countDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
+    public function __construct($title, $nameDataArr, $width, $height, $imageUri = 'public/images/checkoutChart/checkoutChart.png')
     {
         $this->_title               = $title;
-        $this->_countDataArr        = $countDataArr;
+        $this->_nameDataArr         = $nameDataArr;
         $this->_width               = $width;
         $this->_height              = $height;
         $this->_imageUri            = $imageUri;
@@ -117,14 +126,18 @@ class LineChart
         imageline($this->_image, $borderSpace, $height - $borderSpace, $width - $borderSpace + 1, $height - $borderSpace, $color);
 
         //draw X-axis line
-        $yDataPositionArr = $this->_drawXAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $yDataPositionArr = $this->_drawXAxis($this->_image, $this->_nameDataArr, $borderSpace, $width, $height, $font);
         //draw Y-axis line
-        $xDataPositionArr = $this->_drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $xDataPositionArr = $this->_drawYAxis($this->_image, $this->_nameDataArr, $borderSpace, $width, $height, $font);
 
         //draw line
-        $this->_drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr, $font);
+        $this->_drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_nameDataArr, $font);
+
+        //draw title
         //$color = $this->_setColor(123, 3, 111);
         //imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
+
+        //输出图像到文件
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
         imagedestroy($this->_image);
     }
@@ -134,9 +147,9 @@ class LineChart
     *
     *画横轴上的垂直虚线，方便查看数据，返回一个存储横轴名称位置的数组
     */
-    private function _drawYAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    private function _drawYAxis($image, $nameDataArr, $borderSpace, $width, $height, $font)
     {
-        $xAxisCount         = count($countDataArr) + 2;  //获取横轴名称个数，加2个是为了右边留间隔。
+        $xAxisCount         = count($nameDataArr) + 2;  //获取横轴名称个数，加2是为了右边留间隔。
         $xAxisSpace         = floor($width / $xAxisCount);
         $xDataPositionArr   = array();
 
@@ -150,7 +163,7 @@ class LineChart
         //draw name
         $color = $this->_setColor(105, 105, 105);
         $i = 1;
-        foreach ($countDataArr as $key => $value) {
+        foreach ($nameDataArr as $key => $value) {
             $textBox = imagettfbbox(12, 0, $font, $key);
             $textWidth = abs($textBox[2] - $textBox[0]);
             imagettftext($image, 12, -25, $borderSpace + $xAxisSpace * $i - $textWidth / 2, $height - $borderSpace + 20, $color, $font, $key);
@@ -165,9 +178,9 @@ class LineChart
     *
     *画纵轴上的水平单位分隔线，方便查看数据，返回一个存储纵轴单位数据位置的数组。
     */
-    private function _drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    private function _drawXAxis($image, $nameDataArr, $borderSpace, $width, $height, $font)
     {
-        $maxValue           = $this->_getMaxValue($countDataArr);   //获取纵轴数据中最大值
+        $maxValue           = $this->_getMaxValue($nameDataArr);    //获取纵轴数据中最大值
         $yAxisCount         = 0;                                    //初始化纵轴数据单元个数
         $yDataPositionArr   = array();                              //存储纵轴单位数据位置
         $unitNumber         = 2;                                    //Y轴基础单元分隔基数，列如为2，表示分隔为2、4、6、8,为5，表示分隔为5、10、15
@@ -202,16 +215,16 @@ class LineChart
     /**
     *draw  broken line and line point
     *
-    *通过$xDataPostionArr和$yDataPositionArr来确定$countDataArr中的数据在图表中的位置
+    *通过$xDataPostionArr和$yDataPositionArr来确定$nameDataArr中的数据在图表中的位置
     *
     *@param array $xDataPositionArr     横轴名称数组
     *@param array $yDataPositionArr     纵轴单位数组
-    *@param array $countDataArr         数据数组
+    *@param array $nameDataArr          数据数组
     */
-    private function _drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr, $font)
+    private function _drawLine($image, $xDataPositionArr, $yDataPositionArr, $nameDataArr, $font)
     {
         $i = 1;
-        foreach ($countDataArr as $key => $value) {
+        foreach ($nameDataArr as $key => $value) {
             if ($i > 1) {
                 $color = $this->_setColor(60, 179, 113);
                 imageline($image, $xDataPositionArr[$i - 1], $yDataPositionArr[$temp], $xDataPositionArr[$i], $yDataPositionArr[$value], $color);
@@ -221,9 +234,9 @@ class LineChart
             imagefilledellipse($image, $xDataPositionArr[$i], $yDataPositionArr[$value], 6, 6, $color);
 
             //折线点上方写上数值
-            if($value > 0) {
-                $color = $this->_setColor(0, 0, 0);
-                imagettftext($image, 10, 0, $xDataPositionArr[$i] - 5, $yDataPositionArr[$value] - 5, $color, $font, $value);
+            if ($value > 0) {
+                $color = $this->_setColor(255, 100, 0);
+                imagettftext($image, 12, 0, $xDataPositionArr[$i] - 10, $yDataPositionArr[$value] - 10, $color, $font, $value);
             }
 
             $i++;
