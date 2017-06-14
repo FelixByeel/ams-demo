@@ -122,7 +122,7 @@ class LineChart
         $xDataPositionArr = $this->_drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
 
         //draw line
-        $this->_drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr);
+        $this->_drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr, $font);
         //$color = $this->_setColor(123, 3, 111);
         //imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
@@ -170,12 +170,16 @@ class LineChart
         $maxValue           = $this->_getMaxValue($countDataArr);   //获取纵轴数据中最大值
         $yAxisCount         = 0;                                    //初始化纵轴数据单元个数
         $yDataPositionArr   = array();                              //存储纵轴单位数据位置
-
+        $unitNumber         = 2;                                    //Y轴基础单元分隔基数，列如为2，表示分隔为2、4、6、8,为5，表示分隔为5、10、15
         //根据最大数值设定纵轴数据单元个数。
-        if ($maxValue < 10) {
+        if ($maxValue <= 10) {
             $yAxisCount = 11;   //边界加1位，不画Y轴最上面的线
+        } elseif ($maxValue <= 30) {
+            $yAxisCount = 31;
+            $unitNumber = 5;
         } else {
-            $yAxisCount = 21;
+            $yAxisCount = 101;
+            $unitNumber = 10;
         }
 
         //获取单位间隔距离，减去上下边距，平分为$yAxisCount单元个数的间隔距离。
@@ -183,7 +187,7 @@ class LineChart
 
         //draw line and number
         for ($i=1; $i < $yAxisCount; $i++) {
-            if (!($i % 2)) {
+            if (!($i % $unitNumber)) {
                 $color = $this->_setColor(200, 200, 200);
                 imageline($image, $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $width - $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $color);
                 $color = $this->_setColor(105, 105, 105);
@@ -204,7 +208,7 @@ class LineChart
     *@param array $yDataPositionArr     纵轴单位数组
     *@param array $countDataArr         数据数组
     */
-    private function _drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr)
+    private function _drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr, $font)
     {
         $i = 1;
         foreach ($countDataArr as $key => $value) {
@@ -215,6 +219,13 @@ class LineChart
             }
             $color = $this->_setColor(60, 179, 113);
             imagefilledellipse($image, $xDataPositionArr[$i], $yDataPositionArr[$value], 6, 6, $color);
+
+            //折线点上方写上数值
+            if($value > 0) {
+                $color = $this->_setColor(0, 0, 0);
+                imagettftext($image, 10, 0, $xDataPositionArr[$i] - 5, $yDataPositionArr[$value] - 5, $color, $font, $value);
+            }
+
             $i++;
             $temp = $value;
         }
