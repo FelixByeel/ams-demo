@@ -49,6 +49,23 @@
     margin-top: 20px;
     margin-left: 10px;
 }
+
+.chart-select{
+    float: right;
+    margin-top: 2%;
+    margin-right: 100px;
+    width: 140px;
+    height: 30px;
+    border: 1px solid #888;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.checkout-chart {
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
 /*最近出库记录模块,库存预警模块*/
 .recent-checkout-table {
     width: 100%;
