@@ -4,7 +4,7 @@ window.onload = function () {
 }
 
 //5分钟自动加载一次内容
-var timer = setInterval("loadAllPage()", 60000);
+var timer = setInterval("loadAllPage()", 300000);
 
 function loadAllPage() {
 

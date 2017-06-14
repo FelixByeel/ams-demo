@@ -45,7 +45,7 @@ function createTab(tab_id,title){
 
     if(!document.getElementById(tab.id)){
         //tab.innerHTML ="<span class = 'tab_title' onmouseover = 'showCompleteTitle();' title = '" + title + "'>" + title + "</span>" +"<span"+" id ='close_"+tab_id+"' class = 'close'>&times;</span>";
-        tab.innerHTML ="<span class = 'tab_title'>" + title + "</span>" + "<span" + " id ='close_" + tab_id + "' class = 'close'>&times;</span>";
+        tab.innerHTML ="<span class = 'tab_title'>" + title + "</span>" + "<span" + " id ='close_" + tab_id + "' class = 'close' title = '关闭'>&times;</span>";
         obj.appendChild(tab);
         $('#'+tab.id).attr("class","tab_enable");
         $('#'+tab.id).siblings().attr("class","tab_disable");
@@ -72,7 +72,6 @@ function createDiv(div_id,div_url){
         $("#"+con.id).siblings().attr("class","div_disable");
     }
     else{
-
         $("#"+con.id).attr("class","div_enable");
         $("#"+con.id).siblings().attr("class","div_disable");
     }
@@ -177,7 +176,7 @@ $(document).ready(function(){
             <!--TAB标签box-->
             <div id = "tab_box">
                 <ul id = "tab_ul">
-                    <li id = "tab_default" class = "tab_enable"><span class="tab_title" >首页</span></li>
+                    <li id = "tab_default" class = "tab_enable"><span class="tab_title default-page-title" >首页</span><span class = "refresh" title = "刷新" onclick = "loadAllPage()">&#8631</span></li>
                 </ul>
             </div>
             <!-- 内容 -->

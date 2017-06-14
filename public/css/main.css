@@ -213,6 +213,9 @@ span.tab_title{
     text-align: center;
 }
 
+
+
+
 span.close{
     float:right;
     font-size:14px;
@@ -222,6 +225,19 @@ span.close:hover{
     font-weight:bold;
 }
 
+.default-page-title {
+    width:100px;
+}
+
+.refresh {
+    float: right;
+    width: 10px;
+}
+
+.refresh:hover {
+    font-size: 1.1em;
+    font-weight:bold;
+}
 /*--------footer style--------*/
 #footer{
     height:20px;
