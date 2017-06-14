@@ -60,7 +60,7 @@ class LineChart
     }
 
     //Set brush color
-    private function setColor($red, $green, $blue)
+    private function _setColor($red, $green, $blue)
     {
         return imagecolorallocate($this->_image, $red, $green, $blue);
     }
@@ -74,7 +74,7 @@ class LineChart
     *@param int $green
     *@param int $blue
     */
-    private function setBackgroundColor($x, $y, $red, $green, $blue)
+    private function _setBackgroundColor($x, $y, $red, $green, $blue)
     {
         $this->_backgroundColor = imagecolorallocate($this->_image, $red, $green, $blue);
         imagefill($this->_image, $x, $y, $this->_backgroundColor);
@@ -83,7 +83,7 @@ class LineChart
     /**
     *Gets the maximum value from the array,return the value.
     */
-    private function getMaxValue($arr)
+    private function _getMaxValue($arr)
     {
         $tempValue = 0;
         foreach ($arr as $key => $value) {
@@ -100,8 +100,8 @@ class LineChart
         $width = $this->_width;
         $height = $this->_height;
         $font = '../../public/font/msyh.ttc';       //指定中文字体
-        $color = $this->setColor(123, 191, 214);
-        $this->setBackgroundColor(0, 0, 255, 255, 255);
+        $color = $this->_setColor(123, 191, 214);
+        $this->_setBackgroundColor(0, 0, 255, 255, 255);
 
         //画左和下的边框
         $borderSpace = 50; //边距
@@ -117,34 +117,38 @@ class LineChart
         imageline($this->_image, $borderSpace, $height - $borderSpace, $width - $borderSpace + 1, $height - $borderSpace, $color);
 
         //draw X-axis line
-        $yDataPositionArr = $this->drawXAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $yDataPositionArr = $this->_drawXAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
         //draw Y-axis line
-        $xDataPositionArr = $this->drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
+        $xDataPositionArr = $this->_drawYAxis($this->_image, $this->_countDataArr, $borderSpace, $width, $height, $font);
 
         //draw line
-        $this->drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr);
-        //$color = $this->setColor(123, 3, 111);
+        $this->_drawLine($this->_image, $xDataPositionArr, $yDataPositionArr, $this->_countDataArr);
+        //$color = $this->_setColor(123, 3, 111);
         //imagettftext($this->_image, 12, 0, 310, 20, $color, $font, $this->_title . ' ' . date('Y-m-d H:i:s'));
         imagepng($this->_image, APP_ROOT . $this->_imageUri);
         imagedestroy($this->_image);
     }
 
-    //draw Y-axis line
-    private function drawYAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    /**
+    *draw Y-axis line
+    *
+    *画横轴上的垂直虚线，方便查看数据，返回一个存储横轴名称位置的数组
+    */
+    private function _drawYAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
-        $xAxisCount = count($countDataArr) + 2;  //获取横轴名称数，加2个是为了右边留空一个间隔。
-        //$xAxisSpace = floor(($width - $borderSpace * 2) / $xAxisCount);   //除去边距
-        $xAxisSpace = floor($width / $xAxisCount);
+        $xAxisCount         = count($countDataArr) + 2;  //获取横轴名称个数，加2个是为了右边留间隔。
+        $xAxisSpace         = floor($width / $xAxisCount);
         $xDataPositionArr   = array();
+
         //draw line
-        $color = $this->setColor(200, 200, 200);
-        for ($i=1; $i < $xAxisCount - 1; $i++) {    //边界减1位不画X轴最右边的线
+        $color = $this->_setColor(200, 200, 200);
+        for ($i=1; $i < $xAxisCount - 1; $i++) {    //边界减1位不画X轴最右边的垂直线
             imagedashedline($image, $borderSpace + $xAxisSpace * $i, $borderSpace - 1, $borderSpace + $xAxisSpace * $i, $height - $borderSpace, $color);
-            $xDataPositionArr[$i] = $borderSpace + $xAxisSpace * $i;  //save X
+            $xDataPositionArr[$i] = $borderSpace + $xAxisSpace * $i;  //save position
         }
 
         //draw name
-        $color = $this->setColor(105, 105, 105);
+        $color = $this->_setColor(105, 105, 105);
         $i = 1;
         foreach ($countDataArr as $key => $value) {
             $textBox = imagettfbbox(12, 0, $font, $key);
@@ -156,12 +160,17 @@ class LineChart
         return $xDataPositionArr;
     }
 
-    //draw X-axis line
-    private function drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
+    /**
+    *draw X-axis line
+    *
+    *画纵轴上的水平单位分隔线，方便查看数据，返回一个存储纵轴单位数据位置的数组。
+    */
+    private function _drawXAxis($image, $countDataArr, $borderSpace, $width, $height, $font)
     {
-        $maxValue   = $this->getMaxValue($countDataArr);    //获取纵轴数据中最大值
-        $yAxisCount = 0;                                    //初始化纵轴数据单元个数。
-        $yDataPositionArr   = array();
+        $maxValue           = $this->_getMaxValue($countDataArr);   //获取纵轴数据中最大值
+        $yAxisCount         = 0;                                    //初始化纵轴数据单元个数
+        $yDataPositionArr   = array();                              //存储纵轴单位数据位置
+
         //根据最大数值设定纵轴数据单元个数。
         if ($maxValue < 10) {
             $yAxisCount = 11;   //边界加1位，不画Y轴最上面的线
@@ -175,9 +184,9 @@ class LineChart
         //draw line and number
         for ($i=1; $i < $yAxisCount; $i++) {
             if (!($i % 2)) {
-                $color = $this->setColor(200, 200, 200);
+                $color = $this->_setColor(200, 200, 200);
                 imageline($image, $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $width - $borderSpace, $height - $borderSpace - $yAxisSpace * $i, $color);
-                $color = $this->setColor(105, 105, 105);
+                $color = $this->_setColor(105, 105, 105);
                 imagettftext($image, 12, 0, $borderSpace - 25, $height - $borderSpace - $yAxisSpace * $i + 5, $color, $font, $i);
             }
             $yDataPositionArr[$i] = $height - $borderSpace - $yAxisSpace * $i;
@@ -195,17 +204,18 @@ class LineChart
     *@param array $yDataPositionArr     纵轴单位数组
     *@param array $countDataArr         数据数组
     */
-    private function drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr)
+    private function _drawLine($image, $xDataPositionArr, $yDataPositionArr, $countDataArr)
     {
         $i = 1;
         foreach ($countDataArr as $key => $value) {
-            if($i > 1){
-                $color = $this->setColor(60,179,113);
+            if ($i > 1) {
+                $color = $this->_setColor(60, 179, 113);
                 imageline($image, $xDataPositionArr[$i - 1], $yDataPositionArr[$temp], $xDataPositionArr[$i], $yDataPositionArr[$value], $color);
                 //imageline($image, $xDataPositionArr[$i - 1] + 1, $yDataPositionArr[$temp] + 1, $xDataPositionArr[$i] + 1, $yDataPositionArr[$value] + 1, $color);
             }
-            $color = $this->setColor(60,179,113);
-            imagefilledellipse($image, $xDataPositionArr[$i++], $yDataPositionArr[$value], 6, 6, $color);
+            $color = $this->_setColor(60, 179, 113);
+            imagefilledellipse($image, $xDataPositionArr[$i], $yDataPositionArr[$value], 6, 6, $color);
+            $i++;
             $temp = $value;
         }
     }
