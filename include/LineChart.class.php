@@ -106,10 +106,11 @@ class LineChart
     //draw chart start
     public function drawLineChart()
     {
-        $width = $this->_width;
+        $width  = $this->_width;
         $height = $this->_height;
-        $font = '../../public/font/msyh.ttc';       //指定中文字体
-        $color = $this->_setColor(123, 191, 214);
+        $font   = '../../public/font/msyh.ttc';       //指定中文字体
+        $color  = $this->_setColor(123, 191, 214);
+
         $this->_setBackgroundColor(0, 0, 255, 255, 255);
 
         //画左和下的边框
