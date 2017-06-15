@@ -157,7 +157,7 @@ class LineChart
         //draw line
         $color = $this->_setColor(200, 200, 200);
         for ($i=1; $i < $xAxisCount - 1; $i++) {    //边界减1位不画X轴最右边的垂直线
-            imagedashedline($image, $borderSpace + $xAxisSpace * $i, $borderSpace - 1, $borderSpace + $xAxisSpace * $i, $height - $borderSpace, $color);
+            //imagedashedline($image, $borderSpace + $xAxisSpace * $i, $borderSpace - 1, $borderSpace + $xAxisSpace * $i, $height - $borderSpace, $color);
             $xDataPositionArr[$i] = $borderSpace + $xAxisSpace * $i;  //save position
         }
 
