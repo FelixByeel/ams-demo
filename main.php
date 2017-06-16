@@ -184,7 +184,7 @@ $(document).ready(function(){
                 <!--default page start-->
                 <div id = "con_default" class = "default-page div_enable">
                     <div class = "checkout-chart-box">
-                        <p class = "checkout-chart-title title">物品使用统计</p>
+                        <p class = "checkout-chart-title title">出库物品数量统计</p>
                         <div id = "itemSelectBox" class = "item-select-box"></div>
                         <div id = "loadChart" style = "display:hidden"></div>
                         <img id = "checkoutChart" class = "checkout-chart">
