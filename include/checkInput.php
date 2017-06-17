@@ -15,14 +15,17 @@ function checkInput($str){
 
     foreach ($specialCharacter as $key => $value) {
         $result = strpos($str, $value);
+        if ($result !== false) {
+            break;
+        }
     }
 
-    if($result){
-        if((' ' == $specialCharacter[$result]) || ('　' == $specialCharacter[$result])){
+    if($result !== false){
+        if((' ' == $str[$result]) || ('　' == $str[$result])){
             return '空格';
         }
         else{
-            return $specialCharacter[$result];
+            return $str[$result];
         }
     }
     else {
