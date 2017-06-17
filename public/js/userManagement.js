@@ -45,13 +45,14 @@ function showUserList(userData) {
     tbStr += "</tr>";
 
     for (var i = 0; i < userData.length; i++) {
+        if ('99' === userData[i].role_group) {
+            continue;
+        }
         tbStr += "<tr>";
         tbStr += "<td>" + userData[i].username + "</td>";
         tbStr += "<td>" + userData[i].nick_name + "</td>";
 
         switch (userData[i].role_group) {
-            case '99': tbStr += "<td>超级管理</td>";
-                break;
             case '0': tbStr += "<td>查询</td>";
                 break;
             case '1': tbStr += "<td>查询，出库</td>";
@@ -74,13 +75,13 @@ function showUserList(userData) {
             tbStr += "<td>-</td>";
         }
 
-        if('99' === userData[i].role_group) {
-            tbStr += "<td colspan = '2'>-</td>";
-        } else{
-            tbStr += "<td>编辑</td>";
-            tbStr += "<td>启用</td>";
-        }
+        tbStr += "<td><button onclick = 'editUser(" + i + ")'>编辑</button></td>";
 
+        if ('1' === userData[i].is_enabled) {
+            tbStr += "<td><button onclick = 'disableUser(" + i + ")'>禁用</button></td>";
+        } else {
+            tbStr += "<td><button onclick = 'enableUser(" + i + ")'>启用</button></td>";
+        }
 
         tbStr += "</tr>";
     }
