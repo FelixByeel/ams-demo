@@ -10,6 +10,11 @@ window.onload = function () {
     getUserList(uri, searchUser);
 }
 
+/**
+ * 查询用户信息，以JSON格式返回用户列表。
+ * @param {string} uri          获取数据的地址
+ * @param {object} searchUser   需要发送的数据
+ */
 function getUserList(uri, searchUser) {
     $.post(
         uri,
@@ -23,6 +28,10 @@ function getUserList(uri, searchUser) {
     );
 }
 
+/**
+ * 以table形式输出userData里的用户信息到浏览器
+ * @param {object} userData 
+ */
 function showUserList(userData) {
     let userListDom = document.getElementById("userList");
     let tbStr = "<table class = 'user-list-table'>";
@@ -41,7 +50,7 @@ function showUserList(userData) {
         tbStr += "<td>" + userData[i].nick_name + "</td>";
 
         switch (userData[i].role_group) {
-            case '99': tbStr += "<td>超级管理员</td>";
+            case '99': tbStr += "<td>超级管理</td>";
                 break;
             case '0': tbStr += "<td>查询</td>";
                 break;
@@ -53,20 +62,25 @@ function showUserList(userData) {
                 break;
         }
 
-        if ('1' == userData[i].is_enabled) {
+        if ('1' === userData[i].is_enabled) {
             tbStr += "<td>启用</td>";
         } else {
             tbStr += "<td>禁用</td>";
         }
 
-        if ('0' != userData[i].last_time) {
+        if ('0' !== userData[i].last_time) {
             tbStr += "<td>" + dateFormat(userData[i].last_time) + "</td>";
         } else {
             tbStr += "<td>-</td>";
         }
 
-        tbStr += "<td>编辑</td>";
-        tbStr += "<td>启用</td>";
+        if('99' === userData[i].role_group) {
+            tbStr += "<td colspan = '2'>-</td>";
+        } else{
+            tbStr += "<td>编辑</td>";
+            tbStr += "<td>启用</td>";
+        }
+
 
         tbStr += "</tr>";
     }
@@ -75,9 +89,13 @@ function showUserList(userData) {
     userListDom.innerHTML = tbStr;
 }
 
-function dateFormat($num) {
-    $num = parseInt($num) * 1000;
-    let dateObj = new Date($num);
+/**
+ * 格式化Unix时间戳为‘0000-00-00’格式的日期。num可以为UNIX时间戳整数或者UNIX时间戳字符串
+ * @param {string} num 
+ */
+function dateFormat(num) {
+    let dateNum = parseInt(num) * 1000;
+    let dateObj = new Date(dateNum);
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
     month = month < 10 ? '0' + month : month;
@@ -85,4 +103,3 @@ function dateFormat($num) {
     day = day < 10 ? '0' + day : day;
     return year + '-' + month + '-' + day;
 }
-
