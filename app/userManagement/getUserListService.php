@@ -59,6 +59,9 @@ if ($userStatus > -1) {
 $result = $mysqli->select($tableName, $columnArray, $condition);
 $resultArr = array();
 while ($row = mysqli_fetch_assoc($result)) {
+    if ('admin' == $row['username']) {
+        continue;
+    }
     array_push($resultArr, $row);
 }
 

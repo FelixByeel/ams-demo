@@ -45,9 +45,6 @@ function showUserList(userData) {
     tbStr += "</tr>";
 
     for (var i = 0; i < userData.length; i++) {
-        if ('99' === userData[i].role_group) {
-            continue;
-        }
         tbStr += "<tr>";
         tbStr += "<td>" + userData[i].username + "</td>";
         tbStr += "<td>" + userData[i].nick_name + "</td>";
