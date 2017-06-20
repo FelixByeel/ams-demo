@@ -8,6 +8,8 @@
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
     </head>
     <body>
+        <div id = "shade-layer" class = "shadeLayer"></div>
+        <!--content-->
         <div id = "userPageBox" class = "user-page-box">
             <div class = "action-box">
                 <div class = "serch-user-box"></div>
@@ -16,6 +18,19 @@
                 </div>
             </div>
             <div id = "userList" class = "user-list-box"></div>
+        </div>
+
+        <!--edit user's information-->
+        <div id = "editUserInfo" class = "edit-user-info" style="display:none">
+            <p class = "title">编辑用户信息</p>
+            <label for="username">用户名：</label>
+            <input name = "username" type = "text" maxlength="15"/>
+            <label for="nickname">昵称：</label>
+            <input type="text" name="nickname" maxlength="15" value="">
+            <label for="rolegroup">操作权限：</label>
+            <select>
+
+            </select>
         </div>
     </body>
     <script src = "../../public/js/userManagement.js"></script>

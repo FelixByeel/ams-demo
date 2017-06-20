@@ -42,7 +42,7 @@ if (isset ($_POST['searchUser'])) {
 $mysqli = new Msqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
 $tableName = 'user_t';
-$columnArray = array('*');
+$columnArray = array('username', 'nick_name', 'role_group', 'is_enabled', 'last_time');
 $condition = '';
 
 if (!empty($userName)) {
