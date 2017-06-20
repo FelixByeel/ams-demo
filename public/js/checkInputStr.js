@@ -1,22 +1,26 @@
 /**
- * 字符串验证方法
- *
- *
+ * 字符串去除空格和字符串验证
  */
 var checkInputStr = {
 
-    //去除首尾所有空格
+    /**
+     * (method) trimSpace (str : string) : string 去除字符串首尾空格，返回处理后的字符串。
+     */
     trimSpace : function (str) {
         return str.replace(/(^\s*)|(\s*$)/g, "");
     },
 
-    //是否为由数字组成的字符串，数字返回true,含有非数字返回false。
+    /**
+     * (method) isDigital (str : string) : boolean 验证字符串是否全部为数字，含有非数字返回false，否则返回true。
+     */
     isDigital : function (str) {
-        var reg=/^[0-9]*$/;//匹配整数
+        var reg=/^[0-9]*$/;
         return reg.test(str);
     },
 
-    //检测是否存在下列特殊字符，返回该特殊字符。未查找到特殊字符，返回false。
+    /**
+     * (method) isExistSpaecialChar (str : string) : string | false 检测是否存在特殊字符，未查找到特殊字符，返回false，否则返回该特殊字符。
+     */
     isExistSpecialChar : function (str) {
         var specialCharacter = new Array('~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
                 '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '\"', ',', '<', '.', '>', '?',
