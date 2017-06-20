@@ -128,9 +128,11 @@ function editUser(username) {
             "searchUser": searchUser
         },
         function (userData) {
+            $("#uid").val(userData[0].uid);
             $("#username").val(userData[0].username);
             $("#nickname").val(userData[0].nick_name);
             $("#rolegroup").val(userData[0].role_group);
+            $("#editUserInfo").show();
         },
         'json'
     );
@@ -140,9 +142,14 @@ function editUser(username) {
  * save user's information
  */
 function saveUserInfo() {
+    let uid = $("#uid").val();
     let username = $("#username").val();
     let nickname = $("#nickname").val();
     let rolegroup = $("#rolegroup").val();
+
+    if (checkInputStr.isExistSpecialChar(uid)) {
+        return;
+    }
 
     username = checkInputStr.trimSpace(username);
     if (checkInputStr.isExistSpecialChar(username)) {
@@ -162,21 +169,30 @@ function saveUserInfo() {
     }
 
     let userData = {
-        "username":username,
-        "nickname":nickname,
-        "rolegroup":rolegroup
+        "uid": uid,
+        "username": username,
+        "nickname": nickname,
+        "rolegroup": rolegroup
     }
 
     $.post(
         "updateUserInfo.php",
         {
-            "userData":userData
+            "userData": userData
         },
-        function (msg) {
-            alert(msg);
+        function (status) {
+            alert(status);
+            alert(status.info);
+            if(!status.status_id) {
+                statusId = status.status_id;
+                return;
+            }
             initUserList();
-        }
+            $("#editUserInfo").hide();
+        },
+        'json'
     );
+
 }
 //--edit user end
 
