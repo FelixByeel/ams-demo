@@ -109,8 +109,10 @@ function dateFormat(num) {
     return year + '-' + month + '-' + day;
 }
 
+//------------------edit user start---------------------------
+
 /**
- * call edit function
+ * set edit box default value
  * @param {string} username
  */
 function editUser(username) {
@@ -126,21 +128,59 @@ function editUser(username) {
             "searchUser": searchUser
         },
         function (userData) {
-            editUserAction(userData)
+            $("#username").val(userData[0].username);
+            $("#nickname").val(userData[0].nick_name);
+            $("#rolegroup").val(userData[0].role_group);
         },
         'json'
     );
 }
 
 /**
- * edit user's information
- * @param {object} userData
+ * save user's information
  */
-function editUserAction(userData) {
-    console.log("edit:");
-    console.log(userData);
-}
+function saveUserInfo() {
+    let username = $("#username").val();
+    let nickname = $("#nickname").val();
+    let rolegroup = $("#rolegroup").val();
 
+    username = checkInputStr.trimSpace(username);
+    if (checkInputStr.isExistSpecialChar(username)) {
+        alert("用户名不能含有字符：" + checkInputStr.isExistSpecialChar(username));
+        return;
+    }
+
+    nickname = checkInputStr.trimSpace(nickname);
+    if (checkInputStr.isExistSpecialChar(nickname)) {
+        alert("昵称不能含有字符：" + checkInputStr.isExistSpecialChar(nickname));
+        return;
+    }
+
+    if (!checkInputStr.isDigital(rolegroup)) {
+        alert("请重新选择正确的操作权限！");
+        return;
+    }
+
+    let userData = {
+        "username":username,
+        "nickname":nickname,
+        "rolegroup":rolegroup
+    }
+
+    $.post(
+        "updateUserInfo.php",
+        {
+            "userData":userData
+        },
+        function (msg) {
+            alert(msg);
+            initUserList();
+        }
+    );
+}
+//--edit user end
+
+//------------------enable user start-------------------------
 /**
  * enable user
  * @param {string} username
@@ -157,7 +197,9 @@ function enableUser(username) {
         'json'
     );
 }
+//--enable user end
 
+//------------------disable user start-------------------------
 /**
  * disable user
  * @param {string} username
@@ -178,3 +220,4 @@ function sendUserData(userData) {
         'json'
     );
 }
+//--disable user end

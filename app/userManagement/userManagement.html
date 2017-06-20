@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../public/css/userManagement.css" rel="stylesheet" type="text/css" />
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+        <script src = "../../public/js/checkInputStr.js"></script>
     </head>
     <body>
         <div id = "shade-layer" class = "shadeLayer"></div>
@@ -21,16 +22,19 @@
         </div>
 
         <!--edit user's information-->
-        <div id = "editUserInfo" class = "edit-user-info" style="display:none">
-            <p class = "title">编辑用户信息</p>
-            <label for="username">用户名：</label>
-            <input name = "username" type = "text" maxlength="15"/>
-            <label for="nickname">昵称：</label>
-            <input type="text" name="nickname" maxlength="15" value="">
-            <label for="rolegroup">操作权限：</label>
-            <select>
-
-            </select>
+        <div id = "editUserInfo" class = "edit-user-info" style="display:block">
+            <p class = "title">编辑用户信息<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></p>
+            <label for="username" class = "label-name">用户名：</label>
+            <input id = "username" name = "username" type = "text" maxlength="15"/><br/>
+            <label for="nickname" class = "label-name">昵称：</label>
+            <input id = "nickname" type="text" name="nickname" maxlength="15" value=""><br/>
+            <label for="rolegroup" class = "label-name">操作权限：</label>
+            <select id = "rolegroup" name = "rolegroup">
+                <option value="0">查询</option>
+                <option value="1">查询，出库</option>
+                <option value="2">查询，出库，入库</option>
+            </select><br/>
+            <button id="save" onclick="saveUserInfo()">保存</button>
         </div>
     </body>
     <script src = "../../public/js/userManagement.js"></script>

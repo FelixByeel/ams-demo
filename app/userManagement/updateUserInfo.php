@@ -17,3 +17,5 @@ require_once (APP_ROOT.'include/Msqli.class.php');
 if ($_SESSION['role_group'] < 99) {
     die('操作异常！');
 }
+
+var_dump($_POST['userData']);
