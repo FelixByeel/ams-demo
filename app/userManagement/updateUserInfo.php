@@ -33,7 +33,7 @@ else {
 }
 
 if (isset ($userData['uid']) && checkInput($userData['uid']) === false) {
-    $condition = " uid = \'" . $userData['uid'] . "\' ";
+    $condition = " uid = '" . $userData['uid'] . "' ";
 } else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交数据有误！';
@@ -62,7 +62,7 @@ $tableName = 'user_t';
 $sql = 'select uid from ' . $tableName . ' where username = \'' . $userInfo['username'] . '\'';
 $result = $mysqli->query($sql);
 $row = mysqli_fetch_assoc($result);
-if(!empty($row['uid']) && $row['uid'] !== $userData['uid']) {
+if(!empty($row) && $row['uid'] !== $userData['uid']) {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = $userInfo['username'] . ' 已存在，请重新输入一个帐号名！' . $row['uid'] . "--" . $userData['uid'];
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);

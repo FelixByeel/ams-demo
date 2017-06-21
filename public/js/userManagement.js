@@ -181,7 +181,6 @@ function saveUserInfo() {
             "userData": userData
         },
         function (status) {
-            alert(status);
             alert(status.info);
             if(!status.status_id) {
                 statusId = status.status_id;
@@ -192,7 +191,6 @@ function saveUserInfo() {
         },
         'json'
     );
-
 }
 //--edit user end
 
@@ -202,13 +200,23 @@ function saveUserInfo() {
  * @param {string} username
  */
 function enableUser(username) {
+    let searchUser = {
+        "userName": username,
+        "userStatus": -1
+    }
+    let uri = "getUserListService.php";
+
     $.post(
         uri,
         {
-            "searchUser": searchUser
+            "searchUser":searchUser
         },
         function (userData) {
-
+            let userInfo = {
+                "uid":userData[0].uid,
+                "is_enabled":1
+            }
+            sendUserData(userInfo);
         },
         'json'
     );
@@ -221,19 +229,41 @@ function enableUser(username) {
  * @param {string} username
  */
 function disableUser(username) {
-    console.log('disable:' + username);
-}
+    let searchUser = {
+        "userName": username,
+        "userStatus": -1
+    }
+    let uri = "getUserListService.php";
 
-function sendUserData(userData) {
     $.post(
         uri,
         {
-            "updateUserInfo.php": userData
+            "searchUser":searchUser
         },
         function (userData) {
-            showUserList(userData);
+            let userInfo = {
+                "uid":userData[0].uid,
+                "is_enabled":0
+            }
+            sendUserData(userInfo);
         },
         'json'
     );
+}//--disable user end
+
+/**
+ * send update data
+ * @param {object} userData
+ */
+function sendUserData(userData) {
+    $.post(
+        "updateUserInfo.php",
+        {
+            "userData": userData
+        },
+        function () {
+            initUserList();
+        }
+    );
 }
-//--disable user end
+
