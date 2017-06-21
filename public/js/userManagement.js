@@ -45,49 +45,54 @@ function showUserList(userData)
 {
     let userListDom = document.getElementById("userList");
     let tbStr = "<table class = 'user-list-table'>";
-    tbStr += "<tr>";
-    tbStr += "<th>用户名</th>";
-    tbStr += "<th>昵称</th>";
-    tbStr += "<th>操作权限</th>";
-    tbStr += "<th>帐号状态</th>";
-    tbStr += "<th>最后登录时间</th>";
-    tbStr += "<th colspan = '2'>管理</th>"
+    tbStr += "<tr class = 'table-title'>";
+    tbStr += "<td>用户名</td>";
+    tbStr += "<td>昵称</td>";
+    tbStr += "<td>操作权限</td>";
+    tbStr += "<td>帐号状态</td>";
+    tbStr += "<td>最后登录时间</td>";
+    tbStr += "<td colspan = '2'>管理</td>"
     tbStr += "</tr>";
 
     for (var i = 0; i < userData.length; i++) {
-        tbStr += "<tr>";
-        tbStr += "<td>" + userData[i].username + "</td>";
-        tbStr += "<td>" + userData[i].nick_name + "</td>";
+        if(i % 2) {
+            tbStr += "<tr class = 'odd-row'>";
+        } else {
+            tbStr += "<tr class = 'even-row'>";
+        }
+
+        tbStr += "<td class = 'td-username td-content'>" + userData[i].username + "</td>";
+        tbStr += "<td class = 'td-nickname td-content'>" + userData[i].nick_name + "</td>";
 
         switch (userData[i].role_group) {
-            case '0': tbStr += "<td>查询</td>";
+            case '0': tbStr += "<td class = 'td-rolegroup td-content'>查询</td>";
                 break;
-            case '1': tbStr += "<td>查询，出库</td>";
+            case '1': tbStr += "<td class = 'td-rolegroup td-content'>查询，出库</td>";
                 break;
-            case '2': tbStr += "<td>查询，出库，入库</td>";
+            case '2': tbStr += "<td class = 'td-rolegroup td-content'>查询，出库，入库</td>";
                 break;
-            default: tbStr += "<td>-</td>";
+            default: tbStr += "<td class = 'td-rolegroup td-content'>-</td>";
                 break;
         }
 
         if ('1' === userData[i].is_enabled) {
-            tbStr += "<td>启用</td>";
+            tbStr += "<td class = 'td-enabled td-content'>启用</td>";
         } else {
-            tbStr += "<td>禁用</td>";
+            tbStr += "<td class = 'td-disabled td-content'>禁用</td>";
         }
 
         if ('0' !== userData[i].last_time) {
-            tbStr += "<td>" + dateFormat(userData[i].last_time) + "</td>";
+            tbStr += "<td class = 'td-lasttime td-content'>" + dateFormat(userData[i].last_time) + "</td>";
         } else {
-            tbStr += "<td>-</td>";
+            tbStr += "<td class = 'td-lasttime td-content'>-</td>";
         }
 
-        tbStr += "<td><button onclick = 'editUser(\"" + userData[i].username + "\")'>编辑</button></td>";
+        tbStr += "<td class = 'td-btn td-content'><button onclick = 'editUser(\"" + userData[i].username + "\")'>编辑</button></td>";
 
         if ('1' === userData[i].is_enabled) {
-            tbStr += "<td><button onclick = 'disableUser(\"" + userData[i].username + "\")'>禁用</button></td>";
+            tbStr += "<td class = 'td-btn td-content'><button onclick = 'disableUser(\"" + userData[i].username + "\")'>禁用</button></td>";
         } else {
-            tbStr += "<td><button onclick = 'enableUser(\"" + userData[i].username + "\")'>启用</button></td>";
+            tbStr += "<td class = 'td-btn td-content'><button onclick = 'enableUser(\"" + userData[i].username + "\")'>启用</button></td>";
         }
 
         tbStr += "</tr>";
