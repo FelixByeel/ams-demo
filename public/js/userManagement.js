@@ -103,19 +103,31 @@ function showUserList(userData)
 }
 
 /**
- * 格式化Unix时间戳为‘0000-00-00’格式的日期。num可以为UNIX时间戳整数或者UNIX时间戳字符串
+ * 格式化Unix时间戳为‘0000-00-00 00:00:00’格式的日期。num可以为UNIX时间戳整数或者UNIX时间戳字符串
+ * 
+ * (method) dateFormat (string : num) : string
  * @param {string} num
  */
 function dateFormat(num)
 {
     let dateNum = parseInt(num) * 1000;
+
     let dateObj = new Date(dateNum);
+
     let year = dateObj.getFullYear();
+
     let month = dateObj.getMonth() + 1;
     month = month < 10 ? '0' + month : month;
-    let day = dateObj.getDate();
-    day = day < 10 ? '0' + day : day;
-    return year + '-' + month + '-' + day;
+
+    let date = dateObj.getDate();
+    date = date < 10 ? '0' + date : date;
+
+    let hours = dateObj.getHours();
+
+    let minutes = dateObj.getMinutes();
+
+    let seconds = dateObj.getSeconds();
+    return year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
 }
 
 //------------------edit user start---------------------------

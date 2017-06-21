@@ -16,7 +16,7 @@ if(isset($_POST['username']) && isset($_POST['userpwd'])){
     $password = mysqli_real_escape_string($mysqli->getLink(), $_POST['userpwd']);
 
     $tableName = 'user_t';
-    $condition = "username = '$username' and userpwd = '$password'";
+    $condition = " username = '$username' and userpwd = '$password'";
 
     $result = $mysqli->select($tableName, array('*'), $condition);
 
@@ -25,6 +25,10 @@ if(isset($_POST['username']) && isset($_POST['userpwd'])){
         if(!$row['is_enabled']){
             die('帐号已禁用');
         }
+
+        $recordData['last_time'] = strtotime('now');
+        $condition = " username = '" . $username . "'";
+        $mysqli->update($tableName, $recordData, $condition);
 
         session_start();
 
@@ -48,3 +52,4 @@ else{
             window.location.href='../../';
           </script>";
 }
+
