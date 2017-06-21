@@ -8,7 +8,8 @@ window.onload = function () {
 /**
  * initialize user list
  */
-function initUserList() {
+function initUserList()
+{
     let searchUser = {
         "userName": "",
         "userStatus": -1
@@ -22,7 +23,8 @@ function initUserList() {
  * @param {string} uri          获取数据的地址
  * @param {object} searchUser   需要发送的数据
  */
-function getUserList(uri, searchUser) {
+function getUserList(uri, searchUser)
+{
     $.post(
         uri,
         {
@@ -39,7 +41,8 @@ function getUserList(uri, searchUser) {
  * 以table形式输出userData里的用户信息到浏览器
  * @param {object} userData
  */
-function showUserList(userData) {
+function showUserList(userData)
+{
     let userListDom = document.getElementById("userList");
     let tbStr = "<table class = 'user-list-table'>";
     tbStr += "<tr>";
@@ -98,7 +101,8 @@ function showUserList(userData) {
  * 格式化Unix时间戳为‘0000-00-00’格式的日期。num可以为UNIX时间戳整数或者UNIX时间戳字符串
  * @param {string} num
  */
-function dateFormat(num) {
+function dateFormat(num)
+{
     let dateNum = parseInt(num) * 1000;
     let dateObj = new Date(dateNum);
     let year = dateObj.getFullYear();
@@ -115,7 +119,8 @@ function dateFormat(num) {
  * set edit box default value
  * @param {string} username
  */
-function editUser(username) {
+function editUser(username)
+{
     let searchUser = {
         "userName": username,
         "userStatus": -1
@@ -141,7 +146,8 @@ function editUser(username) {
 /**
  * save user's information
  */
-function saveUserInfo() {
+function saveUserInfo()
+{
     let uid = $("#uid").val();
     let username = $("#username").val();
     let nickname = $("#nickname").val();
@@ -182,7 +188,7 @@ function saveUserInfo() {
         },
         function (status) {
             alert(status.info);
-            if(!status.status_id) {
+            if (!status.status_id) {
                 statusId = status.status_id;
                 return;
             }
@@ -199,7 +205,8 @@ function saveUserInfo() {
  * enable user
  * @param {string} username
  */
-function enableUser(username) {
+function enableUser(username)
+{
     let searchUser = {
         "userName": username,
         "userStatus": -1
@@ -209,12 +216,12 @@ function enableUser(username) {
     $.post(
         uri,
         {
-            "searchUser":searchUser
+            "searchUser": searchUser
         },
         function (userData) {
             let userInfo = {
-                "uid":userData[0].uid,
-                "is_enabled":1
+                "uid": userData[0].uid,
+                "is_enabled": 1
             }
             sendUserData(userInfo);
         },
@@ -228,7 +235,8 @@ function enableUser(username) {
  * disable user
  * @param {string} username
  */
-function disableUser(username) {
+function disableUser(username)
+{
     let searchUser = {
         "userName": username,
         "userStatus": -1
@@ -238,12 +246,12 @@ function disableUser(username) {
     $.post(
         uri,
         {
-            "searchUser":searchUser
+            "searchUser": searchUser
         },
         function (userData) {
             let userInfo = {
-                "uid":userData[0].uid,
-                "is_enabled":0
+                "uid": userData[0].uid,
+                "is_enabled": 0
             }
             sendUserData(userInfo);
         },
@@ -255,7 +263,8 @@ function disableUser(username) {
  * send update data
  * @param {object} userData
  */
-function sendUserData(userData) {
+function sendUserData(userData)
+{
     $.post(
         "updateUserInfo.php",
         {
@@ -267,3 +276,100 @@ function sendUserData(userData) {
     );
 }
 
+/**
+ * close pop-layer
+ * @param {string} str
+ */
+function closePopLayer (str)
+{
+    if ("editUserInfo" === str) {
+        $("#editUserInfo").hide();
+    } else if ("addUserInfo" === str) {
+        $("#addUserInfo").hide();
+    }
+}
+
+//---------------add user start-------------------
+function showAddUserBox() {
+    $("#addUserInfo").show();
+    $("#usernameAdd").val("");
+    $("#nicknameAdd").val("");
+    $("#userpwd").val("123456");
+}
+
+function addUserInfo() {
+    //get input user data and check
+    let username = $("#usernameAdd").val();
+    let userpwd = $("#userpwd").val();
+    let nickname = $("#nicknameAdd").val();
+    let rolegroup = $("#rolegroupAdd").val();
+
+    username = checkInputStr.trimSpace(username);
+    if("" === username) {
+        alert("用户名不能为空！");
+        $("#usernameAdd").focus();
+        return;
+    }
+
+    if(checkInputStr.isExistSpecialChar(username)) {
+        alert("用户名中不能含有字符：" + checkInputStr.isExistSpecialChar(username));
+        $("#usernameAdd").focus();
+        return;
+    }
+
+    nickname = checkInputStr.trimSpace(nickname);
+    if("" === nickname) {
+        alert("昵称不能为空！");
+        $("#nickname").focus();
+        return;
+    }
+
+    if(checkInputStr.isExistSpecialChar(nickname)) {
+        alert("用户名中不能含有字符：" + checkInputStr.isExistSpecialChar(nickname));
+        $("#nicknameAdd").focus();
+        return;
+    }
+
+    if("" === userpwd) {
+        alert("用密码不能为空！");
+        $("#userpwd").focus();
+        return;
+    }
+
+    if(userpwd.length < 6) {
+        alert("密码长度不能小于6位！");
+        $("#userpwd").focus();
+        return;
+    }
+
+    for(let i = 0; i < userpwd.length; i++) {
+        if(userpwd.charCodeAt(i) < 0 || userpwd.charCodeAt(i) > 255) {
+            alert("密码只能包含数字、英文字母、符号等字符。");
+            $("#userpwd").focus();
+            return;
+        }
+    }
+
+    let userData = {
+        "username":username,
+        "nickname":nickname,
+        "userpwd":userpwd,
+        "rolegroup":rolegroup
+    }
+
+    $.post(
+        "addUserService.php",
+        {
+            "userData":userData
+        },
+        function (status) {
+            alert(status.info);
+            if (!status.status_id) {
+                return;
+            }
+            $("#addUserInfo").hide();
+            initUserList();
+        },
+        "json"
+    );
+}

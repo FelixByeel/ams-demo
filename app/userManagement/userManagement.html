@@ -15,15 +15,15 @@
             <div class = "action-box">
                 <div class = "serch-user-box"></div>
                 <div class = "add-user-box">
-                    <button>add user 添加用户</button>
+                    <button class = "show-add-box" onclick = "showAddUserBox()">添加用户</button>
                 </div>
             </div>
             <div id = "userList" class = "user-list-box"></div>
         </div>
 
-        <!--edit user's information-->
+        <!--edit user poplayer-->
         <div id = "editUserInfo" class = "edit-user-info" style="display:none">
-            <p class = "title">编辑用户信息<span class = "close-poplayer" onclick="closePopLayer()">&times;</span></p>
+            <p class = "title">编辑用户信息<span class = "close-poplayer" onclick="closePopLayer('editUserInfo')">&times;</span></p>
             <input id="uid" style="display:none" value=""/>
             <label for="username" class = "label-name">用户名：</label>
             <input id = "username" name = "username" type = "text" maxlength="15"/><br/>
@@ -36,6 +36,27 @@
                 <option value="2">查询，出库，入库</option>
             </select><br/>
             <button id="save" onclick="saveUserInfo()">保存</button>
+        </div>
+
+        <!--add user poplayer-->
+        <div id = "addUserInfo" class = "add-user-info" style="display:none">
+            <p class = "title">添加用户<span class = "close-poplayer" onclick="closePopLayer('addUserInfo')">&times;</span></p>
+            <label for="usernameAdd" class = "label-name">用户名：</label>
+            <input id = "usernameAdd" name = "usernameAdd" type = "text" maxlength="15"/><br/>
+
+            <label for="nicknameAdd" class = "label-name">昵称：</label>
+            <input id = "nicknameAdd" type="text" name="nicknameAdd" maxlength="15" value=""><br/>
+
+            <label for ="userpwd" class = "label-name">初始密码</label>
+            <input id = "userpwd" name = "userpwd" type = "text" maxlength = "15" value = "123456" /><br/>
+
+            <label for="rolegroupAdd" class = "label-name">操作权限：</label>
+            <select id = "rolegroupAdd" name = "rolegroupAdd">
+                <option value="0">查询</option>
+                <option value="1">查询，出库</option>
+                <option value="2">查询，出库，入库</option>
+            </select><br/>
+            <button class = "add-btn" onclick="addUserInfo()">确认</button>
         </div>
     </body>
     <script src = "../../public/js/userManagement.js"></script>
