@@ -23,40 +23,44 @@
 
         <!--edit user poplayer-->
         <div id = "editUserInfo" class = "edit-user-info" style="display:none">
-            <p class = "title">编辑用户信息<span class = "close-poplayer" onclick="closePopLayer('editUserInfo')">&times;</span></p>
-            <input id="uid" style="display:none" value=""/>
-            <label for="username" class = "label-name">用户名：</label>
-            <input id = "username" name = "username" type = "text" maxlength="15"/><br/>
-            <label for="nickname" class = "label-name">昵称：</label>
-            <input id = "nickname" type="text" name="nickname" maxlength="15" value=""><br/>
-            <label for="rolegroup" class = "label-name">操作权限：</label>
-            <select id = "rolegroup" name = "rolegroup">
-                <option value="0">查询</option>
-                <option value="1">查询，出库</option>
-                <option value="2">查询，出库，入库</option>
-            </select><br/>
-            <button id="save" onclick="saveUserInfo()">保存</button>
+            <p class = "pop-layer-title">编辑用户信息<span class = "close-poplayer" onclick="closePopLayer('editUserInfo')">&times;</span></p>
+            <div class = "input-box">
+                <input id="uid" style="display:none" value=""/>
+                <label for="username" class = "label-name">帐号名：<input id = "username" class = "edit-username-input" name = "username" type = "text" maxlength="15"/></label>
+
+                <label for="nickname" class = "label-name">用户昵称：<input id = "nickname" type="text" name="nickname" maxlength="15" value=""></label>
+
+                <label for="rolegroup" class = "label-name">操作权限：
+                    <select id = "rolegroup" class = "edit-role-group-select" name = "rolegroup">
+                        <option value="0">查询</option>
+                        <option value="1">查询，出库</option>
+                        <option value="2">查询，出库，入库</option>
+                    </select>
+                </label>
+
+                <button id="save" class = "edit-save-btn" onclick="saveUserInfo()">保存</button>
+            </div>
         </div>
 
         <!--add user poplayer-->
         <div id = "addUserInfo" class = "add-user-info" style="display:none">
-            <p class = "title">添加用户<span class = "close-poplayer" onclick="closePopLayer('addUserInfo')">&times;</span></p>
-            <label for="usernameAdd" class = "label-name">用户名：</label>
-            <input id = "usernameAdd" name = "usernameAdd" type = "text" maxlength="15"/><br/>
+                <p class = "pop-layer-title">添加用户<span class = "close-poplayer" onclick="closePopLayer('addUserInfo')">&times;</span></p>
+                <div class = "input-box">
+                <label for="usernameAdd" class = "label-name">帐号名：<input id = "usernameAdd" class = "add-username-input" name = "usernameAdd" type = "text" maxlength="15"/></label>
 
-            <label for="nicknameAdd" class = "label-name">昵称：</label>
-            <input id = "nicknameAdd" type="text" name="nicknameAdd" maxlength="15" value=""><br/>
+                <label for="nicknameAdd" class = "label-name">用户昵称：<input id = "nicknameAdd" type="text" name="nicknameAdd" maxlength="15" value=""></label>
 
-            <label for ="userpwd" class = "label-name">初始密码</label>
-            <input id = "userpwd" name = "userpwd" type = "text" maxlength = "15" value = "123456" /><br/>
+                <label for ="userpwd" class = "label-name">初始密码：<input id = "userpwd" name = "userpwd" type = "text" maxlength = "15" value = "123456" /></label>
 
-            <label for="rolegroupAdd" class = "label-name">操作权限：</label>
-            <select id = "rolegroupAdd" name = "rolegroupAdd">
-                <option value="0">查询</option>
-                <option value="1">查询，出库</option>
-                <option value="2">查询，出库，入库</option>
-            </select><br/>
-            <button class = "add-btn" onclick="addUserInfo()">确认</button>
+                <label for="rolegroupAdd" class = "label-name">操作权限：
+                    <select id = "rolegroupAdd" class = "add-role-group-select" name = "rolegroupAdd">
+                        <option value="0">查询</option>
+                        <option value="1">查询，出库</option>
+                        <option value="2">查询，出库，入库</option>
+                    </select>
+                </label>
+                <button class = "add-save-btn" onclick="addUserInfo()">保存</button>
+            </div>
         </div>
     </body>
     <script src = "../../public/js/userManagement.js"></script>

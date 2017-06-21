@@ -46,12 +46,12 @@ function showUserList(userData)
     let userListDom = document.getElementById("userList");
     let tbStr = "<table class = 'user-list-table'>";
     tbStr += "<tr class = 'table-title'>";
-    tbStr += "<td>用户名</td>";
-    tbStr += "<td>昵称</td>";
-    tbStr += "<td>操作权限</td>";
-    tbStr += "<td>帐号状态</td>";
-    tbStr += "<td>最后登录时间</td>";
-    tbStr += "<td colspan = '2'>管理</td>"
+    tbStr += "<td class = 'td-title'>帐号名</td>";
+    tbStr += "<td class = 'td-title'>用户昵称</td>";
+    tbStr += "<td class = 'td-title'>操作权限</td>";
+    tbStr += "<td class = 'td-title'>帐号状态</td>";
+    tbStr += "<td class = 'td-title'>最后登录时间</td>";
+    tbStr += "<td class = 'td-title'>管理</td>"
     tbStr += "</tr>";
 
     for (var i = 0; i < userData.length; i++) {
@@ -76,9 +76,9 @@ function showUserList(userData)
         }
 
         if ('1' === userData[i].is_enabled) {
-            tbStr += "<td class = 'td-enabled td-content'>启用</td>";
+            tbStr += "<td class = 'td-enabled td-content'><span class = 'enabled'>启用</span></td>";
         } else {
-            tbStr += "<td class = 'td-disabled td-content'>禁用</td>";
+            tbStr += "<td class = 'td-disabled td-content'><span class = 'disabled'>禁用</span></td>";
         }
 
         if ('0' !== userData[i].last_time) {
@@ -87,15 +87,15 @@ function showUserList(userData)
             tbStr += "<td class = 'td-lasttime td-content'>-</td>";
         }
 
-        tbStr += "<td class = 'td-btn td-content'><button onclick = 'editUser(\"" + userData[i].username + "\")'>编辑</button></td>";
+        tbStr += "<td class = 'td-btn td-content'><button class = 'edit-btn' onclick = 'editUser(\"" + userData[i].username + "\")'>编辑</button>";
 
         if ('1' === userData[i].is_enabled) {
-            tbStr += "<td class = 'td-btn td-content'><button onclick = 'disableUser(\"" + userData[i].username + "\")'>禁用</button></td>";
+            tbStr += "<button class = 'disable-btn change-btn' onclick = 'disableUser(\"" + userData[i].username + "\")'>禁用</button>";
         } else {
-            tbStr += "<td class = 'td-btn td-content'><button onclick = 'enableUser(\"" + userData[i].username + "\")'>启用</button></td>";
+            tbStr += "<button class = 'enable-btn change-btn' onclick = 'enableUser(\"" + userData[i].username + "\")'>启用</button>";
         }
 
-        tbStr += "</tr>";
+        tbStr += "</td></tr>";
     }
 
     tbStr += "</table>";
@@ -126,6 +126,9 @@ function dateFormat(num)
  */
 function editUser(username)
 {
+    //显示遮罩层
+    $("#shade-layer").width("100%");
+    $("#shade-layer").height("100%");
     let searchUser = {
         "userName": username,
         "userStatus": -1
@@ -199,6 +202,8 @@ function saveUserInfo()
             }
             initUserList();
             $("#editUserInfo").hide();
+            $("#shade-layer").width("0");
+            $("#shade-layer").height("0");
         },
         'json'
     );
@@ -292,6 +297,9 @@ function closePopLayer (str)
     } else if ("addUserInfo" === str) {
         $("#addUserInfo").hide();
     }
+
+    $("#shade-layer").width("0");
+    $("#shade-layer").height("0");
 }
 
 //---------------add user start-------------------
@@ -300,6 +308,10 @@ function showAddUserBox() {
     $("#usernameAdd").val("");
     $("#nicknameAdd").val("");
     $("#userpwd").val("123456");
+
+    //显示遮罩层
+    $("#shade-layer").width("100%");
+    $("#shade-layer").height("100%");
 }
 
 function addUserInfo() {
@@ -373,6 +385,8 @@ function addUserInfo() {
                 return;
             }
             $("#addUserInfo").hide();
+            $("#shade-layer").width("0");
+            $("#shade-layer").height("0");
             initUserList();
         },
         "json"
