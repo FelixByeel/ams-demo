@@ -14,7 +14,7 @@ if(isset($_POST['username']) && isset($_POST['userpwd'])){
 
     $username = mysqli_real_escape_string($mysqli->getLink(), $_POST['username']);
     $password = mysqli_real_escape_string($mysqli->getLink(), $_POST['userpwd']);
-
+    $password = MD5($password);
     $tableName = 'user_t';
     $condition = " username = '$username' and userpwd = '$password'";
 

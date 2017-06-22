@@ -53,7 +53,7 @@ if (isset($userData['nickname']) && checkInput($userData['nickname']) === false)
 
 //password
 if (isset($userData['userpwd']) && !empty($userData['userpwd'])) {
-    $userInfo['userpwd'] = $userData['userpwd'];
+    $userInfo['userpwd'] = MD5($userData['userpwd']);
 } else {
     $returnStatus['status_id'] = 0;
     $returnStatus['info'] = '提交数据有误！';
