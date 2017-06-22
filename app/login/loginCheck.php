@@ -7,7 +7,7 @@ if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])){
     <script language='javascript' type='text/javascript'>
         var timer = setInterval('goToLogin()', 3000);
         function goToLogin () {
-            window.location.href='index.php';
+            window.location.href='../../index.php';
         }
     </script>
     ");
