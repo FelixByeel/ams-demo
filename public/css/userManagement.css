@@ -122,8 +122,8 @@ html, body{
 .edit-user-info, .add-user-info{
     width: 700px;
     height: 400px;
-    position: absolute;
-    margin: 8% 30%;
+    position: relative;
+    margin: 5% auto;
     z-index: 10;
     background-color: #FFF;
     box-shadow: 1px 1px 10px 1px #000;
@@ -131,9 +131,9 @@ html, body{
 }
 
 .input-box{
-    margin: 10% auto;
+    margin: 0 auto;
+    padding: 5% 0;
     width: 400px;
-    height: 400px;
 }
 
 .label-name{

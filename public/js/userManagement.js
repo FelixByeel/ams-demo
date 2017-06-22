@@ -46,7 +46,7 @@ function showUserList(userData)
     let userListDom = document.getElementById("userList");
     let tbStr = "<table class = 'user-list-table'>";
     tbStr += "<tr class = 'table-title'>";
-    tbStr += "<td class = 'td-title'>帐号名</td>";
+    tbStr += "<td class = 'td-title'>用户名</td>";
     tbStr += "<td class = 'td-title'>用户昵称</td>";
     tbStr += "<td class = 'td-title'>操作权限</td>";
     tbStr += "<td class = 'td-title'>帐号状态</td>";
@@ -104,7 +104,7 @@ function showUserList(userData)
 
 /**
  * 格式化Unix时间戳为‘0000-00-00 00:00:00’格式的日期。num可以为UNIX时间戳整数或者UNIX时间戳字符串
- * 
+ *
  * (method) dateFormat (string : num) : string
  * @param {string} num
  */
@@ -123,10 +123,14 @@ function dateFormat(num)
     date = date < 10 ? '0' + date : date;
 
     let hours = dateObj.getHours();
+    hours = hours < 10 ? '0' + hours : hours;
 
     let minutes = dateObj.getMinutes();
+    minutes = minutes < 10 ? '0' + minutes : minutes;
 
     let seconds = dateObj.getSeconds();
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
     return year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
 }
 
