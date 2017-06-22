@@ -34,6 +34,10 @@ $(document).ready(function(){
     $("#profile_box").mouseleave(function(){
         hideProfileBox();
     });
+
+    $("#profile_box").click(function(){
+        hideProfileBox();
+    });
 });
 
 //创建tab
@@ -136,8 +140,8 @@ $(document).ready(function(){
             </span>
             <div id = "profile_box" >
                 <ul id = "profile_box_ul">
-                    <li >修改密码</li>
-                    <li  onClick = "location.href='app/login/logOff.php'">注销</li>
+                    <li onClick = "loadCon('addwarehouse','app/userManagement/modify-password.php','修改密码');">修改密码</li>
+                    <li onClick = "location.href='app/login/logOff.php'">注销</li>
                 </ul>
             </div>
         </div>
