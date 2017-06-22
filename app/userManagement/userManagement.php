@@ -65,7 +65,7 @@
                 <label for="rolegroupAdd" class = "label-name">操作权限：
                     <select id = "rolegroupAdd" class = "add-role-group-select" name = "rolegroupAdd">
                         <option value="0">查询</option>
-                        <option value="1">查询，出库</option>
+                        <option value="1" selected = "selected">查询，出库</option>
                         <option value="2">查询，出库，入库</option>
                     </select>
                 </label>
