@@ -65,7 +65,7 @@ function editItem(currentSelectedId) {
     $("#shadeBox").height("100%");
 
     //弹出窗口时，阻止页面滚动。
-    document.documentElement.style.overflow = "hidden";
+    //document.documentElement.style.overflow = "hidden";
 
     //弹出编辑窗口，先清空原来的内容。然后显示当前要编辑的内容。
     $("#editBox").show();
@@ -179,9 +179,10 @@ $("#saveButton").click(function () {
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    /*
     if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
-    }
+    }*/
 });
 
 //点击弹出窗口右上角X
@@ -191,9 +192,10 @@ function closePopLayer() {
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    /*
     if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
-    }
+    }*/
 }
 
 //删除(此为保留功能，暂不实现)

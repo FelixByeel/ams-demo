@@ -63,7 +63,7 @@ function checkoutItem(currentSelectedId) {
     $("#shadeBox").height("100%");
 
     //弹出窗口时，阻止页面滚动。
-    document.documentElement.style.overflow = "hidden";
+    //document.documentElement.style.overflow = "hidden";
 
     //弹出编辑窗口
     $("#checkOutPopLayer").show();
@@ -194,9 +194,10 @@ function hideCheckOutPopLayer() {
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    /*
     if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
-    }
+    }*/
 }
 
 //点击弹出窗口右上角X
@@ -206,7 +207,8 @@ function closePopLayer() {
     $("#shadeBox").height("0");
 
     //判断是否应该出现垂直滚动条，-4是考虑到浏览器边框
+    /*
     if (document.documentElement.clientWidth < document.documentElement.offsetWidth - 4) {
         document.documentElement.style.overflowY = "scroll";
-    }
+    }*/
 }
