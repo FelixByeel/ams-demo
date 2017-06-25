@@ -29,6 +29,8 @@ if ($_SESSION['role_group'] < 99) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/style.css" rel="stylesheet">
+        <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
+        <script src = "../../public/js/set-default-password.js"></script>
     </head>
     <body>
         <div class = "reset-pwd-box">
