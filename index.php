@@ -24,7 +24,7 @@ html,body{
     padding:0;
     text-align:center;
     font-family:"Microsoft YaHei", "Varela Round", Arial,"SimHei", Helvetica, sans-serif;
-    background-color:#DDDDDD;
+    background-color:#ddd;
 }
 
 #login_box{
@@ -32,7 +32,7 @@ html,body{
     margin-top:10%;
     box-shadow:1px 1px 20px 10px #000;
     -webkit-box-shadow:1px 1px 20px 10px #000;
-    background-color:#444444;
+    background-color:#0B7781;
 }
 
 p{
@@ -42,7 +42,7 @@ p{
 }
 #errorinfo{
     display:block;
-    color:#ff0000;
+    color:#FE5F55;
 }
 
 #form_box{
@@ -55,10 +55,10 @@ input{
     list-style-type:none;
     border-radius:3px;
     -webkit-border-radius:3px;
-    border:1px solid #FFF;
+    border:1px solid #444;
     font-family:"Microsoft YaHei", "Varela Round", Arial,"SimHei", Helvetica, sans-serif;
-    color:#FFF;
-    background-color:#686859;
+    color:#000;
+    background-color:#DDD;
 }
 
 #username,#userpwd{
@@ -75,12 +75,13 @@ input{
     -webkit-appearance:none;
     width:200px;
     height:30px;
-    border:1px solid #00BBFF;
+    border:1px solid #F79F79;
     box-shadow:1px 1px 1px 1px #000000 ;
     -webkit-box-shadow:1px 1px 1px 1px #000000;
+    border-radius: 5px;
     font-size:1em;
-    background-color:#00BBFF;
-    color:#FFF;
+    background-color:#F79F79;
+    color:#000;
     font-family:"Microsoft YaHei", "Varela Round", Arial,"SimHei", Helvetica, sans-serif;
 }
 
@@ -118,8 +119,7 @@ a#forget:hover{
                 <label>
                     <input id = "rememberpwd" name = "rememberpwd" type="checkbox"/>记住密码
                 </label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="forget" href="#">忘记密码</a>
-            <button id = "login_btn" onclick = "login_submit()">登录</button>
+            <button id = "login_btn" onclick = "login_submit()">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
         </div>
 </div>
 </body>
