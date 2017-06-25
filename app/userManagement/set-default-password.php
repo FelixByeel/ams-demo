@@ -1,5 +1,5 @@
 <?php
-//查询用户
+
 //定义根目录,加载相关文件
 define('APP_ROOT', dirname(dirname(__DIR__)).'/');
 
@@ -20,3 +20,27 @@ if ($_SESSION['role_group'] < 99) {
     echo json_encode($returnStatus, JSON_UNESCAPED_UNICODE);
     exit();
 }
+
+?>
+<!--重置密码-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class = "reset-pwd-box">
+            <div class = "input-box">
+                <label>用户名：<input id = "usernameIpt" class = "username-input" type = "text" maxlength = "15" /></label>
+                <label>默认密码：<input id = "userpwdIpt" class = "userpwd-input" type = "text" maxlength = "15" value = "123456" /></label>
+            </div>
+            <div id = "tipsBox" class = "tips-box"></div>
+            <div class = "btn-box">
+                <button id = "resetBtn" class = "reset-btn" >重置</button>
+            </div>
+
+        </div>
+    </body>
+</html>
