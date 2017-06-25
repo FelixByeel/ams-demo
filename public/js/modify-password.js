@@ -44,7 +44,6 @@ function sendPwd(oldPwd, newPwd) {
             "newPwd": newPwd
         },
         function (status) {
-            console.log(status);
             if (1 === status['status_id']) {
                 $("#modifyPwdBox").text(status['info']);
             } else {
