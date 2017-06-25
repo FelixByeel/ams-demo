@@ -206,7 +206,7 @@ function saveUserInfo()
     }
 
     $.post(
-        "updateUserInfo.php",
+        "updateUserInfoService.php",
         {
             "userData": userData
         },
@@ -292,7 +292,7 @@ function disableUser(username)
 function sendUserData(userData)
 {
     $.post(
-        "updateUserInfo.php",
+        "updateUserInfoService.php",
         {
             "userData": userData
         },
