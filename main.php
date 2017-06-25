@@ -140,7 +140,7 @@ $(document).ready(function(){
             </span>
             <div id = "profile_box" >
                 <ul id = "profile_box_ul">
-                    <li onClick = "loadCon('addwarehouse','app/userManagement/modify-password.php','修改密码');">修改密码</li>
+                    <li onClick = "loadCon('modify-password','app/userManagement/modify-password.php','修改密码');">修改密码</li>
                     <li onClick = "location.href='app/login/logOff.php'">注销</li>
                 </ul>
             </div>
@@ -153,7 +153,8 @@ $(document).ready(function(){
                     <?php
                         if (($_SESSION['username'] == 'admin') && $_SESSION['role_group'] == 99) {
                             echo "
-                                <li class = 'nav_li' onclick = \"loadCon('admin', 'app/userManagement/userManagement.php', '用户管理');\">用户管理</li>
+                                <li class = 'nav_li' onclick = \"loadCon('user-management', 'app/userManagement/userManagement.php', '用户管理');\">用户管理</li>
+                                <li class = 'nav_li' onclick = \"loadCon('set-default-password', 'app/userManagement/set-default-password.php', '密码重置');\">密码重置</li>
                             ";
                         }
                         else{
