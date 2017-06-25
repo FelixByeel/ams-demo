@@ -13,7 +13,7 @@ if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])){
     ");
 }
 ?>
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
 <title>资产管理系统</title>
@@ -141,7 +141,6 @@ $(document).ready(function(){
 </script>
 
 </head>
-<div id = "compute"></div>
 <body>
     <div id = "bodybox">
         <!--头部信息-->
@@ -193,7 +192,7 @@ $(document).ready(function(){
             <!--TAB标签box-->
             <div id = "tab_box">
                 <ul id = "tab_ul">
-                    <li id = "tab_default" class = "tab_enable"><span class="tab_title default-page-title" >首页</span><span class = "refresh" title = "刷新" onclick = "loadAllPage()">&#8631</span></li>
+                    <li id = "tab_default" class = "tab_enable"><span class="tab_title default-page-title" >首页</span><span class = "refresh" title = "刷新" onclick = "loadAllPage()">&#8631;</span></li>
                 </ul>
             </div>
             <!-- 内容 -->
@@ -219,7 +218,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--footer-->
-        <div id = "footer">&copy <?php echo date('Y'); ?>.</div>
+        <div id = "footer">&copy; <?php echo date('Y'); ?>.</div>
     </div>
 </body>
 </html>
