@@ -28,7 +28,7 @@ if ($_SESSION['role_group'] < 99) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="../../public/css/set-default-password.css" rel="stylesheet">
         <script src = "../../public/js/jquery-1.8.3/jquery.js"></script>
         <script src = "../../public/js/set-default-password.js"></script>
     </head>
