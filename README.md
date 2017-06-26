@@ -1,4 +1,4 @@
->本系统开发环境<br/>
+>本系统基于PHP开发，系统环境配置如下：<br/>
 >* widows 10 64bit<br/>
 >* PHP Version 7.1.2<br/>
 >* Apache Version 2.4.25<br/>
