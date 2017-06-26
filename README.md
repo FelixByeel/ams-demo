@@ -1,5 +1,10 @@
+>本系统开发环境<br/>
+>* widows 10 64bit<br/>
+>* PHP Version 7.1.2<br/>
+>* Apache Version 2.4.25<br/>
+>* Mysql Version 5.7.17<br/>
 # 资产管理系统 v1.0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个定制的小型物品管理系统，用来管理物品的进出库。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个定制的小型B/S物品管理系统，用来管理物品的进出库。
 ### 功能说明
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本系统功能有查询物品出入库记录、物品出库、物品入库、分类管理、后台用户管理等功能。有三种登录角色，普通用户、物品管理员、后台系统管理员。三种角色功能如下：
 1. 普通用户。<br/>
