@@ -8,6 +8,12 @@ $(document).ready(function () {
         let newPwd = $("#newPwdIpt").val();
         let cfmPwd = $("#cfmPwdIpt").val();
 
+        if (oldPwd.length === 0) {
+            $("#tipsBox").text("原密码不能为空.");
+            $("#oldPwdIpt").focus();
+            return;
+        }
+
         if (newPwd.length < 6) {
             $("#tipsBox").text("密码不能小于6位.");
             $("#newPwdIpt").focus();
