@@ -55,3 +55,6 @@ create table check_stock_t(
     uid varchar(40) not null default '' comment '对应用户信息表uid字段',
     primary key(id)
 )engine=innodb default charset=utf8 comment='库存盘点表';
+
+insert into user_t(uid, username, userpwd, nick_name, role_group, is_enabled)
+            values(md5('admin123456'), 'admin', md5('123456'), '管理员', 99, 1);
