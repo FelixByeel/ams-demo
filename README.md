@@ -1,5 +1,5 @@
 >本系统基于PHP开发，系统环境配置如下：<br/>
->* widows 10 64bit<br/>
+>* Windows 10 64bit<br/>
 >* PHP Version 7.1.2<br/>
 >* Apache Version 2.4.25<br/>
 >* Mysql Version 5.7.17<br/>
@@ -9,7 +9,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本系统功能有查询物品出入库记录、物品出库、物品入库、分类管理、后台用户管理等功能。有三种登录角色，普通用户、物品管理员、后台系统管理员。三种角色功能如下：
 1. 普通用户。<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通用户可以查询进出库存记录、进行物品的出库。
-
 2. 物品管理员。<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;物品管理员除了拥有普通用户的权限，可以对物品进行管理。
 3. 后台系统管理员<br/>
