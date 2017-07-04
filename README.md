@@ -1,5 +1,6 @@
 >本系统基于PHP开发，系统环境配置如下：<br/>
 >* Windows 10 64bit<br/>
+>* chrome Version 59.0.3071.115<br/>
 >* PHP Version 7.1.2<br/>
 >* Apache Version 2.4.25<br/>
 >* Mysql Version 5.7.17<br/>
