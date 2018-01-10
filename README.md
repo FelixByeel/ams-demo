@@ -19,9 +19,4 @@
 *  2017-06-25<br/>
 v1.0版本完成，实现基本的功能。
 
-### 部分UI预览
-
-![默认页面](https://raw.githubusercontent.com/FelixByeel/ams-demo/master/public/images/Screenshots/default-page.png)
-![记录查询](https://raw.githubusercontent.com/FelixByeel/ams-demo/master/public/images/Screenshots/record-check.png)
-![用户管理](https://raw.githubusercontent.com/FelixByeel/ams-demo/master/public/images/Screenshots/user-mmt.png)
 
